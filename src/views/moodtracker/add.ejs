@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <% include ../static/partials/head.ejs %>
+
+    <body>
+        <% include ../static/partials/navbar.ejs %>
+
+        <main class="content">
+           <!-- breadcrumbs -->
+           <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/moodtracker">Main</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Add Mood   
+                    </li>
+                </ol>
+            </nav>
+            <!-- end breadcrumbs -->
+
+            <form action="/add" method="POST">
+                <div class="form-group">
+                    <label for="moodselect">Mood</label>
+                    <select multiple class="form-control" id="moodselect">
+                        <option id="happy">Happy, Joyful, Relaxed, Silly, Content</option>
+                        <option id="sad">Sad, Lonely, Depressed, Insecure, Numb</option>
+                        <option id="active">Energetic, Motivated, Active, Productive</option>
+                        <option id="tired">Tired, Sick, Unmotivated, Bored</option>
+                        <option id="fine">Uneventful, Fine</option>
+                        <option id="anxious">Anxious, Worried, Nervous, Restless</option>
+                        <option id="angry">Angry, Frustrated, Annoyed, Grumpy, Irritated</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="moodlevel">Intensity Level</label>
+                    <input type="range" id="moodlevel" name="moodlevel" list="tickmarks">
+                    <datalist id="tickmarks">
+                        <option value=5 label="Barely There">
+                        <option value=10>
+                        <option value=15>
+                        <option value=20 label="Significant">
+                        <option value=25>
+                        <option value=30>
+                        <option value=35 label="Strong">
+                         <option value=40>
+                        <option value=45>
+                        <option value=50 label="Off the Charts">
+                        <option value=55>
+                    </datalist>
+                </div>
+                <div class="form-group">
+                        <label for="notes">Add Notes</label>
+                        <textarea class="form-control" rows="4" id="notes" value="moodnotes" placeholder="Add a note"></textarea>
+                    </div>
+                <button type="submit" class="btn btn-warning">Save</button>
+            </form>
+
+            </main>
+
+            <% include ../static/partials/baseScripts.ejs %>
+        </body>
+</html>

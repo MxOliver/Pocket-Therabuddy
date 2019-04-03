@@ -1,2 +1,2 @@
-# LifeManager
-Web app for handling to-do's, scheduling, alarms, notes, and other handle my life neccesities 
+# Pocket Thera-buddy
+Mental health web application with mood and habit tracking, coping skill resources, exercises, and a customizable support contact list. 

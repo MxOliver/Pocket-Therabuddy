@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <% include ../static/partials/head.ejs %>
+
+    <body>
+        <% include ../static/partials/navbar.ejs %>
+
+        <main class="content">
+           <!-- breadcrumbs -->
+           <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/moodtracker">Main</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/moodtracker/add">Add Mood</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        View History  
+                    </li>
+                </ol>
+            </nav>
+            <!-- end breadcrumbs -->
+
+            <% if(results){ %>
+                <% results.forEach((result) => { %>
+
+                    
+
+
+
+               <% }) %>
+
+          <%  } %>
+        </main>
+
+        <% include ../static/partials/baseScripts.ejs %>
+    </body>
+</html>

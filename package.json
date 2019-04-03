@@ -1,0 +1,42 @@
+{
+  "name": "lifemanager",
+  "version": "1.0.0",
+  "description": "Manage your Life",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "export NODE_ENV=test&& jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MxOliver/LifeManager.git"
+  },
+  "author": "Oliver L Coley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MxOliver/LifeManager/issues"
+  },
+  "homepage": "https://github.com/MxOliver/LifeManager#readme",
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "jasmine": "^3.3.1",
+    "request": "^2.88.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "dotenv": "^7.0.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-flash": "0.0.2",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.9.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^5.2.9",
+    "sequelize-cli": "^5.4.0"
+  }
+}
