@@ -15,8 +15,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Users",
+        key: "id",
+        as: "userId"
+      }
+    }
   }, {});
   Mood.associate = function(models) {
+
+    Mood.belongsTo(models.User, {
+      foreignKey: "userId",
+      onDelete: "CASCADE"
+    });
    
     Mood.addScope("lastWeek", () => {
       let today = new Date();

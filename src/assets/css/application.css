@@ -1,3 +1,14 @@
 body {
     padding: 25px;
 }
+
+main {
+    padding-top: 30px;
+    margin-left: 15px;
+}
+
+jumbotron {
+    background: white;
+    margin-top: 25px;
+}
+
