@@ -1,7 +1,7 @@
 {
-  "name": "lifemanager",
+  "name": "Pocket Therabuddy",
   "version": "1.0.0",
-  "description": "Manage your Life",
+  "description": "Pocket-sized mental health tool-kit application",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MxOliver/LifeManager.git"
+    "url": "git+https://github.com/MxOliver/Pocket-Therabuddy.git"
   },
   "author": "Oliver L Coley",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MxOliver/LifeManager/issues"
+    "url": "https://github.com/MxOliver/Pocket-Therabuddy/issues"
   },
-  "homepage": "https://github.com/MxOliver/LifeManager#readme",
+  "homepage": "https://github.com/MxOliver/Pocket-Therabuddy#readme",
   "devDependencies": {
     "faker": "^4.1.0",
     "jasmine": "^3.3.1",
