@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Op = require('Sequelize').Op;
+  const Op = require('sequelize').Op;
   
   var Mood = sequelize.define('Mood', {
     moodlevel: {
