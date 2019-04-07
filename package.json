@@ -1,11 +1,7 @@
 {
   "name": "pocket-therabuddy",
   "version": "1.0.0",
-  "description": "Mental health toolkit",
-  "engines": {
-    "node": "10.13.0",
-    "npm": "6.7.0"
-  },
+  "description": "Pocket-sized mental health tool-kit application",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
