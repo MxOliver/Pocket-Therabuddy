@@ -18,6 +18,9 @@
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "logging": false,
+    "use_env_variable": "DATABASE_URL",
+    "db": "process.env.DATABASE_URL"
   }
 }
