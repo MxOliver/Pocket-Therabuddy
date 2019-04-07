@@ -5,4 +5,6 @@ const staticController = require("../controllers/staticController");
 
 router.get("/", staticController.index);
 
+router.get("/error", staticController.error);
+
 module.exports = router;

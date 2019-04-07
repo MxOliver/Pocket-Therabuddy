@@ -4,6 +4,7 @@
 
     <body>
         <% include ./partials/navbar.ejs %>
+        <% include ./partials/messages.ejs %>
 
         <main class="content">
 
@@ -12,7 +13,12 @@
                 <h1 class="display-4">Welcome to your Pocket Thera-buddy</h1>
                 <p class="lead">I'm here to help you keep track of your moods and daily habits, remind you of your favorite coping resources, and give you a spot to reframe your negative thoguhts.</p>
                 <hr class="my-4">
-                <p class="sub-lead">The pocket thera-buddy is not a replacement for therapy, it is just one helpful tool in your mental health toolkit.</p>
+                    <% if(currentUser) { %>
+                        <a href="/sign_out" class="btn btn-warning">Sign Out</a>
+                    <% } else { %>
+                        <a href="/sign_up" class="btn btn-warning">Sign Up</a>
+                        <a href="/sign_in" class="btn btn-success">Sign In</a>
+                   <% } %>
             </div>
             </div>
 

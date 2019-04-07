@@ -1,6 +1,6 @@
 const request = require("request");
 const server = require("../../src/server");
-const base = "http://localhost:3000/"
+const base = "http://localhost:3001/"
 
 describe(" routes: static", () => {
 
