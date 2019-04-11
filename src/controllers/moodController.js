@@ -15,10 +15,13 @@ module.exports = {
             userId: req.user.id
         }
 
+        console.log(newMood);
+
         moodQueries.create(newMood, (err, mood) => {
             if(err){
                 req.flash("error", err);
-                res.redirect('/add');
+                console.log(err);
+                res.redirect('/moodtracker/add');
             } else {
                 req.flash("notice", "Mood added successfully!");
                 res.redirect('/moodtracker');
