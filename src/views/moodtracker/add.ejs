@@ -20,17 +20,17 @@
             </nav>
             <!-- end breadcrumbs -->
 
-            <form action="/add" method="POST">
+            <form action="/moodtracker/add" method="POST">
                 <div class="form-group">
                     <label for="moodselect">Mood</label>
-                    <select multiple class="form-control" id="moodselect">
-                        <option id="happy">Happy, Joyful, Relaxed, Silly, Content</option>
-                        <option id="sad">Sad, Lonely, Depressed, Insecure, Numb</option>
-                        <option id="active">Energetic, Motivated, Active, Productive</option>
-                        <option id="tired">Tired, Sick, Unmotivated, Bored</option>
-                        <option id="fine">Uneventful, Fine</option>
-                        <option id="anxious">Anxious, Worried, Nervous, Restless</option>
-                        <option id="angry">Angry, Frustrated, Annoyed, Grumpy, Irritated</option>
+                    <select class="form-control" name="moodselect" id="moodselect">
+                        <option value="happy">Happy, Joyful, Relaxed, Silly, Content</option>
+                        <option value="sad">Sad, Lonely, Depressed, Insecure, Numb</option>
+                        <option value="active">Energetic, Motivated, Active, Productive</option>
+                        <option value="tired">Tired, Sick, Unmotivated, Bored</option>
+                        <option value="fine">Uneventful, Fine</option>
+                        <option value="anxious">Anxious, Worried, Nervous, Restless</option>
+                        <option value="angry">Angry, Frustrated, Annoyed, Grumpy, Irritated</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-group">
                         <label for="notes">Add Notes</label>
-                        <textarea class="form-control" rows="4" id="notes" value="moodnotes" placeholder="Add a note"></textarea>
+                        <textarea class="form-control" rows="4" id="notes" name="moodnotes" placeholder="Add a note"></textarea>
                     </div>
                 <button type="submit" class="btn btn-warning">Save</button>
             </form>
