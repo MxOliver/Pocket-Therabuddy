@@ -12,3 +12,13 @@ jumbotron {
     margin-top: 25px;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+    opacity: 0.5;
+}
