@@ -10,8 +10,7 @@ module.exports = {
     },
     getHistory(user, callback){
 
-        Mood.findByPk(user.id, {plain: true, raw: true}).then((moods) => {
-
+        Mood.findAll({where: {userId: user.id}, raw: true}).then((moods) => {
             callback(null, moods);
         }).catch((err) => {
             callback(err);
