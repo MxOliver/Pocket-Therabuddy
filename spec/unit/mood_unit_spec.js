@@ -32,7 +32,7 @@ describe("Mood", () => {
     describe("#fetchData()", () => {
 
         it("should return a json of the mood history", (done) => {
-            Mood.findByPk(this.user.id, {plain: true, raw: true}).then((moods) => {
+            Mood.findAll({where: {userId: this.user.id}, raw: true}).then((moods) => {
                 console.log("Moods " + moods);
                 expect(moods).toEqual(jasmine.any(Object));
                 done();
