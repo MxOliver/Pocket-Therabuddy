@@ -28,16 +28,16 @@ module.exports = {
             }
         });
     },
-//     history(req, res, next){
-//         moodQueries.getHistory((err, result) => {
+    history(req, res, next){
+        moodQueries.getHistory(req.user, (err, result) => {
 
-//             if(err || result.moods == undefined){
-//                 console.log(err);
-//                 req.flash("notice", "No history found.");
-//                 res.redirect("/moodtracker");
-//             } else {
-//                 res.render("moodtracker/history", {...result});
-//             }
-//         })
-//     }
+            if(err || result.moods == undefined){
+                console.log(err);
+                req.flash("notice", "No history found.");
+                res.redirect("/moodtracker");
+            } else {
+                res.render("moodtracker/history", {...result});
+            }
+        })
+    }
 }

@@ -95,33 +95,38 @@ describe(" routes : moods ", () => {
             });
         });
 
-        // describe("GET /history", () => {
+        describe("GET /history", () => {
 
-        //     beforeEach((done) => {
-        //         this.mood;
-        //         let currentDate = new Date();
+            beforeEach((done) => {
+                this.mood;
+                let currentDate = new Date();
 
-        //         Mood.create({
-        //             moodselect: "Sad",
-        //             moodlevel: 15,
-        //             createdAt: currentDate
-        //         }).then((newMood) => {
-        //             this.mood = newMood;
-        //             done();
-        //         }).catch((err) => {
-        //             console.log(err);
-        //             done();
-        //         })
+                Mood.create({
+                    moodselect: "Sad",
+                    moodlevel: 15,
+                    createdAt: currentDate,
+                    userId: this.user.id
+                }).then((newMood) => {
+                    this.mood = newMood;
+                    done();
+                }).catch((err) => {
+                    console.log(err);
+                    done();
+                })
 
-        //     });
+            });
 
-        //     it("should render a view with the recent mood history", (done) => {
-        //         request.get(`${base}history`, (err, res, body) => {
-        //             expect(body).toContain("Mood History");
-        //             expect(res.statusCode).toBe(200);
-        //             expect(body).toContain("Sad");
-        //             done();
-        //         });
-        //     });
-        // });
+            it("should render a view with the recent mood history", (done) => {
+                request.get(`${base}history`, (err, res, body) => {
+                    Mood.findByPk(this.user.id).then(() => {
+                        expect(body).toContain("Mood History");
+                        expect(res.statusCode).toBe(200);
+                        done();
+                    }).catch((err) => {
+                        console.log(err);
+                        done();
+                    })
+                });
+            });
+        });
 });

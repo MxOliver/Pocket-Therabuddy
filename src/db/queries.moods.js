@@ -8,15 +8,13 @@ module.exports = {
             callback(err);
         });
     },
-//     getHistory(callback){
-//         let result = {};
+    getHistory(user, callback){
 
-//         Mood.scope({method: ["lastWeek"]}).all().then((moods) => {
-//             result["moods"] = moods;
+        Mood.findByPk(user.id, {plain: true, raw: true}).then((moods) => {
 
-//             callback(null, result);
-//         }).catch((err) => {
-//             callback(err);
-//         })
-//     },
+            callback(null, moods);
+        }).catch((err) => {
+            callback(err);
+        })
+    },
 }
