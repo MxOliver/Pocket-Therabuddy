@@ -14,6 +14,9 @@ class ConnectedData extends Component {
         super();
 
         this.state = {
+            response: '',
+            post: '',
+            responseToPost: '',
             fetchedData: {
                 type: [],
                 level: [],
@@ -25,10 +28,27 @@ class ConnectedData extends Component {
 
         this.handleInput = this.handleInput.bind(this);
         this.handleOutput = this.handleOutput.bind(this);
+        this.callApi = this.callApi.bind(this);
     }
 
-    handleInput(e){
+    componentDidMount() {
+        this.callApi().then(res => this.setState({ response: res.data }))
+        .catch(err => console.log(err));
+    }
+    
+    callApi = async () => {
+        const response = await fetch('/api/moodHistory');
+        const body = await response.json();
 
+        if (response.status !== 200) throw Error(body.message);
+
+        return body;
+    }
+
+    handleInput(){
+        for(let value of Object.values(this.state.response)){
+            console.log(value);
+        }
     }
 
     handleOutput(e){
@@ -37,6 +57,15 @@ class ConnectedData extends Component {
         const id = uuidv1();
         this.props.addMood({ fetchedData, id}); 
         this.setState({ fetchedData: {}, save: true});
+    }
+
+    render() {
+        return (
+            <div class="chart">
+            <button class="btn btn-warning" onClick={this.handleInput}>Input</button>
+            <button class="btn btn-success" onClick={this.handleOutput}>Output</button>
+            </div>
+        )
     }
 }
 
