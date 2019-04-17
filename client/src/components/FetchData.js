@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid';
 import { addMood } from '../actions/index';
+import axios from 'axios';
 
 function mapDispatchToProps(dispatch){
     return {
@@ -37,7 +38,7 @@ class ConnectedData extends Component {
     }
     
     callApi = async () => {
-        const response = await fetch('/api/moodHistory');
+        const response = await fetch('/api/moodhistory');
         const body = await response.json();
 
         if (response.status !== 200) throw Error(body.message);
@@ -47,7 +48,7 @@ class ConnectedData extends Component {
 
     handleInput(){
         for(let value of Object.values(this.state.response)){
-            console.log(value);
+            console.log(value.moodselect);
         }
     }
 

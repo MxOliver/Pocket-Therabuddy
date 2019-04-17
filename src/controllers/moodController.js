@@ -29,17 +29,17 @@ module.exports = {
         });
     },
     history(req, res, next){
-        moodQueries.getHistory(req.user, (err, result) => {
+        res.render("moodtracker/history");
+    },
+    fetchhistory(req, res, next){
+        moodQueries.getHistory(req.user, (err, moods) => {
 
             if(err){
                 console.log(err);
                 req.flash("error", err);
                 res.redirect("/moodtracker");
-            } else if (result.moods == undefined) {
-                req.flash("notice", "No history found.");
-                res.render("moodtracker/history");
             } else {
-                res.render("moodtracker/history", {...result});
+                res.send({ data: moods });
             }
         })
     }

@@ -9,6 +9,6 @@ router.get("/moodtracker/add", moodController.addForm);
 
 router.post("/moodtracker/add", moodController.add);
 
-router.get("/moodtracker/history", moodController.history);
+router.get('/moodtracker/history', moodController.history);
 
 module.exports = router;
