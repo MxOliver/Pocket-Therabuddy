@@ -1,16 +1,33 @@
 import React, { Component } from 'react';
-import Chart from './Chart';
-import FetchData from './FetchData';
+import NavBar from './partials/NavBar';
+import Landing from './Landing';
+import AddMood from './mood/AddMood';
+import MoodHistory from './mood/MoodHistory'
+import MoodJumbotron from './mood/Jumbotron';
+import SignIn from './partials/SignIn';
+import SignUp from './partials/SignUp';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-class MoodHistory extends Component {
+class App extends Component {
     render(){
         return (
+            <Router>
             <div className="App">
-            <FetchData />
-            <Chart />
+            <NavBar />
+            <main className="content">
+                <Switch>
+                    <Route exact path="/" component={Landing}/>
+                    <Route exact path="/moodtracker" component={MoodJumbotron}/>
+                    <Route expact path="/sign_in" component={SignIn}/>
+                    <Route exact path="/sign_up" component={SignUp}/>
+                    <Route path="/moodtracker/add" component={AddMood} />
+                    <Route path="/moodtracker/history" component={MoodHistory} />
+                </Switch>
+            </main>
             </div>
+            </Router>
         )
     }
 }
 
-export default MoodHistory;
+export default App;
