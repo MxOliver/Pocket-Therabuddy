@@ -1,4 +1,4 @@
-const moodQueries = require("../db/queries.moods.js.js");
+const moodQueries = require("../db/queries.moods");
 
 module.exports = {
     add(req, res, next){

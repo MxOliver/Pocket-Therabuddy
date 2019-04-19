@@ -11,12 +11,6 @@ function mapDispatchToProps(dispatch){
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        mood: state.mood
-    }
-}
-
 class ConnectedMoodForm extends Component {
     constructor(props){
         super();
@@ -55,22 +49,25 @@ class ConnectedMoodForm extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const id = uuidv1();
-        this.props.addMood({ mood: {
-                type: this.state.moodselect,
-                level: this.state.moodlevel,
-                notes: this.state.moodnotes,
-                userId: this.state.user
-            }, id });
-        this.postApi()
+        const newMood = {
+            type: this.state.moodselect,
+            level: this.state.moodlevel,
+            notes: this.state.moodnotes,
+            date: new Date(),
+            userId: this.state.user
+        }
+        this.props.addMood({ newMood, id });
+        this.setState({ type: '', level: '', notes: '', user: '' });
+        this.postApi(newMood)
     }
 
-    postApi = async () => {
+    postApi = async (newMood) => {
         const response = await fetch('/api/moodtracker/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ mood: this.props.mood })
+            body: JSON.stringify({ mood: newMood })
         });
         const body = await response.text();
         console.log("RESPONSE: " + body);
@@ -265,6 +262,6 @@ class ConnectedMoodForm extends Component {
     }
 }
 
-const AddMood = connect(null, mapDispatchToProps, mapStateToProps)(ConnectedMoodForm);
+const AddMood = connect(null, mapDispatchToProps)(ConnectedMoodForm);
 
 export default AddMood;
