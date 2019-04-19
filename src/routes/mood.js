@@ -3,12 +3,8 @@ const router = express.Router();
 
 const moodController = require("../controllers/moodController");
 
-router.get("/moodtracker", moodController.main);
+router.post("api/moodtracker/add", moodController.add);
 
-router.get("/moodtracker/add", moodController.addForm);
-
-router.post("/moodtracker/add", moodController.add);
-
-router.get('/moodtracker/history', moodController.history);
+router.get("api/moodtracker/history", moodController.fetchhistory);
 
 module.exports = router;

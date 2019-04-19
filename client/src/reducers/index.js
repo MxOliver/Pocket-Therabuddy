@@ -2,10 +2,10 @@ import { ADD_MOOD } from "../constants/action-types";
 
 const initialState = {
     mood: {
-        type: [],
-        level: [],
-        date: [],
-        userId: []
+        type: '',
+        level: '',
+        date: '',
+        userId: ''
     }
 }
 

@@ -1,36 +1,80 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import uuidv1 from 'uuid';
+import { addMood } from '../../actions/index';
 import { MDBInput, MDBContainer, MDBRow, MDBBtn } from "mdbreact";
 import HistoryNav from '../partials/HistoryNav';
 
-class AddMood extends Component {
+function mapDispatchToProps(dispatch){
+    return {
+        addMood: mood => dispatch(addMood(mood))
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        mood: state.mood
+    }
+}
+
+class ConnectedMoodForm extends Component {
     constructor(props){
         super();
 
         this.state = {
             moodselect: '',
             moodlevel: '',
-            option: ''
+            notes: '',
+            isChecked: false,
+            user: ''
         }
 
-        this.handleMoodSelect = this.handleMoodSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleRange = this.handleRange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleMoodSelect(e){
-        e.preventDefault();
-        this.setState({ option: e.target.value });
+    componentDidMount() {
+        this.callApi().then(res => this.setState({ user: res.user }))
+        .catch(err => console.log(err));
     }
+
+    callApi = async () => {
+        const user = await fetch ('/api/user');
+        const body = await user.json();
+
+        if(user.status !== 200) throw Error(body.message);
+
+        return body;
+    };
     
-    handleRange(e){
+    handleChange(e){
         e.preventDefault();
-        this.setState({ moodlevel: e.target.value });
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        this.setState({ moodselect: this.state.option });
+        const id = uuidv1();
+        this.props.addMood({ mood: {
+                type: this.state.moodselect,
+                level: this.state.moodlevel,
+                notes: this.state.moodnotes,
+                userId: this.state.user
+            }, id });
+        this.postApi()
     }
+
+    postApi = async () => {
+        const response = await fetch('/api/moodtracker/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ mood: this.props.mood })
+        });
+        const body = await response.text();
+        console.log("RESPONSE: " + body);
+    };
 
     render() {
         const radioStyle = {
@@ -71,8 +115,8 @@ class AddMood extends Component {
                         type="radio" 
                         id="happy" 
                         value="happy" 
-                        onChange={this.handleMoodSelect} 
-                        checked={this.state.option === 'happy'} 
+                        onChange={this.handleChange}
+                        name="moodselect" 
                         />
                     Happy, Joyful, Relaxed, Silly, Content
                     </label>
@@ -86,8 +130,8 @@ class AddMood extends Component {
                         style={radioStyle} 
                         id="sad" 
                         value="sad" 
-                        onChange={this.handleMoodSelect} 
-                        checked={this.state.option === 'sad'}
+                        name="moodselect" 
+                        onChange={this.handleChange} 
                         />
                         Sad, Lonely, Depressed, Insecure, Numb
                         </label>
@@ -100,9 +144,9 @@ class AddMood extends Component {
                         type="radio" 
                         style={radioStyle} 
                         id="active" 
-                        value="active" 
-                        onChange={this.handleMoodSelect} 
-                        checked={this.state.option === 'active'} 
+                        value="active"
+                        name="moodselect"  
+                        onChange={this.handleChange} 
                         />
                     Energetic, Motivated, Active, Productive
                     </label>
@@ -116,8 +160,8 @@ class AddMood extends Component {
                         id="tired" 
                         value="tired" 
                         style={radioStyle} 
-                        onChange={this.handleMoodSelect} 
-                        checked={this.state.option === 'tired'} 
+                        name="moodselect" 
+                        onChange={this.handleChange} 
                         />
                     Tired, Sick, Unmotivated, Bored
                     </label>
@@ -130,9 +174,9 @@ class AddMood extends Component {
                         type="radio" 
                         id="fine" 
                         value="fine" 
+                        name="moodselect" 
                         style={radioStyle} 
-                        onChange={this.handleMoodSelect} 
-                        checked={this.state.option === 'fine'} 
+                        onChange={this.handleChange} 
                         />
                     Uneventful, Fine
                     </label>
@@ -144,10 +188,10 @@ class AddMood extends Component {
                         className="form-check-input" 
                         type="radio" 
                         id="anxious" 
-                        value="anxious" 
+                        value="anxious"
+                        name="moodselect"  
                         style={radioStyle} 
-                        onChange={this.handleMoodSelect} 
-                        checked={this.state.option === 'anxious'} 
+                        onChange={this.handleChange} 
                         />
                     Anxious, Worried, Nervous, Restless
                     </label>
@@ -161,9 +205,9 @@ class AddMood extends Component {
                         type="radio" 
                         id="angry" 
                         value="angry" 
+                        name="moodselect" 
                         style={radioStyle} 
-                        onChange={this.handleMoodSelect} 
-                        checked={this.state.option === 'angry'} 
+                        onChange={this.handleChange}  
                         />
                     Angry, Frustrated, Annoyed, Grumpy, Irritated
                     </label>
@@ -177,10 +221,11 @@ class AddMood extends Component {
                     <span className="mr-2">Barely There</span>
                     <input 
                         type="range"
+                        name="moodlevel"
                         id="moodlevel"
                         list="tickmarks"
                         style={rangeStyle}
-                        onChange={this.handleRange}
+                        onChange={this.handleChange}
                         />
                     <span className="ml-2">Off the Charts</span>
                     <datalist id="tickmarks">
@@ -201,7 +246,14 @@ class AddMood extends Component {
 
                 <MDBRow>
                     <label htmlFor="moodnotes">Notes</label>
-                    <MDBInput type="textarea" id="moodnotes" rows="3" cols="45" style={textareaStyle}/>
+                    <MDBInput 
+                        type="textarea" 
+                        name="moodnotes" 
+                        onChange={this.handleChange} 
+                        id="moodnotes" 
+                        rows="3" 
+                        cols="45" 
+                        style={textareaStyle}/>
                 </MDBRow>
 
                 <MDBBtn outline color="red lighten-3" type="submit">Save</MDBBtn>
@@ -212,5 +264,7 @@ class AddMood extends Component {
         )
     }
 }
+
+const AddMood = connect(null, mapDispatchToProps, mapStateToProps)(ConnectedMoodForm);
 
 export default AddMood;

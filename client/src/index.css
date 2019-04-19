@@ -4,7 +4,7 @@ body {
 }
 
 a {
-  text-dectoration: none;
+  text-decoration: none;
 }
 
 .navbar-nav {
@@ -14,6 +14,10 @@ a {
 
 .nav.navbar.red {
   margin-bottom: 25px;
+}
+
+.nav-link {
+  padding-right: 10px;
 }
 
 #user-form {

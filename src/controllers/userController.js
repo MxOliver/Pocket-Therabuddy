@@ -1,8 +1,11 @@
-const userQueries = require('../db/user.queries.js');
+const userQueries = require('../db/user.queries.js.js');
 const User = require('../db/models').User;
 const passport = require("passport");
 
 module.exports = {
+    currentUser(){
+        res.send({ user: req.user.id });
+    },
     createAccount(req, res, next){
         res.render('users/sign_up');
     },

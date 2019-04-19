@@ -16,13 +16,13 @@ const MoodNav = props => {
         <MDBNavbar color="red lighten-4" flex-direction="row" margin="35px" style={paddingStyle}>
         <MDBNavbarNav left flex-direction="row">
             <MDBNavItem>
-                <MDBNavLink to="/moodtracker" style={textStyle}>Main</MDBNavLink>
+                <MDBNavLink disableRipple to="/moodtracker" style={textStyle}>Main</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-                <MDBNavLink to="/moodtracker/add" style={textStyle}>Add Mood</MDBNavLink>
+                <MDBNavLink disableRipple to="/moodtracker/add" style={textStyle}>Add Mood</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-                <MDBNavLink to="/moodtracker/history" style={textStyle}>History</MDBNavLink>
+                <MDBNavLink disableRipple to="/moodtracker/history" style={textStyle}>History</MDBNavLink>
             </MDBNavItem>
         </MDBNavbarNav>
         </MDBNavbar>

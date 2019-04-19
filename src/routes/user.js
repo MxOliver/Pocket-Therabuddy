@@ -3,14 +3,16 @@ const router = express.Router();
 
 const userController = require("../controllers/userController");
 
-router.get('/sign_up', userController.createAccount);
+router.post('api/user', userController.currentUser);
 
-router.post('/sign_up', userController.sign_up);
+router.get('api/sign_up', userController.createAccount);
 
-router.get('/sign_in', userController.sign_inForm);
+router.post('api/sign_up', userController.sign_up);
 
-router.post('/sign_in', userController.sign_in);
+router.get('api/sign_in', userController.sign_inForm);
 
-router.get('/sign_out', userController.signOut);
+router.post('api/sign_in', userController.sign_in);
+
+router.get('api/sign_out', userController.signOut);
 
 module.exports = router;
