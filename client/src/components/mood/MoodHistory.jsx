@@ -13,13 +13,14 @@ class ConnectedMoodHistory extends Component {
         super();
 
         this.state = {
-            data: {}
+            data: {},
+            dataLoaded: false,
         }
         
     }
 
     componentDidMount() {
-        this.callApi().then(res => this.setState({ data: res.data }))
+        this.callApi().then(res => this.setState({ data: res.data, dataLoaded: true }))
         .catch(err => console.log(err));
     }
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { addUser } from '../../actions/index';
-import uuidv1 from 'uuid';
 import { connect } from 'react-redux';
 
 import {
@@ -12,7 +11,7 @@ import {
     MDBBtn,
     MDBInput
 } from "mdbreact";
-import { stringify } from 'querystring';
+
 
 function mapDispatchToProps(dispatch){
   return {
@@ -29,7 +28,7 @@ class ConnectedUserForm extends Component {
       name: '',
       password: '',
       passwordConfirmation: '',
-      response: ''
+      response: '',
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,16 +43,15 @@ class ConnectedUserForm extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    const id = uuidv1();
     const newUser = {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
       passwordConfirmation: this.state.passwordConfirmation
     }
-    this.props.addUser({ newUser, id });
-    this.setState({ name: '', email: '', password: '', passwordConfirmation: '' });
+    this.props.addUser({ newUser });
     this.postApi(newUser);
+    this.setState({ name: '', email: '', password: '', passwordConfirmation: '' });
   }
 
   postApi = async (newUser) => {
@@ -70,13 +68,12 @@ class ConnectedUserForm extends Component {
 
   render() {
     return (
-      <form className="signUpForm" onSubmit={this.handleSubmit}>
       <MDBContainer id="user-form">
         <MDBRow>
           <MDBCol md="6">
             <MDBCard>
                 <MDBCardBody>
-                  <form>
+                <form className="signUpForm" onSubmit={this.handleSubmit}>
                     <p className="h4 text-center py-4">Sign up</p>
                     <div className="grey-text">
                       <MDBInput
@@ -110,11 +107,11 @@ class ConnectedUserForm extends Component {
                        <MDBInput
                         label="Password Confirmation"
                         group
-                        type="text"
+                        type="password"
                         validate
                         error="wrong"
                         success="right"
-                        name="passwordconfirmation"
+                        name="passwordConfirmation"
                         onChange={this.handleChange}
                       />
                     </div>
@@ -129,7 +126,6 @@ class ConnectedUserForm extends Component {
             </MDBCol>
           </MDBRow>
         </MDBContainer>
-        </form>
     );
   }
 }

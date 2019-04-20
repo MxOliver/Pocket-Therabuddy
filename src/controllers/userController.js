@@ -1,41 +1,31 @@
 const userQueries = require('../db/user.queries');
 const User = require('../db/models').User;
-const passport = require("passport");
 
 module.exports = {
-    currentUser(){
+    currentUser(req, res, next){
         res.send({ user: req.user.id });
     },
     sign_up(req, res, next){
-        let newUser = {
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            passwordConfirmation: req.body.passwordConfirmation
-        };
-
+        let newUser = req.body.user;
         userQueries.create(newUser, (err, user) => {
             if(err){
-                req.flash(err);
                 res.send({ error: err });
             } else {
-                passport.authenticate("local")(req, res, () => {
-                    req.flash('notice', "Account successfully created");
-                    res.send({ response: req.user });
-                });
+                console.log("SUCCESS");
+                res.send({ response: user });
             }
         });
     },
     sign_in(req, res, next){
-        passport.authenticate("local")(req, res, () => {
-            if(!req.user){
-                req.flash("notice", "sign in failed. please try again");
-                res.send({response: err });
+        let checkUser = req.body.user;
+        userQueries.authenticate(checkUser, (err, user) => {
+            if(err){
+                res.send({ error: err });
             } else {
-                req.flash("notice", "You've successfully signed in");
-                res.send({ response: req.user });
+                console.log("SUCCESS");
+                res.send({ response: user });
             }
-        });
+        })
     },
     signOut(req, res, next){
         req.logout();

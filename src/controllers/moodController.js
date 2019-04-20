@@ -2,6 +2,7 @@ const moodQueries = require("../db/queries.moods");
 
 module.exports = {
     add(req, res, next){
+        console.log("RESPONSE " + req.body.mood);
         const newMood = {
             moodselect: req.body.moodselect,
             moodlevel: req.body.moodlevel,
