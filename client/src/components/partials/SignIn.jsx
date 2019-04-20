@@ -17,6 +17,7 @@ function mapStateToProps(state){
   }
 }
 
+
 class ConnectedSignIn extends Component {
   constructor(props){
     super();
@@ -60,7 +61,7 @@ class ConnectedSignIn extends Component {
   }
 
   render() {
-    
+
     return (
       <MDBContainer id="user-form">
         <MDBRow>

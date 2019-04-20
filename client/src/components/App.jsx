@@ -9,6 +9,14 @@ import SignUpForm from './partials/SignUp';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class App extends Component {
+    constructor(props){
+        super();
+
+        this.state = {
+            currentUser: ''
+        }
+    }
+
     render(){
         return (
             <Router>
