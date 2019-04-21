@@ -3,9 +3,10 @@ const User = require('../db/models').User;
 
 module.exports = {
     currentUser(req, res, next){
-        res.send({ user: req.user.id });
+        res.send({ user: req.user });
     },
     sign_up(req, res, next){
+        console.log(req.body.user);
         let newUser = req.body.user;
         userQueries.create(newUser, (err, user) => {
             if(err){

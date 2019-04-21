@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { addUser } from '../../actions/index';
+import { userActions } from '../../actions/userActions';
+import {Link} from "react-router-dom";
 import { connect } from 'react-redux';
 
 import {
@@ -13,22 +14,19 @@ import {
 } from "mdbreact";
 
 
-function mapDispatchToProps(dispatch){
-  return {
-      addUser: user => dispatch(addUser(user))
-  }
-}
-
 class ConnectedUserForm extends Component {
   constructor(props){
-    super();
+    super(props);
 
     this.state = {
-      email: '',
-      name: '',
-      password: '',
-      passwordConfirmation: '',
-      response: '',
+      user: {
+        email: '',
+        name: '',
+        password: '',
+        passwordConfirmation: '',
+      },
+      loggedIn: false,
+      submitted: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,35 +36,31 @@ class ConnectedUserForm extends Component {
 
   handleChange(e){
     e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value })
+    const { name, value } = e.target;
+    const { user } = this.state;
+    this.setState({ 
+      user: {
+        ...user,
+        [name]: value
+      }
+    });
   }
 
   handleSubmit(e){
     e.preventDefault();
-    const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      passwordConfirmation: this.state.passwordConfirmation
+    this.setState({ submitted: true });
+    const { user } = this.state;
+    const { dispatch } = this.props;
+    console.log("USER " + user);
+    if(user.email && user.password){
+      dispatch(userActions.register(user));
     }
-    this.props.addUser({ newUser });
-    this.postApi(newUser);
-    this.setState({ name: '', email: '', password: '', passwordConfirmation: '' });
-  }
-
-  postApi = async (newUser) => {
-    const response = await fetch('/api/sign_up', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user: newUser })
-    });
-    const body = await response.text();
-    console.log("RESPONSE " + body);
   }
 
   render() {
+
+    const { user, submitted } = this.state;
+
     return (
       <MDBContainer id="user-form">
         <MDBRow>
@@ -84,8 +78,11 @@ class ConnectedUserForm extends Component {
                         error="wrong"
                         success="right"
                         name="name"
+                        className="form-control"
                         onChange={this.handleChange}
                       />
+                    </div>
+                    <div className={'form-group' + (submitted && !user.email ? ' has-error' : '')}>
                       <MDBInput
                         label="Your email"
                         group
@@ -94,16 +91,22 @@ class ConnectedUserForm extends Component {
                         error="wrong"
                         success="right"
                         name="email"
+                        className="form-control"
                         onChange={this.handleChange}
                       />
+                    </div>
+                    <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
                       <MDBInput
                         label="Password"
                         group
                         type="password"
                         validate
                         name="password"
+                        className="form-control"
                         onChange={this.handleChange}
                       />
+                    </div>
+                    <div className="form-group">
                        <MDBInput
                         label="Password Confirmation"
                         group
@@ -119,6 +122,7 @@ class ConnectedUserForm extends Component {
                       <MDBBtn color="red lighten-3" type="submit">
                         Sign Up
                       </MDBBtn>
+                      <Link to="/sign_in" className="btn btn-link">Already a user? Sign In</Link>
                     </div>
                   </form>
                 </MDBCardBody>
@@ -130,6 +134,13 @@ class ConnectedUserForm extends Component {
   }
 }
 
-const SignUpForm = connect(null, mapDispatchToProps)(ConnectedUserForm);
+
+function mapStateToProps(state) {
+  return {
+    registration: state.registration
+  }
+}
+
+const SignUpForm = connect(mapStateToProps)(ConnectedUserForm);
   
 export default SignUpForm;

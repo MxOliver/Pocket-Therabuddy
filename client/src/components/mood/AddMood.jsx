@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import uuidv1 from 'uuid';
-import { addMood } from '../../actions/index';
 import { MDBInput, MDBContainer, MDBRow, MDBBtn } from "mdbreact";
 import HistoryNav from '../partials/HistoryNav';
 
-function mapDispatchToProps(dispatch){
+function mapStateToProps(state) {
+    const { authentication } = state;
+    const { user } = authentication;
     return {
-        addMood: mood => dispatch(addMood(mood))
-    }
+        user
+    };
 }
 
 class ConnectedMoodForm extends Component {
@@ -19,8 +19,7 @@ class ConnectedMoodForm extends Component {
             moodselect: '',
             moodlevel: '',
             notes: '',
-            isChecked: false,
-            user: ''
+            isChecked: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,16 +46,15 @@ class ConnectedMoodForm extends Component {
     }
 
     handleSubmit(e) {
+        const userId = this.props.user.id;
         e.preventDefault();
-        const id = uuidv1();
         const newMood = {
             type: this.state.moodselect,
             level: this.state.moodlevel,
             notes: this.state.moodnotes,
             date: new Date(),
-            userId: this.state.user
+            userId: userId
         }
-        this.props.addMood({ newMood, id });
         this.setState({ type: '', level: '', notes: '', user: '' });
         this.postApi(newMood)
     }
@@ -262,6 +260,6 @@ class ConnectedMoodForm extends Component {
     }
 }
 
-const AddMood = connect(null, mapDispatchToProps)(ConnectedMoodForm);
+const AddMood = connect(mapStateToProps)(ConnectedMoodForm);
 
 export default AddMood;

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {Link} from "react-router-dom";
+import { userActions } from '../../actions/userActions';
 
 import {
     MDBContainer,
@@ -11,22 +13,20 @@ import {
     MDBInput
 } from "mdbreact";
 
-function mapStateToProps(state){
-  return {
-    user: state.user
-  }
-}
-
 
 class ConnectedSignIn extends Component {
   constructor(props){
-    super();
+    super(props);
+
 
     this.state = {
-      name: '',
-      email: '',
-      password: '',
+      user: {
+        email: '',
+        password: ''
+      },
       response: '',
+      loggedIn: false,
+      submitted: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,32 +35,29 @@ class ConnectedSignIn extends Component {
 
   handleChange(e){
     e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    const { user } = this.state;
+    this.setState({ 
+      user: {
+        ...user,
+        [name]: value
+      }
+    });
   }
 
   handleSubmit(e){
     e.preventDefault();
-    const checkUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password
-    };
-    this.postApi(checkUser);
-  }
-
-  postApi = async (checkUser) => {
-    const response = await fetch('/api/sign_in', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user: checkUser })
-    });
-    const body = await response.text();
-    console.log("RESPONSE " + body);
+    this.setState({ submitted: true });
+    const { user } = this.state;
+    const { dispatch } = this.props;
+    if( user.email && user.password ) {
+      dispatch(userActions.login(user))
+    } 
   }
 
   render() {
+    const { loggingIn } = this.props;
+    const { email, password, submitted } = this.state;
 
     return (
       <MDBContainer id="user-form">
@@ -68,11 +65,12 @@ class ConnectedSignIn extends Component {
           <MDBCol md="6">
             <MDBCard>
               <MDBCardBody>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} className="grey-text">
                   <p className="h4 text-center py-4">Sign In</p>
-                  <div className="grey-text">
+                  <div className='form-group'>
                     <MDBInput
-                      label="Your name"
+                      label="name"
+                      className="form-control"
                       group
                       type="text"
                       validate
@@ -81,8 +79,10 @@ class ConnectedSignIn extends Component {
                       name="name"
                       onChange={this.handleChange}
                     />
+                  </div>
+                  <div className={"form-group" + (submitted && !email ? ' has-error' : '')}>
                     <MDBInput
-                      label="Your email"
+                      label="email"
                       group
                       type="email"
                       validate
@@ -91,6 +91,8 @@ class ConnectedSignIn extends Component {
                       name="email"
                       onChange={this.handleChange}
                     />
+                  </div>
+                  <div className={"form-group" + (submitted && !password ? ' has-error' : '')} >
                     <MDBInput
                       label="Your password"
                       group
@@ -104,6 +106,8 @@ class ConnectedSignIn extends Component {
                     <MDBBtn color="red lighten-3" type="submit">
                       Sign In
                     </MDBBtn>
+                    { loggingIn }
+                    <Link to="/sign_up" className="btn btn-link">Sign Up</Link>
                   </div>
                 </form>
               </MDBCardBody>
@@ -113,6 +117,13 @@ class ConnectedSignIn extends Component {
       </MDBContainer>
     );
   }
+}
+
+function mapStateToProps(state){
+  const { loggingIn } = state.authentication;
+  return {
+    loggingIn
+  };
 }
 
 const SignInForm = connect(mapStateToProps)(ConnectedSignIn);
