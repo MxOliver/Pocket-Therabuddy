@@ -2,16 +2,8 @@ const moodQueries = require("../db/queries.moods");
 
 module.exports = {
     add(req, res, next){
-        console.log("RESPONSE " + req.body.mood);
-        const newMood = {
-            moodselect: req.body.moodselect,
-            moodlevel: req.body.moodlevel,
-            moodnotes: req.body.moodnotes,
-            userId: req.user.id
-        }
-
-        console.log(newMood);
-
+        let newMood = req.body.mood;
+        
         moodQueries.create(newMood, (err, mood) => {
             if(err){
                 req.flash("error", err);
