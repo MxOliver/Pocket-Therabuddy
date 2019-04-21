@@ -1,5 +1,6 @@
-const User = require('../db/models').User;
+const User = require('./models').User;
 const bcrypt = require("bcryptjs");
+const authHelper = require("../auth/helper");
 
 module.exports = {
     create(newUser, callback){
@@ -16,4 +17,15 @@ module.exports = {
             callback(err);
         })
     },
+    authenticate(checkUser, callback){
+        let email = checkUser.email;
+        let password = checkUser.password;
+        User.findOne({ where: { email }}).then((user) => {
+            if(!user || !authHelper.comparePass(password, user.password)) {
+                callback(err);
+            } else {
+                callback(null, user);
+            }
+        });
+    }
 }

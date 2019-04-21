@@ -1,0 +1,42 @@
+body {
+  margin: 25px;
+  padding: 15px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.navbar-nav {
+  flex-direction: row !important;
+  margin-bottom: 15px;
+}
+
+.nav.navbar.red {
+  margin-bottom: 25px;
+}
+
+.nav-link {
+  padding-right: 10px;
+}
+
+#user-form {
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+  margin-left: 50px;
+}
+
+#mood-nav {
+  margin-top: 35px;
+  flex-direction: row;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* GRADIENT -- warm-flame-gradient OR tempting-azure-gradient */
+/* PRIMARY COLOR -- teal lighten-3 */
+/* SECONDARY COLOR -- red lighten-3 */

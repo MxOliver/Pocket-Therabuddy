@@ -1,13 +1,8 @@
-const moodQueries = require("../db/queries.moods.js");
+const moodQueries = require("../db/queries.moods");
 
 module.exports = {
-     main(req, res, next){
-         res.render("moodtracker/main");
-     },
-    addForm(req, res, next){
-        res.render("moodtracker/add");
-    },
     add(req, res, next){
+        console.log("RESPONSE " + req.body.mood);
         const newMood = {
             moodselect: req.body.moodselect,
             moodlevel: req.body.moodlevel,
@@ -21,25 +16,21 @@ module.exports = {
             if(err){
                 req.flash("error", err);
                 console.log(err);
-                res.redirect('/moodtracker/add');
+                res.send({ response: err });
             } else {
                 req.flash("notice", "Mood added successfully!");
-                res.redirect('/moodtracker');
+                res.send({ response: 'success'});
             }
         });
     },
-    history(req, res, next){
-        moodQueries.getHistory(req.user, (err, result) => {
+    fetchhistory(req, res, next){
+        moodQueries.getHistory(req.user, (err, moods) => {
 
             if(err){
                 console.log(err);
-                req.flash("error", err);
-                res.redirect("/moodtracker");
-            } else if (result.moods == undefined) {
-                req.flash("notice", "No history found.");
-                res.render("moodtracker/history");
+                res.send({ response: err });
             } else {
-                res.render("moodtracker/history", {...result});
+                res.send({ data: moods });
             }
         })
     }
