@@ -2,74 +2,62 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MDBInput, MDBContainer, MDBRow, MDBBtn } from "mdbreact";
 import HistoryNav from '../partials/HistoryNav';
+import { moodActions } from '../../actions/moodActions';
 
 function mapStateToProps(state) {
-    const { authentication } = state;
+    const { saveMood, authentication } = state;
     const { user } = authentication;
+    const { mood } = saveMood;
     return {
+        mood,
         user
     };
 }
 
 class ConnectedMoodForm extends Component {
     constructor(props){
-        super();
+        super(props);
 
         this.state = {
-            moodselect: '',
-            moodlevel: '',
-            notes: '',
+            mood: {
+                moodselect: '',
+                moodlevel: '',
+                notes: '',
+            },
             isChecked: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-
-    componentDidMount() {
-        this.callApi().then(res => this.setState({ user: res.user }))
-        .catch(err => console.log(err));
-    }
-
-    callApi = async () => {
-        const user = await fetch ('/api/user');
-        const body = await user.json();
-
-        if(user.status !== 200) throw Error(body.message);
-
-        return body;
-    };
     
     handleChange(e){
         e.preventDefault();
-        this.setState({ [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        const { mood } = this.state;
+        this.setState({ 
+        mood: {
+            ...mood,
+            [name]: value
+        }
+        });
     }
 
     handleSubmit(e) {
-        const userId = this.props.user.id;
         e.preventDefault();
+        const { mood } = this.state;
+        const { dispatch, user } = this.props;
         const newMood = {
-            type: this.state.moodselect,
-            level: this.state.moodlevel,
-            notes: this.state.moodnotes,
+            moodselect: mood.moodselect,
+            moodlevel: mood.moodlevel,
+            moodnotes: mood.moodnotes,
             date: new Date(),
-            userId: userId
+            userId: user.response.id
         }
-        this.setState({ type: '', level: '', notes: '', user: '' });
-        this.postApi(newMood)
+        if(newMood){
+            dispatch(moodActions.addMood(newMood));
+        }
     }
-
-    postApi = async (newMood) => {
-        const response = await fetch('/api/moodtracker/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ mood: newMood })
-        });
-        const body = await response.text();
-        console.log("RESPONSE: " + body);
-    };
 
     render() {
         const radioStyle = {

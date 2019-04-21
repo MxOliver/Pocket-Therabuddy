@@ -1,10 +1,12 @@
 import { alert } from './alertReducer';
 import { authentication } from './authReducer';
+import { saveMood } from './moodReducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
     alert, 
-    authentication
+    authentication,
+    saveMood
 })
 
 export default rootReducer;
