@@ -3,7 +3,7 @@ const router = express.Router();
 
 const moodController = require("../controllers/moodController");
 
-router.post("/api/moodtracker/add", moodController.add);
+router.post(`/api/moodtracker/add`, moodController.add);
 
 router.get(`/api/moodtracker/:id/history`, moodController.fetchhistory);
 
