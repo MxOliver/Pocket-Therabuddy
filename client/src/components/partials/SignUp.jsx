@@ -14,6 +14,13 @@ import {
 } from "mdbreact";
 
 
+function mapStateToProps(state) {
+  return {
+    registration: state.registration
+  }
+}
+
+
 class ConnectedUserForm extends Component {
   constructor(props){
     super(props);
@@ -51,8 +58,7 @@ class ConnectedUserForm extends Component {
     this.setState({ submitted: true });
     const { user } = this.state;
     const { dispatch } = this.props;
-    console.log("USER " + user);
-    if(user.email && user.password){
+    if(user.email && user.password && user.name){
       dispatch(userActions.register(user));
     }
   }
@@ -69,7 +75,7 @@ class ConnectedUserForm extends Component {
                 <MDBCardBody>
                 <form className="signUpForm" onSubmit={this.handleSubmit}>
                     <p className="h4 text-center py-4">Sign up</p>
-                    <div className="grey-text">
+                    <div className={'form-group' + (submitted && !user.name ? ' has-error' : '')}>
                       <MDBInput
                         label="Your name"
                         group
@@ -131,13 +137,6 @@ class ConnectedUserForm extends Component {
           </MDBRow>
         </MDBContainer>
     );
-  }
-}
-
-
-function mapStateToProps(state) {
-  return {
-    registration: state.registration
   }
 }
 

@@ -1,16 +1,35 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
+import { connect } from 'react-redux';
+import { userActions } from '../actions/userActions';
 import { MDBJumbotron, MDBBtn, MDBContainer, MDBRow, MDBCol, MDBIcon, MDBCardBody, MDBCardTitle } from "mdbreact";
 
 
-class LandingPage extends Component {
+function mapStateToProps(state) {
+  const { authentication } = state;
+  const { user } = authentication;
+  return {
+      user
+  };
+}
+
+class ConnectedLandingPage extends Component {
     constructor(props){
         super();
 
+        this.handleLogOut = this.handleLogOut.bind(this);
+    }
 
+    handleLogOut(e){
+      e.preventDefault();
+      const { dispatch } = this.props;
+      dispatch(userActions.logout());
     }
 
     render() {
+
+      const { user } = this.props
+
       const pStyle = {
         color: 'teal lighten-3'
     } 
@@ -19,6 +38,37 @@ class LandingPage extends Component {
         color: 'red lighten-3',
         text: '#b71c1c'
     }
+
+      let buttonComponent = null;
+
+      if(user){
+        buttonComponent = (
+          <div className="pt-2">
+          <MDBBtn outline color="red lighten-3" onClick={this.handleLogOut}>
+          Log Out
+          </MDBBtn>
+          </div>
+        )
+      } else {
+        buttonComponent = (
+          <div className="pt-2">
+          <Link to="/sign_up">
+          <MDBBtn
+          style={buttonStyle}>
+          Sign Up <MDBIcon icon="user-circle" />
+          </MDBBtn>
+          </Link>
+          <Link to="/sign_in">
+          <MDBBtn
+          outline
+          color="red lighten-3"
+          >
+          Sign In <MDBIcon far icon="user-circle" />
+          </MDBBtn>
+          </Link>
+          </div>
+        ) 
+      }
 
         return (
               <MDBContainer className="mt-5 text-center">
@@ -32,24 +82,7 @@ class LandingPage extends Component {
                         <p className="my-4 font-weight-bold" style={pStyle}>
                         I'm here to help you keep track of your moods and daily habits, remind you of your favorite coping resources, and give you a spot to reframe your negative thoguhts.
                         </p>
-                        <div className="pt-2">
-                          <Link to="/sign_up">
-                          <MDBBtn
-                            style={buttonStyle}>
-                            Sign Up <MDBIcon icon="user-circle" />
-                          </MDBBtn>
-                          </Link>
-
-                          <Link to="/sign_in">
-                          <MDBBtn
-                            outline
-                            color="red lighten-3"
-                          >
-                            Sign In <MDBIcon far icon="user-circle" />
-                          </MDBBtn>
-                          </Link>
-                          
-                        </div>
+                        { buttonComponent }
                       </MDBCardBody>
                     </MDBJumbotron>
                   </MDBCol>
@@ -58,6 +91,8 @@ class LandingPage extends Component {
         )
     }
 }
+
+const LandingPage = connect(mapStateToProps)(ConnectedLandingPage);
 
 export default LandingPage;
 

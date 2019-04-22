@@ -6,6 +6,7 @@ export const userService = {
     register,
     getById,
     update,
+    getCurrent,
     delete: _delete
 };
 
@@ -24,6 +25,15 @@ async function login(user) {
 
 function logout() {
     localStorage.removeItem('user');
+}
+
+function getCurrent() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`/api/user`, requestOptions).then(handleResponse);
 }
 
 async function getById(id) {
