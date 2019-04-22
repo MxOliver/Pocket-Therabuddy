@@ -33,7 +33,9 @@ function getCurrent() {
         headers: authHeader()
     };
 
-    return fetch(`/api/user`, requestOptions).then(handleResponse);
+    const response = await fetch(`/api/user`, requestOptions);
+    const res = response.text();
+    console.log(res);
 }
 
 async function getById(id) {

@@ -23,7 +23,8 @@ async function getHistory(user) {
     };
 
     const response = await fetch(`/api/moodtracker/${user.id}/history`, requestOptions);
-    return handleResponse(response);
+    const res = response.text();
+    console.log(res);
 }
 
 async function handleResponse(response) {
