@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HistoryNav from '../partials/HistoryNav';
+import { moodActions } from '../../actions/moodActions';
+import { userActions } from '../../actions/userActions';
+import { MDBBtn, MDBContainer, MDBRow } from 'mdbreact';
 
 function mapStateToProps(state){
+    const { saveMood, authentication } = state;
+    const { user } = authentication;
+    const { moods } = saveMood; 
     return {
-        mood: state.mood
+        moods,
+        user
     }
 }
 
@@ -16,33 +23,45 @@ class ConnectedMoodHistory extends Component {
             data: {},
             dataLoaded: false,
         }
+
+        this.fetchHistory = this.fetchHistory.bind(this);
         
     }
 
     componentDidMount() {
-        this.callApi().then(res => this.setState({ data: res.data, dataLoaded: true }))
-        .catch(err => console.log(err));
+        const { dispatch } = this.props;
+        dispatch(userActions.getCurrentUser());
     }
 
-    callApi = async () => {
-        const data = await fetch('/api/moodtracker/history');
-        const body = await data.json();
-
-        if(data.status !== 200) throw Error(body.message);
-
-        return body;
+    fetchHistory(){
+        const { dispatch, user } = this.props;
+        dispatch(moodActions.getMoodHistory(user.response));
+        this.setState({ dataLoaded: true });
     }
 
     render() {
+        const { moods } = this.props;
+        const { dataLoaded } = this.state;
+
+
         const navStyle = {
             marginBottom: '35px'
+        }
+
+        const containerStyle = {
+            outline: 'dashed, 1px'
         }
 
         return (
             <div className="content">
             <HistoryNav style={navStyle} />
             <div className="container">
+            <MDBBtn outline color='red lighten-3' onClick={this.fetchHistory}>
+            Fetch History
+            </MDBBtn>
+           <MDBContainer style={containerStyle}>
             
+            </MDBContainer>
             </div>
             </div>
         )
