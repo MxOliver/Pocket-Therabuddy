@@ -7,6 +7,7 @@ export const userActions = {
     login,
     logout,
     register,
+    getCurrentUser,
     delete: _delete
 };
 
@@ -32,6 +33,21 @@ function login(email, password){
 function logout() {
     userService.logout();
     return { type: userConstants.LOGOUT };
+}
+
+function getCurrentUser() {
+    return dispatch => {
+        dispatch(request());
+
+        userService.getCurrent().then(
+            user => dispatch(success(user)),
+            error => dispatch(failure(error.toString()))
+        );
+    };
+
+    function request() { return { type: userConstants.GETCURRENT_REQUEST }};
+    function success(user) { return { type: userConstants.GETCURRENT_SUCCESS, user }};
+    function failure(error) { return { type: userConstants.GETCURRENT_FAILURE, error }};
 }
 
 function register(user) {

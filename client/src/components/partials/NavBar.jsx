@@ -18,6 +18,9 @@ class NavBar extends Component {
             <MDBNavItem active>
               <MDBNavLink to="/" className="black-text">Home</MDBNavLink>
             </MDBNavItem>
+            <MDBNavItem active>
+              <MDBNavLink to="/dashboard" className="black-text">Dashboard</MDBNavLink>
+            </MDBNavItem>
             <MDBNavItem>
               <MDBNavLink to="/moodtracker" className="black-text">MoodTracker</MDBNavLink>
             </MDBNavItem>
