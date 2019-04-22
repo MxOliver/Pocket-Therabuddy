@@ -27,7 +27,7 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-function getCurrent() {
+async function getCurrent() {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
