@@ -5,6 +5,6 @@ const moodController = require("../controllers/moodController");
 
 router.post("/api/moodtracker/add", moodController.add);
 
-router.get("/api/moodtracker/history", moodController.fetchhistory);
+router.get(`/api/moodtracker/:id/history`, moodController.fetchhistory);
 
 module.exports = router;

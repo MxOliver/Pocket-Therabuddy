@@ -8,9 +8,9 @@ module.exports = {
             callback(err);
         });
     },
-    getHistory(user, callback){
+    getHistory(id, callback){
 
-        Mood.findAll({where: {userId: user.id}, raw: true}).then((moods) => {
+        Mood.findAll({where: {userId: id}, raw: true}).then((moods) => {
             callback(null, moods);
         }).catch((err) => {
             callback(err);

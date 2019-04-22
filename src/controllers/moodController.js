@@ -16,7 +16,8 @@ module.exports = {
         });
     },
     fetchhistory(req, res, next){
-        moodQueries.getHistory(req.user, (err, moods) => {
+        console.log(req.params.id);
+        moodQueries.getHistory(req.params.id, (err, moods) => {
 
             if(err){
                 console.log(err);

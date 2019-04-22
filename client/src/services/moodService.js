@@ -1,6 +1,8 @@
+import { authHeader } from '../helpers/authHeader';
 
 export const moodService = {
-    add
+    add,
+    getHistory
 }
 
 async function add(mood) {
@@ -11,6 +13,16 @@ async function add(mood) {
     };
 
     const response = await fetch(`/api/moodtracker/add`, requestOptions);
+    return handleResponse(response);
+}
+
+async function getHistory(user) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    const response = await fetch(`/api/moodtracker/${user.id}/history`, requestOptions);
     return handleResponse(response);
 }
 

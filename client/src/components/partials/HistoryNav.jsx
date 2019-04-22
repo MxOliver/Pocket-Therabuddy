@@ -7,11 +7,6 @@ class MoodNav extends Component {
 
 
     }
-    
-    componentDidMount(){
-        MDBNavLink.defaultProps.disableTouchRipple = true;
-        MDBNavLink.defaultProps.disableFocusRipple = true;
-    }
 
     render() {
         const textStyle = {
