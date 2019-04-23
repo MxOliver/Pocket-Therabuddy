@@ -35,7 +35,7 @@ async function getCurrent() {
 
     const response = await fetch(`/api/user`, requestOptions);
     const res = response.text();
-    console.log(res);
+    return res;
 }
 
 async function getById(id) {

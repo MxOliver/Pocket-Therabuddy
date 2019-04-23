@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { MDBInput, MDBContainer, MDBRow, MDBBtn } from "mdbreact";
 import HistoryNav from '../partials/HistoryNav';
 import { moodActions } from '../../actions/moodActions';
+import { userActions } from '../../actions/userActions';
 
 function mapStateToProps(state) {
     const { saveMood, authentication } = state;

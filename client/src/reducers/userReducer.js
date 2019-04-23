@@ -1,6 +1,6 @@
 import { userConstants } from '../constants/userConstants';
 
-exoport function users(state = {}, action) {
+export function users(state = {}, action) {
     switch(action.type) {
         case userConstants.GETCURRENT_REQUEST:
             return {

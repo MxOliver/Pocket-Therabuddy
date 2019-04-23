@@ -14,18 +14,18 @@ module.exports = {
             password: hashedPassword
         }).then((user) => {
             callback(null, user);
-        }).catch((err) => {
-            callback(err);
+        }).catch((error) => {
+            callback(error);
         })
     },
     authenticate(checkUser, callback){
         let email = checkUser.email;
         let password = checkUser.password;
         User.findOne({ where: { email }}).then((user) => {
-            if(!user || !authHelper.comparePass(password, user.password)) {
-                callback(err);
-            } else {
+            if(user || authHelper.comparePass(password, user.password)) {
                 callback(null, user);
+            } else {
+                callback(err);
             }
         });
     }

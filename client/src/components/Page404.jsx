@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { MDBContainer, MDBRow } from 'mdbreact';
 
 class Page404 extends Component {
-    constructor(props){
-        super(props);
-
-    }
 
     render() {
         return (

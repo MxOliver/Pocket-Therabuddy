@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MDBContainer, MDBRow } from 'mdbreact';
-import { userActions } from '../actions/userActions';
 
+
+function mapStateToProps(state) {
+    const { user } = state.authentication;
+    return {
+        user
+    };
+}
 
 class ConnectedDashboard extends Component {
     constructor(props){
         super();
         
-    }
-
-    componentDidMount() {
-        this.props.dispatch(userActions.getCurrentUser());
     }
 
     render() {
@@ -24,14 +26,6 @@ class ConnectedDashboard extends Component {
             </MDBContainer>
         )
     }
-}
-
-function mapStateToProps(state) {
-    const { authentication } = state;
-    const { user } = authentication;
-    return {
-        user
-    };
 }
 
 const Dashboard = connect(mapStateToProps)(ConnectedDashboard);
