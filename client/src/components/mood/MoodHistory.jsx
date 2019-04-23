@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HistoryNav from '../partials/HistoryNav';
 import { moodActions } from '../../actions/moodActions';
-import { userActions } from '../../actions/userActions';
 import { MDBBtn, MDBContainer } from 'mdbreact';
 
 function mapStateToProps(state){
@@ -20,27 +19,25 @@ class ConnectedMoodHistory extends Component {
         super();
 
         this.state = {
-            data: {},
-            dataLoaded: false,
+            data: {}
         }
 
-        this.fetchHistory = this.fetchHistory.bind(this);
+        this.drawChart = this.drawChart.bind(this);
         
     }
 
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(userActions.getCurrentUser());
-    }
-
-    fetchHistory(){
         const { dispatch, user } = this.props;
         dispatch(moodActions.getMoodHistory(user.response));
-        this.setState({ dataLoaded: true });
+        this.drawChart();
+    }
+
+    drawChart() {
+        const { moods } = this.props;
+        
     }
 
     render() {
-
 
         const navStyle = {
             marginBottom: '35px'
@@ -54,11 +51,11 @@ class ConnectedMoodHistory extends Component {
             <div className="content">
             <HistoryNav style={navStyle} />
             <div className="container">
-            <MDBBtn outline color='red lighten-3' onClick={this.fetchHistory}>
+            <MDBBtn outline color='red lighten-3' onClick={this.drawChart()}>
             Fetch History
             </MDBBtn>
            <MDBContainer style={containerStyle}>
-            
+
             </MDBContainer>
             </div>
             </div>
