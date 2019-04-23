@@ -19,25 +19,54 @@ class ConnectedMoodHistory extends Component {
         super();
 
         this.state = {
-            data: {}
+            moods: '',
+            data: {
+                type: '',
+                level: '',
+                date: ''
+            }
         }
 
         this.drawChart = this.drawChart.bind(this);
-        
+        this.formatData = this.formatData.bind(this);
+        this.getData = this.getData.bind(this);
     }
 
     componentDidMount() {
         const { dispatch, user } = this.props;
         dispatch(moodActions.getMoodHistory(user.response));
-        this.drawChart();
+    }
+
+    componentDidUpdate(props, state){
+        if(props.moods !== state.moods){
+            return {
+                moods: props.moods,
+            };
+        }
+       return null;
+    }
+
+    getData(){
+    const { moods } = this.props;
+    for(var i = 0; i < moods.length; i++){
+        const obj = moods[i];
+        console.log(obj.moodselect);
+    }
+    }
+
+    formatData() {
+        const { data } = this.state;
+        const values = Object.values(data);
+        console.log(values);
     }
 
     drawChart() {
-        const { moods } = this.props;
+        
         
     }
 
     render() {
+
 
         const navStyle = {
             marginBottom: '35px'
@@ -51,7 +80,7 @@ class ConnectedMoodHistory extends Component {
             <div className="content">
             <HistoryNav style={navStyle} />
             <div className="container">
-            <MDBBtn outline color='red lighten-3' onClick={this.drawChart()}>
+            <MDBBtn outline color='red lighten-3' onClick={this.getData}>
             Fetch History
             </MDBBtn>
            <MDBContainer style={containerStyle}>

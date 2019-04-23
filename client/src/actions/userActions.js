@@ -57,7 +57,7 @@ function register(user) {
         userService.register(user).then(
             user => {
                 dispatch(success());
-                history.push('/dashboard');
+                history.push('/sign_in');
                 dispatch(alertActions.success('Account creation successful'));
             }, 
             error => {

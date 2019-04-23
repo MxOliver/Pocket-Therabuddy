@@ -20,7 +20,7 @@ export function saveMood(state = {}, action){
             };
         case moodConstants.MOODHISTORY_SUCCESS:
             return {
-                items: action.moods
+                moods: action.moods
             };
         case moodConstants.MOODHISTORY_FAILURE:
             return {
