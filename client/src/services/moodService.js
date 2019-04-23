@@ -12,7 +12,7 @@ async function add(mood) {
         body: JSON.stringify({ mood: mood })
     };
 
-    const response = await fetch(`/api/moodtracker/add`, requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/moodtracker/add`, requestOptions);
     const currentMood = await handleResponse(response);
     return currentMood;
 }
@@ -23,7 +23,7 @@ async function getHistory(user) {
         headers: authHeader()
     };
 
-    const response = await fetch(`/api/moodtracker/${user.id}/history`, requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/moodtracker/${user.id}/history`, requestOptions);
     const res = response.text();
     return res;
 }

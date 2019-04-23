@@ -17,9 +17,9 @@
   },
   "proxy": "http://localhost:3001",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-scripts start .env.development",
+    "build": "react-scripts build .env.production .env.development",
+    "test": "react-scripts test .env.development",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

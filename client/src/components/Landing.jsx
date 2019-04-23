@@ -26,6 +26,10 @@ class ConnectedLandingPage extends Component {
       dispatch(userActions.logout());
     }
 
+    componentDidMount(){
+      console.log(process.env.REACT_APP_API_URL)
+    }
+
     render() {
 
       const { user } = this.props
