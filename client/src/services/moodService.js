@@ -13,7 +13,8 @@ async function add(mood) {
     };
 
     const response = await fetch(`/api/moodtracker/add`, requestOptions);
-    return handleResponse(response);
+    const currentMood = await handleResponse(response);
+    return currentMood;
 }
 
 async function getHistory(user) {
@@ -24,7 +25,7 @@ async function getHistory(user) {
 
     const response = await fetch(`/api/moodtracker/${user.id}/history`, requestOptions);
     const res = response.text();
-    console.log(res);
+    return res;
 }
 
 async function handleResponse(response) {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import HistoryNav from '../partials/HistoryNav';
 import { moodActions } from '../../actions/moodActions';
 import { userActions } from '../../actions/userActions';
-import { MDBBtn, MDBContainer, MDBRow } from 'mdbreact';
+import { MDBBtn, MDBContainer } from 'mdbreact';
 
 function mapStateToProps(state){
     const { saveMood, authentication } = state;
@@ -40,8 +40,6 @@ class ConnectedMoodHistory extends Component {
     }
 
     render() {
-        const { moods } = this.props;
-        const { dataLoaded } = this.state;
 
 
         const navStyle = {
