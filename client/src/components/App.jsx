@@ -8,6 +8,7 @@ import MoodJumbotron from './mood/Jumbotron';
 import SignInForm from './partials/SignIn';
 import SignUpForm from './partials/SignUp';
 import { connect } from 'react-redux';
+import Page404 from './Page404';
 import { history } from '../helpers/history';
 import { alertActions } from '../actions/alertActions';
 import { Router, Switch, Route } from 'react-router-dom';
@@ -40,6 +41,7 @@ class connectedApp extends Component {
                     <Route exact path="/sign_up" component={SignUpForm}/>
                     <Route path="/moodtracker/add" component={AddMood} />
                     <Route path="/moodtracker/history" component={MoodHistory} />
+                    <Route component={Page404} />
                 </Switch>
             </main>
             </div>

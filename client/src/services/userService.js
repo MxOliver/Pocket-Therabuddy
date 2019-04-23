@@ -17,7 +17,7 @@ async function login(user) {
         body: JSON.stringify({ user: user })
     };
 
-    const response = await fetch('/api/sign_in', requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sign_in`, requestOptions);
     const currentUser = await handleResponse(response);
     localStorage.setItem('user', JSON.stringify(currentUser));
     return currentUser;
@@ -33,7 +33,7 @@ async function getCurrent() {
         headers: authHeader()
     };
 
-    const response = await fetch(`/api/user`, requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user`, requestOptions);
     const res = response.text();
     return res;
 }
@@ -44,7 +44,7 @@ async function getById(id) {
         headers: authHeader()
     };
 
-    const response = await fetch(`/api/users/${id}`, requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${id}`, requestOptions);
     return handleResponse(response);
 }
 
@@ -55,7 +55,7 @@ async function register(user) {
         body: JSON.stringify({ user: user })
     };
 
-    const response = await fetch(`/api/sign_up`, requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/sign_up`, requestOptions);
     const res = response.text();
     console.log(res);
 }
@@ -67,7 +67,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`/api/users/${user.id}`, requestOptions).then(handleResponse);;
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/${user.id}`, requestOptions).then(handleResponse);;
 }
 
 async function _delete(id) {
@@ -76,7 +76,7 @@ async function _delete(id) {
         headers: authHeader()
     };
 
-    const response = await fetch(`/api/users/${id}`, requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/${id}`, requestOptions);
     return handleResponse(response);
 }
 
