@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "fetch-mock": "^7.3.3",
     "history": "^4.9.0",
     "mdbreact": "^4.13.0",
     "nivo": "^0.31.0",
@@ -31,8 +35,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "http-proxy-middleware": "^0.19.1"
-  }
+  ]
 }
