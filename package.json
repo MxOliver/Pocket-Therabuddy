@@ -13,7 +13,7 @@
     "server": "nodemon src/server.js --ignore './client'",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "concurrently \"npm run server\" \"npm run client\" && export NODE_ENV=test && jasmine",
+    "test": "export NODE_ENV=test && jasmine",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "repository": {

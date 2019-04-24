@@ -1,5 +1,6 @@
 import { moodConstants } from '../constants/moodConstants';
 
+
 export function saveMood(state = {}, action){
     switch(action.type){
         case moodConstants.ADD_MOOD:
@@ -16,11 +17,13 @@ export function saveMood(state = {}, action){
             return {};
         case moodConstants.MOODHISTORY_REQUEST:
             return {
-                loading: true
+                fetching: true,
+                moods: action.moods
             };
         case moodConstants.MOODHISTORY_SUCCESS:
             return {
-                moods: action.moods.data
+                fetched: true,
+                moods: action.moods
             };
         case moodConstants.MOODHISTORY_FAILURE:
             return {

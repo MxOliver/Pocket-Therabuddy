@@ -15,24 +15,11 @@ describe("user : routes", () => {
                 password: "cardigansRlyfe"
             }).then((user) => {
                 this.user = user;
-
-                request.get({
-                    url: `${mockAuth}`,
-                    form: {
-                        name: this.user.name,
-                        userId: this.user.id,
-                        email: this.user.email
-                    }
-                }, (err, res, body) => {
-                    done();
-                }).catch((err) => {
-                    console.log(err);
-                    done();
-                });
+                done();
             }).catch((err) => {
                 console.log(err);
                 done();
-            })
+            });
         });
     });
 

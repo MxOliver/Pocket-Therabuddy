@@ -40,7 +40,7 @@ describe('routes : mood', () => {
     describe('POST /api/moodtracker/add', () => {
 
         it("should create a new mood instance and return success", (done) => {
-            request.post(`${base}moodtracker/add`, (err, res, body) => {
+            request.post(`${base}add`, (err, res, body) => {
                 expect(res.statusCode).toBe(200);
                 done();
             });
