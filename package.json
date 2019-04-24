@@ -13,7 +13,7 @@
     "server": "nodemon src/server.js --ignore './client'",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "export NODE_ENV=test&& jasmine",
+    "test": "concurrently \"npm run server\" \"npm run client\" && export NODE_ENV=test && jasmine",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
@@ -34,6 +34,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "d3": "^5.9.2",
@@ -42,8 +43,9 @@
     "express": "^4.16.4",
     "express-flash": "0.0.2",
     "express-session": "^1.15.6",
+    "fetch-mock": "^7.3.3",
     "heroku": "^7.22.9",
-    "http-proxy-middleware": "^0.19.1",
+    "mocha": "^6.1.4",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.11",
     "passport": "^0.4.0",
@@ -51,6 +53,7 @@
     "pg": "^7.9.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^5.3.0",
-    "sequelize-cli": "^5.4.0"
+    "sequelize-cli": "^5.4.0",
+    "sinon": "^7.3.2"
   }
 }
