@@ -1,11 +1,24 @@
-import { dataConstants } from '../constants/dataConstants';
+import { moodConstants } from '../constants/moodConstants';
 
+let moods = JSON.parse(localStorage.getItem('moods'));
 
-export function addData(state = {}, action){
+const initialSate = moods ? { fetched: true, moods } : {};
+
+export function fetchMoods(state = initialSate, action){
     switch(action.type){
-        case dataConstants.ADD_MOOD_HISTORY:
+        case moodConstants.MOODHISTORY_REQUEST:
             return {
-                data: action.payload
+                fetching: true,
+                moods: action.moods
+            };
+        case moodConstants.MOODHISTORY_SUCCESS:
+            return {
+                fetched: true,
+                moods: action.moods
+            };
+        case moodConstants.MOODHISTORY_FAILURE:
+            return {
+                error: action.error
             };
         default:
             return state;
