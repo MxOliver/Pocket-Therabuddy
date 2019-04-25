@@ -12,7 +12,7 @@
     "start": "node src/server.js",
     "server": "nodemon src/server.js --ignore './client'",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\" ",
     "test": "export NODE_ENV=test && jasmine",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
@@ -32,6 +32,7 @@
     "request": "^2.88.0"
   },
   "dependencies": {
+    "@nivo/line": "^0.56.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",

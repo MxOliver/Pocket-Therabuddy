@@ -27,6 +27,7 @@ async function getHistory(user) {
     const res = response.text();
     localStorage.setItem('moods', JSON.stringify(res));
     return res;
+    
 }
 
 async function handleResponse(response) {

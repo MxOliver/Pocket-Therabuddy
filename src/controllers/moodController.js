@@ -23,7 +23,7 @@ module.exports = {
                 console.log(err);
                 res.send({ response: err });
             } else {
-                res.send({ data: moods });
+                res.send({ moods });
             }
         })
     }

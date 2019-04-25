@@ -72,7 +72,7 @@ describe('routes : mood', () => {
     
         it("should query the mood history for the user and return them", (done) => {
             request.get(`${base}${this.user.id}/history`, (err, res, body) => {
-                expect(res.statusCode).toBe(200);
+                expect(res.statusCode).toBe(304);
                 done();
             });
         });
