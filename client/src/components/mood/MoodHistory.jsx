@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HistoryNav from '../partials/HistoryNav';
 import { moodActions } from '../../actions/moodActions';
-import { MDBBtn, MDBContainer, MDBJumbotron, MDBCardBody, MDBCardHeader } from 'mdbreact';
-import { VictoryLine, VictoryChart, VictoryTheme } from 'victory';
-
+import { MDBBtn, MDBContainer } from 'mdbreact';
+import { ResponsiveLine } from '@nivo/line';
 
 function mapStateToProps(state){
     const { fetchMoods, authentication } = state;
@@ -59,50 +58,59 @@ class ConnectedMoodHistory extends Component {
         Object.values(data[i]).forEach(e => {
             if(e['moodselect'] === "happy"){
                 happy.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel']}
                 )
             }
             if(e['moodselect'] === "sad"){
                 sad.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
                 )
             }
             if(e['moodselect'] === "active"){
                 active.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
                 )
             }
             if(e['moodselect'] === "anxious"){
                 anxious.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
                 )
             }
             if(e['moodselect'] === "angry"){
                 angry.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
                 )
             }
             if(e['moodselect'] === "fine"){
                 fine.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
                 )
             }
             if(e['moodselect'] === "tired"){
                 tired.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
                 )
             }
         })
     };
-
-    this.setState({ happy: happy, sad: sad, angry: angry, anxious: anxious, tired: tired, fine: fine, active: active, loaded: true })
+    let dataPoints = [];
+    dataPoints.push(
+        {id: 'happy', data: happy }, 
+        {id: 'sad', data: sad }, 
+        {id: 'angry', data: angry}, 
+        {id: 'anxious', data: anxious}, 
+        {id: 'tired', data: tired}, 
+        {id: 'fine', data: fine}, 
+        {id: 'active', data: active});
+    this.setState({ dataPoints: dataPoints, loaded: true })
     }
 
 
     render() {
-        const { happy, sad, tired, anxious, angry, active, fine, loaded } = this.state;
+        const { dataPoints, loaded } = this.state;
         const { fetched } = this.props;
         let moodChart = null;
+        console.log(dataPoints);
         if(loaded === false){
             if(fetched === false){
                 moodChart = (
@@ -114,138 +122,82 @@ class ConnectedMoodHistory extends Component {
                 )
             }
         } else {
-            console.log(happy);
-            console.log(active);
-            console.log(sad);
-            console.log(fine);
             moodChart = (
                 <div className="charts">
-                <MDBContainer>
-                            <MDBJumbotron style={{ padding: '5px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Happy, Joyful, Relaxed, Silly, Content</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
+                <MDBContainer style={{ padding: '5px', height: '600px', width: '700px' }}>
+                                <ResponsiveLine 
+                                    data={dataPoints}
+                                    margin={{
+                                        "top": 50,
+                                        "right": 110,
+                                        "bottom": 50,
+                                        "left": 60
+                                    }}
+                                    xScale={{
+                                        'type': 'point',
+                                        
+                                    }}
+                                    yScale={{
+                                        'type': 'linear',
+                                        'stacked': true,
+                                        'min': 0,
+                                        'max': 100
+                                    }}
+                                    curve='cardinal'
+                                    axisBottom={{
+                                        'orient': 'bottom',
+                                        'legend': 'Date',
+                                        'legendPosition': 'middle'
+                                    }}
+                                    axisLeft={{
+                                        'orient': 'left',
+                                        'legend': 'Intensity',
+                                        'legendPosition': 'middle'
+                                    }}
+                                    colors={{
+                                        'scheme': 'nivo'
+                                    }}
+                                    lineWidth={4}
+                                    dotSize={10}
+                                    dotColor={{
+                                        'theme': 'background'
+                                    }}
+                                    dotBorderWidth={2}
+                                    dotBorderColor={{
+                                        'from': 'color'
+                                    }}
+                                    enableDotLabel={true}
+                                    dotLabel='y'
+                                    dotLabelYOffset={-12}
+                                    animate={true}
+                                    legends={[
+                                        {
+                                            "anchor": "bottom-right",
+                                            "direction": "column",
+                                            "justify": false,
+                                            "translateX": 100,
+                                            "translateY": 0,
+                                            "itemsSpacing": 0,
+                                            "itemDirection": "left-to-right",
+                                            "itemWidth": 80,
+                                            "itemHeight": 20,
+                                            "itemOpacity": 0.75,
+                                            "symbolSize": 12,
+                                            "symbolShape": "circle",
+                                            "symbolBorderColor": "rgba(0, 0, 0, .5)",
+                                            "effects": [
+                                                {
+                                                    "on": "hover",
+                                                    "style": {
+                                                        "itemBackground": "rgba(0, 0, 0, .03)",
+                                                        "itemOpacity": 1
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]}
                                     >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#80cbc4", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={happy} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-
-                        <MDBJumbotron style={{ padding: '5px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Sad, Lonely, Depressed, Insecure, Numb</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#ef9a9a", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={sad} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                       
-                        <MDBJumbotron style={{ padding: '5px' }}>
-                        <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Energetic, Motivated, Active, Productive</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#4f9a94", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={active} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                       
-                            <MDBJumbotron style={{ padding: '5px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Tired, Sick, Unmotivated, Bored</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#80cbc4", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={tired} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                       
-                        <MDBJumbotron style={{ padding: '5px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Uneventful, Fine</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#ba6b6c", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={fine} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                        
-                        <MDBJumbotron style={{ padding: '5px' }}>
-                        <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Anxious, Worried, Nervous, Restless</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#b71c1c", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={anxious} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                       
-                        <MDBJumbotron style={{ padding: '15px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Angry, Frustrated, Annoyed, Grumpy, Irritated</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#4f9a94", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={angry} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
+                                </ResponsiveLine>
                        
                     </MDBContainer>
                 </div>
