@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import HistoryNav from '../partials/HistoryNav';
 import { moodActions } from '../../actions/moodActions';
 import { MDBBtn, MDBContainer } from 'mdbreact';
-import { ResponsiveLine } from '@nivo/line';
+import * as d3 from 'd3';
+import moment from 'moment';
 
 function mapStateToProps(state){
     const { fetchMoods, authentication } = state;
@@ -21,14 +22,6 @@ class ConnectedMoodHistory extends Component {
         super();
 
         this.state = {
-            dataPoints: [],
-            happy: [],
-            sad: [],
-            angry: [],
-            active: [],
-            fine: [],
-            tired: [],
-            anxious: [],
             loaded: false
         }
 
@@ -47,72 +40,122 @@ class ConnectedMoodHistory extends Component {
     Object.keys(temp).forEach((e) => (
         data.push(temp[e])
     ));
-    let happy = [];
-    let sad = [];
-    let anxious = [];
-    let angry = [];
-    let active = [];
-    let tired = [];
-    let fine = [];
+    let dataSet = [];
+
     for(let i = 0; i < data.length; i++){
         Object.values(data[i]).forEach(e => {
             if(e['moodselect'] === "happy"){
-                happy.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel']}
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'happy'}
                 )
             }
             if(e['moodselect'] === "sad"){
-                sad.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'sad' }
                 )
             }
             if(e['moodselect'] === "active"){
-                active.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'active' }
                 )
             }
             if(e['moodselect'] === "anxious"){
-                anxious.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'anxious' }
                 )
             }
             if(e['moodselect'] === "angry"){
-                angry.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'angry' }
                 )
             }
             if(e['moodselect'] === "fine"){
-                fine.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'fine' }
                 )
             }
             if(e['moodselect'] === "tired"){
-                tired.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toTimeString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'tired' }
                 )
             }
-        })
-    };
-    let dataPoints = [];
-    dataPoints.push(
-        {id: 'happy', data: happy }, 
-        {id: 'sad', data: sad }, 
-        {id: 'angry', data: angry}, 
-        {id: 'anxious', data: anxious}, 
-        {id: 'tired', data: tired}, 
-        {id: 'fine', data: fine}, 
-        {id: 'active', data: active});
-    this.setState({ dataPoints: dataPoints, loaded: true })
+        });
+    }
+
+    var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+    var formatDate = d3.timeFormat('%a %b %d %Y');
+
+    let dataPoints = dataSet.map(function(d) {
+        console.log(d.date)
+            return {
+                date: formatDate(d.date),
+                level: +d.level,
+                mood: d.mood
+            };
+    });
+
+    console.log(dataPoints); 
+
+    const maxDate = moment()
+    const minDate = moment().subtract(2, 'week');
+
+    let xScale = d3.scaleTime().domain([minDate, maxDate]).range([margin.left, width - margin.right]);
+    let yScale = d3.scaleLinear().domain([0, 100]).range([height - margin.bottom, margin.top]);
+
+    let line = d3.line()
+        .x(function(d) { return xScale(d.date)})
+        .y(function (d) { return yScale(d.level)})
+        .curve(d3.curveMonotoneX)
+
+    var svg = d3.select('#moodChart').append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    var dataNest = d3.nest().key(function(d) { return d.mood; }).entries(dataPoints) 
+        
+    let color = d3.scaleOrdinal(d3.schemePaired);
+
+    let legendSpace = height / dataNest.length;
+
+    dataNest.forEach(function(d, i){
+        svg.append('path')
+            .attr('class', 'line')
+            .style('stroke', function() {
+                return d.color = color(d.key);
+            })
+            .attr('d', line(d.values))
+
+        svg.append('text')
+            .attr('y', (legendSpace/5)+ i * legendSpace)
+            .attr('x', width - (margin.right / 3))
+            .attr('class', 'legend')
+            .style('fill', function() {
+                return d.color = color(d.key);
+            })
+            .text(d.key)
+    });
+
+    svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
+        .call(d3.axisBottom(xScale).ticks(7));
+
+    svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
+
+    this.setState({ loaded: true })
     }
 
 
     render() {
-        const { dataPoints, loaded } = this.state;
-        const { fetched } = this.props;
+        const { loaded } = this.state;
+        const { fetched, dateFetched } = this.props;
         let moodChart = null;
-        console.log(dataPoints);
+
         if(loaded === false){
-            if(fetched === false){
+            if(fetched === false || dateFetched === false){
                 moodChart = (
                     <em>Data is loading...</em>
                 )
@@ -124,82 +167,7 @@ class ConnectedMoodHistory extends Component {
         } else {
             moodChart = (
                 <div className="charts">
-                <MDBContainer style={{ padding: '5px', height: '600px', width: '700px' }}>
-                                <ResponsiveLine 
-                                    data={dataPoints}
-                                    margin={{
-                                        "top": 50,
-                                        "right": 110,
-                                        "bottom": 50,
-                                        "left": 60
-                                    }}
-                                    xScale={{
-                                        'type': 'point',
-                                        
-                                    }}
-                                    yScale={{
-                                        'type': 'linear',
-                                        'stacked': true,
-                                        'min': 0,
-                                        'max': 100
-                                    }}
-                                    curve='cardinal'
-                                    axisBottom={{
-                                        'orient': 'bottom',
-                                        'legend': 'Date',
-                                        'legendPosition': 'middle'
-                                    }}
-                                    axisLeft={{
-                                        'orient': 'left',
-                                        'legend': 'Intensity',
-                                        'legendPosition': 'middle'
-                                    }}
-                                    colors={{
-                                        'scheme': 'nivo'
-                                    }}
-                                    lineWidth={4}
-                                    dotSize={10}
-                                    dotColor={{
-                                        'theme': 'background'
-                                    }}
-                                    dotBorderWidth={2}
-                                    dotBorderColor={{
-                                        'from': 'color'
-                                    }}
-                                    enableDotLabel={true}
-                                    dotLabel='y'
-                                    dotLabelYOffset={-12}
-                                    animate={true}
-                                    legends={[
-                                        {
-                                            "anchor": "bottom-right",
-                                            "direction": "column",
-                                            "justify": false,
-                                            "translateX": 100,
-                                            "translateY": 0,
-                                            "itemsSpacing": 0,
-                                            "itemDirection": "left-to-right",
-                                            "itemWidth": 80,
-                                            "itemHeight": 20,
-                                            "itemOpacity": 0.75,
-                                            "symbolSize": 12,
-                                            "symbolShape": "circle",
-                                            "symbolBorderColor": "rgba(0, 0, 0, .5)",
-                                            "effects": [
-                                                {
-                                                    "on": "hover",
-                                                    "style": {
-                                                        "itemBackground": "rgba(0, 0, 0, .03)",
-                                                        "itemOpacity": 1
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    ]}
-                                    >
-                                </ResponsiveLine>
-                       
-                    </MDBContainer>
+                    <div id="moodChart" />
                 </div>
             )
         }

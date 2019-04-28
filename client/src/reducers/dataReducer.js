@@ -20,6 +20,20 @@ export function fetchMoods(state = initialSate, action){
             return {
                 error: action.error
             };
+        case moodConstants.DATE_REQUEST:
+            return {
+                dateFetching: true,
+                date: action.date
+            };
+        case moodConstants.DATE_SUCCESS:
+            return {
+                dateFetched: true,
+                date: action.date
+            }
+        case moodConstants.DATE_FAILURE:
+            return {
+                error: action.error
+            };
         default:
             return state;
     }

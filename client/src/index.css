@@ -43,3 +43,23 @@ code {
 /* P - #80cbc4 P-light-  #b2fef7  P-dark- #4f9a94 */
 /* S- #ef9a9a S-light- #ffcccb S-dark- #ba6b6c */
 /* red- #b71c1c */
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.legend {
+  font-size: 14px;
+  font-weight: bold;
+  text-anchor: end;
+}
+
+path {
+  stroke: black;
+  stroke-width: 1;
+  fill: none;
+}

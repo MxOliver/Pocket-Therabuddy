@@ -16,4 +16,12 @@ module.exports = {
             callback(err);
         })
     },
+    getDateRange(id, callback){
+        
+        Mood.findAll({where: {userId: id}, attributes: ['createdAt'], limit: 1, order: [ ['createdAt', 'ASC']], raw: true}).then((date) => {
+            callback(null, date);
+        }).catch((err) => {
+            callback(err);
+        })
+    }
 }

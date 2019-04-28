@@ -18,13 +18,22 @@ module.exports = {
     fetchhistory(req, res, next){
         console.log(req.params.id);
         moodQueries.getHistory(req.params.id, (err, moods) => {
-
+                if(err){
+                    console.log(err);
+                    res.send({ response: err });
+                } else {
+                    res.send({ moods });
+                }
+            })
+    },
+    dateRange(req, res, next){
+        moodQueries.getDateRange(req.params.id, (err, date) => {
             if(err){
-                console.log(err);
                 res.send({ response: err });
             } else {
-                res.send({ moods });
+                console.log("DATE " + date);
+                res.send({ date });
             }
-        })
+        });
     }
 }
