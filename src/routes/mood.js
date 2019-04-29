@@ -7,4 +7,6 @@ router.post(`/api/moodtracker/add`, moodController.add);
 
 router.get(`/api/moodtracker/:id/history`, moodController.fetchhistory);
 
+router.get(`/api/moodtracker/:id/historyDate`, moodController.dateRange);
+
 module.exports = router;

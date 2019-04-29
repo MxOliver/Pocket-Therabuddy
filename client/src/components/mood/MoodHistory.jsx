@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HistoryNav from '../partials/HistoryNav';
 import { moodActions } from '../../actions/moodActions';
-import { MDBBtn, MDBContainer, MDBJumbotron, MDBCardBody, MDBCardHeader } from 'mdbreact';
-import { VictoryLine, VictoryChart, VictoryTheme } from 'victory';
-
+import { MDBBtn, MDBContainer } from 'mdbreact';
+import * as d3 from 'd3';
+import moment from 'moment';
 
 function mapStateToProps(state){
     const { fetchMoods, authentication } = state;
@@ -22,14 +22,6 @@ class ConnectedMoodHistory extends Component {
         super();
 
         this.state = {
-            dataPoints: [],
-            happy: [],
-            sad: [],
-            angry: [],
-            active: [],
-            fine: [],
-            tired: [],
-            anxious: [],
             loaded: false
         }
 
@@ -48,63 +40,122 @@ class ConnectedMoodHistory extends Component {
     Object.keys(temp).forEach((e) => (
         data.push(temp[e])
     ));
-    let happy = [];
-    let sad = [];
-    let anxious = [];
-    let angry = [];
-    let active = [];
-    let tired = [];
-    let fine = [];
+    let dataSet = [];
+
     for(let i = 0; i < data.length; i++){
         Object.values(data[i]).forEach(e => {
             if(e['moodselect'] === "happy"){
-                happy.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'happy'}
                 )
             }
             if(e['moodselect'] === "sad"){
-                sad.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'sad' }
                 )
             }
             if(e['moodselect'] === "active"){
-                active.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'active' }
                 )
             }
             if(e['moodselect'] === "anxious"){
-                anxious.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'anxious' }
                 )
             }
             if(e['moodselect'] === "angry"){
-                angry.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'angry' }
                 )
             }
             if(e['moodselect'] === "fine"){
-                fine.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'fine' }
                 )
             }
             if(e['moodselect'] === "tired"){
-                tired.push(
-                    { x: new Date(Date.parse(e['createdAt'])).toDateString(), y: e['moodlevel'] }
+                dataSet.push(
+                    { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'tired' }
                 )
             }
-        })
-    };
+        });
+    }
 
-    this.setState({ happy: happy, sad: sad, angry: angry, anxious: anxious, tired: tired, fine: fine, active: active, loaded: true })
+    var margin = {top: 50, right: 50, bottom: 50, left: 80},
+    width = 850 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+    let dataPoints = dataSet.map(function(d) {
+        console.log(d.date)
+            return {
+                date: new Date(d.date),
+                level: +d.level,
+                mood: d.mood
+            };
+    });
+
+    console.log(dataPoints); 
+
+    const maxDate = moment()
+    const minDate = moment().subtract(5, 'day');
+
+    let xScale = d3.scaleTime().domain([minDate, maxDate]).range([margin.left, width - margin.right]);
+    let yScale = d3.scaleLinear().domain([0, 100]).range([height - margin.bottom, margin.top]);
+
+    let line = d3.line()
+        .x(function(d) { return xScale(d.date)})
+        .y(function (d) { return yScale(d.level)})
+        .curve(d3.curveMonotoneX)
+
+    var svg = d3.select('#moodChart').append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    var dataNest = d3.nest().key(function(d) { return d.mood; }).entries(dataPoints) 
+        
+    let color = d3.scaleOrdinal(d3.schemePaired);
+
+    let legendSpace = height / dataNest.length;
+
+    dataNest.forEach(function(d, i){
+        svg.append('path')
+            .attr('class', 'line')
+            .style('stroke', function() {
+                return d.color = color(d.key);
+            })
+            .style('stroke-width', 3)
+            .attr('d', line(d.values))
+
+        svg.append('text')
+            .attr('y', (legendSpace/5)+ i * legendSpace)
+            .attr('x', width - (margin.right / 3) + 5)
+            .attr('class', 'legend')
+            .style('fill', function() {
+                return d.color = color(d.key);
+            })
+            .text(d.key)
+
+    });
+
+    svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
+        .call(d3.axisBottom(xScale).ticks(7).tickFormat(d3.timeFormat('%a %b %d %Y')));
+
+    svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
+    
+    this.setState({ loaded: true })
     }
 
 
     render() {
-        const { happy, sad, tired, anxious, angry, active, fine, loaded } = this.state;
-        const { fetched } = this.props;
+        const { loaded } = this.state;
+        const { fetched, dateFetched } = this.props;
         let moodChart = null;
+
         if(loaded === false){
-            if(fetched === false){
+            if(fetched === false || dateFetched === false){
                 moodChart = (
                     <em>Data is loading...</em>
                 )
@@ -114,140 +165,9 @@ class ConnectedMoodHistory extends Component {
                 )
             }
         } else {
-            console.log(happy);
-            console.log(active);
-            console.log(sad);
-            console.log(fine);
             moodChart = (
                 <div className="charts">
-                <MDBContainer>
-                            <MDBJumbotron style={{ padding: '5px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Happy, Joyful, Relaxed, Silly, Content</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#80cbc4", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={happy} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-
-                        <MDBJumbotron style={{ padding: '5px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Sad, Lonely, Depressed, Insecure, Numb</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#ef9a9a", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={sad} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                       
-                        <MDBJumbotron style={{ padding: '5px' }}>
-                        <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Energetic, Motivated, Active, Productive</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#4f9a94", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={active} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                       
-                            <MDBJumbotron style={{ padding: '5px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Tired, Sick, Unmotivated, Bored</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#80cbc4", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={tired} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                       
-                        <MDBJumbotron style={{ padding: '5px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Uneventful, Fine</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#ba6b6c", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={fine} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                        
-                        <MDBJumbotron style={{ padding: '5px' }}>
-                        <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Anxious, Worried, Nervous, Restless</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#b71c1c", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={anxious} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                       
-                        <MDBJumbotron style={{ padding: '15px' }}>
-                            <MDBCardHeader style={{ background: '#80cbc4', border: '1px #b71c1c', paddingBottom: '10px', paddingTop: '20px', height: '60px' }}>Angry, Frustrated, Annoyed, Grumpy, Irritated</MDBCardHeader>
-                            <MDBCardBody>
-                                <VictoryChart 
-                                    theme={VictoryTheme.material}
-                                    >
-                                    <VictoryLine
-                                        style={{
-                                            data: { stroke: "#4f9a94", strokeWidth: 4 },
-                                            parent: { border: "2px dashed #80cbc4"}
-                                        }}
-                                        range={{ y: [0, 100]}}
-                                        scale={{x: 'time', y: 'linear'}}
-                                        data={angry} />
-                                </VictoryChart>
-                            </MDBCardBody>
-                            </MDBJumbotron>
-                       
-                    </MDBContainer>
+                    <div id="moodChart" />
                 </div>
             )
         }
@@ -263,7 +183,7 @@ class ConnectedMoodHistory extends Component {
             <MDBBtn id="fetchButton" outline color='red lighten-3' onClick={this.getData}>
             Fetch History
             </MDBBtn>
-           <MDBContainer style={{ height: '500px', width: '700px', padding: '25px'}}>
+           <MDBContainer>
             {moodChart}
             </MDBContainer>
             </div>
