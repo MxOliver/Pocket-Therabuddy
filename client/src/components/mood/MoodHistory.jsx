@@ -82,16 +82,14 @@ class ConnectedMoodHistory extends Component {
         });
     }
 
-    var margin = {top: 50, right: 50, bottom: 50, left: 50},
-    width = 800 - margin.left - margin.right,
+    var margin = {top: 50, right: 50, bottom: 50, left: 80},
+    width = 850 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
-
-    var formatDate = d3.timeFormat('%a %b %d %Y');
 
     let dataPoints = dataSet.map(function(d) {
         console.log(d.date)
             return {
-                date: formatDate(d.date),
+                date: new Date(d.date),
                 level: +d.level,
                 mood: d.mood
             };
@@ -100,7 +98,7 @@ class ConnectedMoodHistory extends Component {
     console.log(dataPoints); 
 
     const maxDate = moment()
-    const minDate = moment().subtract(2, 'week');
+    const minDate = moment().subtract(5, 'day');
 
     let xScale = d3.scaleTime().domain([minDate, maxDate]).range([margin.left, width - margin.right]);
     let yScale = d3.scaleLinear().domain([0, 100]).range([height - margin.bottom, margin.top]);
@@ -128,23 +126,25 @@ class ConnectedMoodHistory extends Component {
             .style('stroke', function() {
                 return d.color = color(d.key);
             })
+            .style('stroke-width', 3)
             .attr('d', line(d.values))
 
         svg.append('text')
             .attr('y', (legendSpace/5)+ i * legendSpace)
-            .attr('x', width - (margin.right / 3))
+            .attr('x', width - (margin.right / 3) + 5)
             .attr('class', 'legend')
             .style('fill', function() {
                 return d.color = color(d.key);
             })
             .text(d.key)
+
     });
 
     svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
-        .call(d3.axisBottom(xScale).ticks(7));
+        .call(d3.axisBottom(xScale).ticks(7).tickFormat(d3.timeFormat('%a %b %d %Y')));
 
     svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
-
+    
     this.setState({ loaded: true })
     }
 
@@ -183,7 +183,7 @@ class ConnectedMoodHistory extends Component {
             <MDBBtn id="fetchButton" outline color='red lighten-3' onClick={this.getData}>
             Fetch History
             </MDBBtn>
-           <MDBContainer style={{ height: '500px', width: '700px', padding: '25px'}}>
+           <MDBContainer>
             {moodChart}
             </MDBContainer>
             </div>

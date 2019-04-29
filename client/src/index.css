@@ -49,13 +49,23 @@ code {
   fill: none;
   stroke: black;
   stroke-width: 1;
+  font-size: 14px;
   shape-rendering: crispEdges;
 }
 
 .legend {
   font-size: 14px;
   font-weight: bold;
-  text-anchor: end;
+  margin-left: 15px;
+}
+
+
+.xAxis {
+  font-size: 14px;
+}
+
+.yAxis {
+  font-size: 14px;
 }
 
 path {
