@@ -98,7 +98,7 @@ class ConnectedMoodHistory extends Component {
     console.log(dataPoints); 
 
     const maxDate = moment()
-    const minDate = moment().subtract(5, 'day');
+    const minDate = moment().subtract(2, 'week');
 
     let xScale = d3.scaleTime().domain([minDate, maxDate]).range([margin.left, width - margin.right]);
     let yScale = d3.scaleLinear().domain([0, 100]).range([height - margin.bottom, margin.top]);
@@ -181,7 +181,7 @@ class ConnectedMoodHistory extends Component {
             <HistoryNav style={navStyle} />
             <div className="container">
             <MDBBtn id="fetchButton" outline color='red lighten-3' onClick={this.getData}>
-            Fetch History
+            Click Twice to Fetch History
             </MDBBtn>
            <MDBContainer>
             {moodChart}
