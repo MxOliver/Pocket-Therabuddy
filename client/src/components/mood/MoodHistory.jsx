@@ -83,7 +83,7 @@ class ConnectedMoodHistory extends Component {
     }
 
     var margin = {top: 50, right: 50, bottom: 50, left: 80},
-    width = 850 - margin.left - margin.right,
+    width = 1000 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
     let dataPoints = dataSet.map(function(d) {
@@ -97,10 +97,10 @@ class ConnectedMoodHistory extends Component {
 
     console.log(dataPoints); 
 
-    const maxDate = moment()
-    const minDate = moment().subtract(2, 'week');
+    // const maxDate = moment()
+    // const minDate = moment().subtract(2, 'week');
 
-    let xScale = d3.scaleTime().domain([minDate, maxDate]).range([margin.left, width - margin.right]);
+    let xScale = d3.scaleTime().domain(d3.extent(dataPoints, function(d) { return d.date})).range([margin.left, width - margin.right]);
     let yScale = d3.scaleLinear().domain([0, 100]).range([height - margin.bottom, margin.top]);
 
     let line = d3.line()
