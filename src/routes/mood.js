@@ -9,4 +9,6 @@ router.get(`/api/moodtracker/:id/history`, moodController.fetchhistory);
 
 router.get(`/api/moodtracker/:id/historyDate`, moodController.dateRange);
 
+router.get(`/api/moodtracker/:id/notes`, moodController.fetchNotes );
+
 module.exports = router;

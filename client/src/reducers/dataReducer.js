@@ -20,6 +20,18 @@ export function fetchMoods(state = initialSate, action){
             return {
                 error: action.error
             };
+        case moodConstants.NOTE_REQUEST:
+            return {
+                noteFetching: true,
+                notes: action.notes
+            };
+        case moodConstants.NOTE_SUCCESS:
+            return {
+                noteFetched: true,
+                notes: action.notes
+            };
+        case moodConstants.NOTE_FAILURE:
+            return {};
         case moodConstants.DATE_REQUEST:
             return {
                 dateFetching: true,

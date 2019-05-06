@@ -3,7 +3,8 @@ import { authHeader } from '../helpers/authHeader';
 export const moodService = {
     add,
     getHistory,
-    getDateRange
+    getDateRange,
+    getNotes
 }
 
 async function add(mood) {
@@ -29,6 +30,17 @@ async function getHistory(user) {
     localStorage.setItem('moods', JSON.stringify(res));
     return res;
     
+}
+
+async function getNotes(user) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/moodtracker/${user.id}/notes`, requestOptions);
+    const res = response.text();
+    return res;
 }
 
 async function getDateRange(user) {

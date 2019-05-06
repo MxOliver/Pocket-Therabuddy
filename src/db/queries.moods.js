@@ -23,5 +23,12 @@ module.exports = {
         }).catch((err) => {
             callback(err);
         })
+    },
+    getNotes(id, callback){
+        Mood.findAll({ where: {userId: id }, attributes: ['moodnotes'], raw: true}).then((notes) => {
+            callback(null, notes);
+        }).catch((err) => {
+            callback(err);
+        })
     }
 }
