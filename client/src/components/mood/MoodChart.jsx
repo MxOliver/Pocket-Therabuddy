@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 
-
 class MoodChart extends Component {
 
     render() {
@@ -111,6 +110,7 @@ class MoodChart extends Component {
 
     svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
     .call(d3.axisBottom(xScale).ticks(d3.timeDay.every(1)).tickFormat(d3.timeFormat('%a %b %d %Y')));
+
 
     svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
 

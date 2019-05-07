@@ -15,9 +15,9 @@ module.exports = {
         app.use(bodyParser.urlencoded({ extended: true }));
 
         app.use(session({
-            secret: process.env.cookieSecret,
+            secret: "wtv",
             resave: false,
-            saveUninitialized: false,
+            saveUninitialized: true,
             cookie: { maxAge: 1.21e+9 }
         }));
 

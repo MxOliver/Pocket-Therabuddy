@@ -35,5 +35,15 @@ module.exports = {
                 res.send({ date });
             }
         });
+    },
+    fetchNotes(req, res, next){
+        moodQueries.getNotes(req.params.id, (err, notes) => {
+            if(err){
+                console.log(err);
+                res.send({ response: err });
+            } else {
+                res.send({ notes })
+            }
+        })
     }
 }

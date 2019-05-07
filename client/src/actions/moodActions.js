@@ -6,7 +6,8 @@ import { moodService } from '../services/moodService';
 export const moodActions = {
     addMood,
     getMoodHistory,
-    getHistoryRange
+    getHistoryRange,
+    getMoodNotes
 }
 
 function addMood(mood){
@@ -44,6 +45,24 @@ function getMoodHistory(user){
     function request() { return { type: moodConstants.MOODHISTORY_REQUEST }};
     function success(moods) { return { type: moodConstants.MOODHISTORY_SUCCESS, moods }};
     function failure(error) { return { type: moodConstants.MOODHISTORY_FAILURE, error }};
+}
+
+function getMoodNotes(user){
+    return dispatch => {
+        dispatch(request());
+
+        moodService.getNotes(user).then(notes => {
+            dispatch(success(notes));
+        },
+        error => {
+            dispatch(failure(error.toString()));
+            dispatch(alertActions.error(error.toString()));
+        });
+    };
+
+    function request() { return { type: moodConstants.NOTE_REQUEST }};
+    function success(notes) { return { type: moodConstants.NOTE_SUCCESS, notes }};
+    function failure(error) { return { type: moodConstants.NOTE_FAILURE, error }};
 }
 
 function getHistoryRange(user){
