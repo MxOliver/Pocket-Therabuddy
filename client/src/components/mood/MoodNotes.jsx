@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBJumbotron, MDBContainer, MDBCardText, MDBCardGroup } from 'mdbreact';
+import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardGroup } from 'mdbreact';
 import { connect } from 'react-redux';
 import { moodActions } from '../../actions/moodActions';
 

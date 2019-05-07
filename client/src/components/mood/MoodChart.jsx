@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
+import moment from 'moment';
 
 class MoodChart extends Component {
 
@@ -95,8 +96,9 @@ class MoodChart extends Component {
             })
             .style('stroke-width', 3)
             .attr('d', line(d.values))
+        
 
-
+        
         svg.append('text')
             .attr('y', (legendSpace/5)+ i * legendSpace)
             .attr('x', width - (margin.right / 3) + 5)
@@ -105,14 +107,29 @@ class MoodChart extends Component {
                 return d.color = color(d.key);
             })
             .text(d.key)
+        
 
     });
 
-    svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
-    .call(d3.axisBottom(xScale).ticks(d3.timeDay.every(1)).tickFormat(d3.timeFormat('%a %b %d %Y')));
+    const makeAxis = (scale, n) => {
+        return d3.axisBottom(scale).tickFormat(d3.timeFormat('%a %b %d %Y')).ticks(d3.timeDay.every(n));
+    }
 
+    let datePoints = dataPoints.map(d => {
+        return d.date
+     });
+     
+     let dateMax = Math.min.apply(null, datePoints);
 
-    svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
+     if(new Date(dateMax) < moment().subtract('week', 1)){
+        svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
+        .call(makeAxis(xScale, 5));
+     }else {
+        svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
+        .call(makeAxis(xScale, 1));
+     }
+
+        svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
 
     var points = svg.select('g.data-points').selectAll('dot')
         .data(dataPoints.filter(function(d) {
