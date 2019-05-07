@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardHeader } from 'mdbreact';
+import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBJumbotron, MDBContainer, MDBCardText, MDBCardGroup } from 'mdbreact';
 import { connect } from 'react-redux';
 import { moodActions } from '../../actions/moodActions';
 
@@ -23,26 +23,32 @@ class ConnectedMoodNotes extends Component {
     render() {
         const { notes } = this.props;
 
-        for(let i = 0; i < notes.length; i++){
-            Object.values(notes[i]).forEach(e => {
-                return (
-                    <MDBRow>
-                    <MDBCol>
-                        <MDBContainer>
-                            <MDBCard className="mt-3">
-                            <MDBCardHeader>
-                                Notes for:
-                                </MDBCardHeader>
-                                    <MDBCardBody>
-                                   <p>{e['moodnotes']}</p>
-                                    </MDBCardBody>
-                                </MDBCard>
-                            </MDBContainer>
-                    </MDBCol>
-                    </MDBRow>
-                )
+        let moodNotesComponent = [];
+
+        for(let i in notes){
+            notes[i].forEach(e => {
+                moodNotesComponent.push(
+                    <MDBCard>
+                            <MDBCardBody key={e.createdAt}>
+                            <MDBCardTitle className="text-left text-capitalize" tag="h5">{e.moodselect}</MDBCardTitle>
+                            <MDBCardText>{e.moodnotes}</MDBCardText>
+                            <MDBCardText small muted>
+                            {new Date(Date.parse(e.createdAt)).toDateString()}
+                            </MDBCardText>                                     
+                            </MDBCardBody>
+                    </MDBCard>
+
+                )       
             })
         }
+        
+
+
+        return (
+           <MDBCardGroup>
+               {moodNotesComponent}
+           </MDBCardGroup>
+        )
     }
 }
 

@@ -1,4 +1,6 @@
 const Mood = require("./models").Mood;
+const Sequelize = require('./models/index').Sequelize;
+const Op = Sequelize.Op;
 
 module.exports = {
     create(newMood, callback){
@@ -25,7 +27,7 @@ module.exports = {
         })
     },
     getNotes(id, callback){
-        Mood.findAll({ where: {userId: id }, attributes: ['moodnotes'], raw: true}).then((notes) => {
+        Mood.findAll({ where: {userId: id, moodnotes: {[Op.ne]: null}}, attributes: ['moodnotes', 'createdAt', 'moodselect', 'moodlevel'], raw: true}).then((notes) => {
             callback(null, notes);
         }).catch((err) => {
             callback(err);

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MDBContainer, MDBRow, MDBCard, MDBCardBody, MDBCardHeader } from 'mdbreact';
+import { MDBContainer, MDBCard, MDBCardBody, MDBCardHeader } from 'mdbreact';
 import { moodActions } from '../actions/moodActions';
+import MoodNotes from './mood/MoodNotes';
 
 function mapStateToProps(state) {
     const { user } = state.authentication;
@@ -25,7 +26,7 @@ class ConnectedDashboard extends Component {
     }
 
     render() {
-        const { user, notes } = this.props;
+        const { user } = this.props;
         
         return (
             <div className="dash-content">
@@ -36,6 +37,12 @@ class ConnectedDashboard extends Component {
                             <h4 className="font-weight-bold mb-3">{user.response.name}</h4>
                         </MDBCardBody>
                     </MDBCard>
+                    </MDBContainer>
+                    <MDBContainer>
+                        <MDBCardHeader className="text-left" style={{ background: "#ffcccb"}}>
+                            Notes
+                        </MDBCardHeader>
+                    <MoodNotes />
                     </MDBContainer>
             </div>
         )
