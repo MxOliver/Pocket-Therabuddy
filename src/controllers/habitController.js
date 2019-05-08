@@ -34,5 +34,16 @@ module.exports = {
                 res.send({ notes });
             }
         })
+    },
+    removeNote(req, res, next){
+        let habitId = req.params.id
+
+        habitQueries.destroyNote(habitId, (err, response) => {
+            if(err){
+                res.send({ response: err })
+            } else {
+                res.send({ response: response })
+            }
+        })
     }
 }

@@ -45,5 +45,16 @@ module.exports = {
                 res.send({ notes })
             }
         })
+    },
+    removeNote(req, res, next){
+        const moodId = req.params.id;
+
+        moodQueries.destoryNote(moodId, (err, response) => {
+            if(err){
+                res.send({ response: err });
+            } else {
+                res.send({ response: response });
+            }
+        })
     }
 }

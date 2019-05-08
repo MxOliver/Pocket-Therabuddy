@@ -3,7 +3,8 @@ import { authHeader } from '../helpers/authHeader';
 export const habitService = {
     addHabit,
     getHistory,
-    getNotes
+    getNotes,
+    removeNote
 }
 
 async function addHabit(habit) {
@@ -14,8 +15,20 @@ async function addHabit(habit) {
         body: JSON.stringify({habit: habit})
     }
 
-    const response = await fetch(`/api/habittracker/add_habit`, requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/habittracker/add_habit`, requestOptions);
     localStorage.setItem('habits', JSON.stringify(response));
+    const res = handleResponse(response);
+    return res;
+}
+
+async function removeNote(id){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ habitId: id })
+    }
+
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/habittracker/${id}/remove_note`, requestOptions);
     const res = handleResponse(response);
     return res;
 }
@@ -26,7 +39,7 @@ async function getNotes(user){
         headers: authHeader()
     }
 
-    const response = await fetch(`/api/habittracker/${user.id}/notes`, requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/habittracker/${user.id}/notes`, requestOptions);
     const res = handleResponse(response);
     return res;
 }
@@ -37,7 +50,7 @@ async function getHistory(user) {
         headers: authHeader()
     }
 
-    const response = await fetch(`/api/habittracker/${user.id}/history`, requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/habittracker/${user.id}/history`, requestOptions);
     const res = handleResponse(response);
     return res;
 }

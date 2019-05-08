@@ -6,7 +6,8 @@ import { history } from '../helpers/history';
 export const habitActions = {
     create,
     fetchHistory,
-    getHabitNotes
+    getHabitNotes,
+    removeNote
 }
 
 function create(habit){
@@ -26,6 +27,24 @@ function create(habit){
     function request(habit) { return { type: habitConstants.ADD_HABIT_REQUEST, habit }};
     function success(habit) { return { type: habitConstants.ADD_HABIT_SUCCESS, habit }};
     function failure(error) { return { type: habitConstants.ADD_HABIT_FAILURE, error }};
+}
+
+function removeNote(habit){
+    return dispatch => {
+        dispatch(request());
+
+        habitService.removeNote(habit).then(() => {
+            dispatch(success());
+        },
+        error => {
+            dispatch(failure(error.toString()));
+            dispatch(alertActions.error(error.toString()));
+        })
+    }
+
+    function request() { return { type: habitConstants.REMOVE_NOTE_REQUEST }};
+    function success() { return { type: habitConstants.REMOVE_NOTE_SUCCESS }};
+    function failure(error) { return { type: habitConstants.REMOVE_NOTE_FAILURE, error }};
 }
 
 function fetchHistory(id){

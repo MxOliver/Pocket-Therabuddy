@@ -29,6 +29,16 @@ export function saveMood(state = {}, action){
             return {
                 error: action.error
             };
+        case moodConstants.REMOVE_MOODNOTE_REQUEST: 
+            return {
+                removingMoodnote: true
+            };
+        case moodConstants.REMOVE_MOODNOTE_SUCCESS:
+            return {
+                moodnoteRemoved: true
+            };
+        case moodConstants.REMOVE_MOODNOTE_FAILURE:
+            return {};
         default:
             return state;
     }

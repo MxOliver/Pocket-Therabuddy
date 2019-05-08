@@ -23,5 +23,14 @@ module.exports = {
         }).catch((err) => {
             callback(err);
         })
+    },
+    destroyNote(noteId, callback){
+        Habit.findOne({ where: {id: noteId}}).then((habit) => {
+            habit.update({ note: null }).then(() => {
+                callback(null, "success");
+            }).catch((err) => {
+                callback(err);
+            })
+        })
     }
 }

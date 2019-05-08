@@ -9,7 +9,7 @@ function mapSateToProps(state) {
     return {
         user,
         habitNotes,
-        fetchedNotes 
+        fetchedNotes
     }
 }
 
@@ -18,6 +18,12 @@ class ConnectedHabitNotes extends Component {
     componentDidMount(){
         const { dispatch, user} = this.props;
         dispatch(habitActions.getHabitNotes(user.response));
+    }
+
+    handleDelete(e){
+        const { value } = e.target;
+        const { dispatch } = this.props;
+        dispatch(habitActions.removeNote(value));
     }
 
     render() {
@@ -30,17 +36,20 @@ class ConnectedHabitNotes extends Component {
             for(let i in habitNotes){
      
                 habitNotes[i].forEach(e => {
-                    habitNotesComponent.push(
-                        <MDBCard>
-                            <MDBCardBody key={e.createdAt}>
-                            <MDBCardTitle className="text-left text-capitalize" tag="h5">{e.type}</MDBCardTitle>
-                            <MDBCardText>{e.notes}</MDBCardText>
-                            <MDBCardText small muted>
-                            {new Date(Date.parse(e.createdAt)).toDateString()}
-                            </MDBCardText>                                     
-                            </MDBCardBody>
-                        </MDBCard>
-                    )
+                    if(e.notes.length > 1){
+                        habitNotesComponent.push(
+                            <MDBCard>
+                                <MDBCardBody key={e.createdAt}>
+                                <MDBCardTitle className="text-left text-capitalize" tag="h5">{e.type}</MDBCardTitle>
+                                <MDBCardText>{e.notes}</MDBCardText>
+                                <MDBCardText small muted>
+                                {new Date(Date.parse(e.createdAt)).toDateString()}
+                                </MDBCardText>                                     
+                                </MDBCardBody>
+                               
+                            </MDBCard>
+                        )
+                    }
                 })
             }
         }

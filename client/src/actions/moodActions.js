@@ -7,7 +7,8 @@ export const moodActions = {
     addMood,
     getMoodHistory,
     getHistoryRange,
-    getMoodNotes
+    getMoodNotes,
+    removeNote
 }
 
 function addMood(mood){
@@ -27,6 +28,24 @@ function addMood(mood){
     function request(mood) { return { type: moodConstants.ADD_MOOD, mood }};
     function success(mood) { return { type: moodConstants.ADD_SUCCESS, mood }};
     function failure(error) { return { type: moodConstants.ADD_ERROR, error }};
+}
+
+function removeNote(mood){
+    return dispatch => {
+        dispatch(request());
+
+        moodService.removeNote(mood).then(() => {
+            dispatch(success());
+        },
+        error => {
+            dispatch(failure(error.toString()));
+            dispatch(alertActions.error(error.toString()));
+        })
+    }
+
+    function request() { return { type: moodConstants.REMOVE_MOODNOTE_REQUEST }};
+    function success() { return { type: moodConstants.REMOVE_MOODNOTE_SUCCESS }};
+    function failure(error) { return { type: moodConstants.REMOVE_MOODNOTE_FAILURE, error }};
 }
 
 function getMoodHistory(user){
