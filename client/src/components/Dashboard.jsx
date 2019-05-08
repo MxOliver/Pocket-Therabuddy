@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { MDBContainer, MDBCard, MDBCardBody, MDBCardHeader } from 'mdbreact';
 import { moodActions } from '../actions/moodActions';
 import MoodNotes from './mood/MoodNotes';
+import HabitNotes from './habit/HabitNotes';
 
 function mapStateToProps(state) {
     const { user } = state.authentication;
@@ -15,10 +16,7 @@ function mapStateToProps(state) {
 }
 
 class ConnectedDashboard extends Component {
-    constructor(props){
-        super();
-        
-    }
+
 
     componentDidMount(){
         const { dispatch, user } = this.props;
@@ -40,9 +38,13 @@ class ConnectedDashboard extends Component {
                     </MDBContainer>
                     <MDBContainer>
                         <MDBCardHeader className="text-left" style={{ background: "#ffcccb"}}>
-                            Notes
+                            Mood Notes
                         </MDBCardHeader>
                     <MoodNotes />
+                        <MDBCardHeader className="text-left" style={{ background: "#ef9a9a"}}>
+                            Habit Notes
+                        </MDBCardHeader>
+                        <HabitNotes />
                     </MDBContainer>
             </div>
         )

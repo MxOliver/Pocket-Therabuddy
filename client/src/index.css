@@ -16,6 +16,18 @@ a {
   margin-bottom: 25px;
 }
 
+#teal {
+  background: '#80cbc4' !important;
+}
+
+.btn-default {
+  background: '#ef9a9a' !important;
+}
+
+Link {
+  text-decoration: none;
+}
+
 .nav-link {
   padding-right: 10px;
 }

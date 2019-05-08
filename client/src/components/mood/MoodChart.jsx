@@ -52,9 +52,9 @@ class MoodChart extends Component {
         }
 
 
-        var margin = {top: 50, right: 50, bottom: 50, left: 80},
-        width = 1050 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        var margin = {top: 50, right: 100, bottom: 85, left: 80},
+        width = 1150 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
 
         let dataPoints = dataSet.map(function(d) {
             return {
@@ -66,7 +66,7 @@ class MoodChart extends Component {
 
 
         let xScale = d3.scaleTime().domain(d3.extent(dataPoints, function(d) { return d.date})).range([margin.left, width - margin.right]);
-        let yScale = d3.scaleLinear().domain([0, 100]).range([height - margin.bottom, margin.top]);
+        let yScale = d3.scaleLinear().domain([0, 100]).range([height - (margin.bottom / 4), margin.top]);
 
         let line = d3.line()
         .x(function(d) { return xScale(d.date)})
@@ -130,6 +130,17 @@ class MoodChart extends Component {
      }
 
         svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
+
+        svg.append('text')
+        .attr('transform', 'translate(' + (width/2) + " ," + (height + margin.top + 2) + ")" )
+        .style('text-anchor', 'middle')
+        .text('Date Recorded');
+    
+    svg.append('text')
+     .attr('x', (width / 7) - margin.left - margin.right - 7)
+     .attr('y', (margin.top / 2) + 2)
+     .style('text-anchor', 'left')
+     .text('Level of Intensity')
 
     var points = svg.select('g.data-points').selectAll('dot')
         .data(dataPoints.filter(function(d) {

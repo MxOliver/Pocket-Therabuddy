@@ -25,21 +25,23 @@ class ConnectedMoodNotes extends Component {
 
         let moodNotesComponent = [];
 
-        for(let i in notes){
-            notes[i].forEach(e => {
-                moodNotesComponent.push(
-                    <MDBCard>
-                            <MDBCardBody key={e.createdAt}>
-                            <MDBCardTitle className="text-left text-capitalize" tag="h5">{e.moodselect}</MDBCardTitle>
-                            <MDBCardText>{e.moodnotes}</MDBCardText>
-                            <MDBCardText small muted>
-                            {new Date(Date.parse(e.createdAt)).toDateString()}
-                            </MDBCardText>                                     
-                            </MDBCardBody>
-                    </MDBCard>
-
-                )       
-            })
+        if(notes){
+            for(let i in notes){
+                notes[i].forEach(e => {
+                    moodNotesComponent.push(
+                        <MDBCard>
+                                <MDBCardBody key={e.createdAt}>
+                                <MDBCardTitle className="text-left text-capitalize" tag="h5">{e.moodselect}</MDBCardTitle>
+                                <MDBCardText>{e.moodnotes}</MDBCardText>
+                                <MDBCardText small muted>
+                                {new Date(Date.parse(e.createdAt)).toDateString()}
+                                </MDBCardText>                                     
+                                </MDBCardBody>
+                        </MDBCard>
+    
+                    )       
+                })
+            }
         }
         
 

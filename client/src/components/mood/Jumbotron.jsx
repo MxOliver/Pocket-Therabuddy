@@ -5,15 +5,6 @@ import { MDBJumbotron, MDBBtn, MDBContainer, MDBRow, MDBCol, MDBIcon, MDBCardBod
 
 const MoodJumbotron = () => {
 
-  const pStyle = {
-      color: 'teal lighten-3'
-  } 
-  
-  const buttonStyle = {
-      color: 'red lighten-3',
-      text: '#b71c1c'
-  }
-
   return (
     <div className="content">
     <HistoryNav />
@@ -25,13 +16,14 @@ const MoodJumbotron = () => {
               <MDBCardTitle className="h2">
                 Mood Tracker
               </MDBCardTitle>
-              <p className="my-4 font-weight-bold" style={pStyle}>
-                Track your daily moods and view your history to find patterns.
+              <p className="my-4 font-weight-bold" style={{color: 'teal lighten-3'}}>
+                Track your daily moods and view your history to find patterns. 
+                You can also see your combined habit and mood history to find insights about how your actions effect your mood.
               </p>
               <div className="pt-2">
                 <Link to="/moodtracker/add">
                 <MDBBtn
-                  style={buttonStyle}>
+                  color="default">
                   Add Mood <MDBIcon far icon="smile-beam" />
                 </MDBBtn>
                 </Link>
@@ -39,13 +31,18 @@ const MoodJumbotron = () => {
                 <Link to="/moodtracker/history">
                 <MDBBtn
                   outline
-                  color="red lighten-3"
+                  color="red"
                 >
                   View History <MDBIcon icon="chart-line" />
                 </MDBBtn>
                 </Link>
 
               </div>
+              <div className="pt-2 text-center">
+  
+                    <MDBBtn href="/trackerhistory" gradient="purple" className="white-text">Moods & Habits History <MDBIcon color="white" icon="chart-area" /></MDBBtn>
+                 
+                    </div>
             </MDBCardBody>
           </MDBJumbotron>
         </MDBCol>
