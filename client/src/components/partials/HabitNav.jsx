@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBNavLink } from "mdbreact";
 
-class MoodNav extends Component {
-    constructor(props){
-        super();
+class HabitNav extends Component {
 
-
-    }
 
     render() {
         const textStyle = {
@@ -26,16 +22,13 @@ class MoodNav extends Component {
         <MDBNavbar color="red lighten-4" flex-direction="row" margin="35px" style={paddingStyle}>
         <MDBNavbarNav left flex-direction="row">
             <MDBNavItem style={navItemStyle}>
-                <MDBNavLink to="/moodtracker" style={textStyle}>Main</MDBNavLink>
+                <MDBNavLink to="/habittracker" style={textStyle}>Main</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem style={navItemStyle}>
-                <MDBNavLink to="/moodtracker/add" style={textStyle}>Add Mood</MDBNavLink>
+                <MDBNavLink to="/habittracker/add" style={textStyle}>Add Habit</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem style={navItemStyle}>
-                <MDBNavLink to="/moodtracker/history" style={textStyle}>History</MDBNavLink>
-            </MDBNavItem>
-            <MDBNavItem style={navItemStyle}>
-                <MDBNavLink to="/moodtracker/notes" style={textStyle}>Mood Notes</MDBNavLink>
+                <MDBNavLink to="/habittracker/history" style={textStyle}>History</MDBNavLink>
             </MDBNavItem>
             <MDBNavItem style={navItemStyle}>
                 <MDBNavLink to="/trackerhistory" style={textStyle}>Moods & Habits History</MDBNavLink>
@@ -47,4 +40,4 @@ class MoodNav extends Component {
     }
 };
 
-export default MoodNav;
+export default HabitNav;

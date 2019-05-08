@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
    User.hasMany(models.Mood, {
      foreignKey: "userId"
    });
+   User.hasMany(models.Habit, {
+     foreignKey: "userId"
+   })
   };
   return User;
 };

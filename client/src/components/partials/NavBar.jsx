@@ -21,6 +21,7 @@ class ConnectedNavBar extends Component {
 
       let dash = null;
       let tracker = null;
+      let habitTracker = null;
 
       if(user){
         dash = (
@@ -32,6 +33,12 @@ class ConnectedNavBar extends Component {
         tracker = (
           <MDBNavItem>
             <MDBNavLink to="/moodtracker" className="black-text">MoodTracker</MDBNavLink>
+          </MDBNavItem>
+        )
+
+        habitTracker = (
+          <MDBNavItem>
+          <MDBNavLink to="/habittracker" className="black-text">HabitTracker</MDBNavLink>
           </MDBNavItem>
         )
       }
@@ -48,6 +55,7 @@ class ConnectedNavBar extends Component {
             </MDBNavItem>
             {dash}
             {tracker}
+            {habitTracker}
             </MDBNavbarNav>
             </MDBNavbar>
         )
