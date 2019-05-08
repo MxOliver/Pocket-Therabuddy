@@ -20,6 +20,12 @@ class ConnectedMoodNotes extends Component {
         dispatch(moodActions.getMoodNotes(user.response))
     }
 
+    handleDelete(e){
+        const { value } = e.target;
+        const { dispatch } = this.props;
+        dispatch(moodActions.removeNote(value));
+    }
+
     render() {
         const { notes } = this.props;
 
@@ -28,18 +34,21 @@ class ConnectedMoodNotes extends Component {
         if(notes){
             for(let i in notes){
                 notes[i].forEach(e => {
-                    moodNotesComponent.push(
-                        <MDBCard>
-                                <MDBCardBody key={e.createdAt}>
-                                <MDBCardTitle className="text-left text-capitalize" tag="h5">{e.moodselect}</MDBCardTitle>
-                                <MDBCardText>{e.moodnotes}</MDBCardText>
-                                <MDBCardText small muted>
-                                {new Date(Date.parse(e.createdAt)).toDateString()}
-                                </MDBCardText>                                     
-                                </MDBCardBody>
-                        </MDBCard>
-    
-                    )       
+                    if(e.moodnotes.length > 1){
+                        moodNotesComponent.push(
+                            <MDBCard>
+                                    <MDBCardBody key={e.createdAt}>
+                                    <MDBCardTitle className="text-left text-capitalize" tag="h5">{e.moodselect}</MDBCardTitle>
+                                    <MDBCardText>{e.moodnotes}</MDBCardText>
+                                    <MDBCardText small muted>
+                                    {new Date(Date.parse(e.createdAt)).toDateString()}
+                                    </MDBCardText>                                     
+                                    </MDBCardBody>
+                
+                            </MDBCard>
+        
+                        )  
+                    }     
                 })
             }
         }

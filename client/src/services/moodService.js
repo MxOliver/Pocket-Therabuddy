@@ -4,7 +4,8 @@ export const moodService = {
     add,
     getHistory,
     getDateRange,
-    getNotes
+    getNotes,
+    removeNote
 }
 
 async function add(mood) {
@@ -17,6 +18,18 @@ async function add(mood) {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/moodtracker/add`, requestOptions);
     const currentMood = await handleResponse(response);
     return currentMood;
+}
+
+async function removeNote(mood){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ moodId: mood })
+    }
+
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/${mood}/remove_moodnote`, requestOptions);
+    const res = handleResponse(response);
+    return res;
 }
 
 async function getHistory(user) {

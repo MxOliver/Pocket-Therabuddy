@@ -11,4 +11,6 @@ router.get(`/api/moodtracker/:id/historyDate`, moodController.dateRange);
 
 router.get(`/api/moodtracker/:id/notes`, moodController.fetchNotes );
 
+router.post(`/api/moodtracker/:id/remove_moodnote`, moodController.removeNote );
+
 module.exports = router;

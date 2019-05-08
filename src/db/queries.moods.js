@@ -32,5 +32,14 @@ module.exports = {
         }).catch((err) => {
             callback(err);
         })
+    },
+    destoryNote(id, callback){
+        Mood.findOne({ where: {id: id }}).then((mood) => {
+            mood.update({ moodnotes: null }).then(() => {
+                callback(null, "success");
+            }).catch((err) => {
+                callback(err);
+            })
+        })
     }
 }

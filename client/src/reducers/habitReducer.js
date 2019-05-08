@@ -14,6 +14,18 @@ export function saveHabit(state = {}, action){
             };
         case habitConstants.ADD_HABIT_FAILURE:
             return {};
+        case habitConstants.REMOVE_NOTE_REQUEST:
+            return {
+                removing: true,
+                habitId: action.value
+            };
+        case habitConstants.REMOVE_NOTE_SUCCESS:
+            return {
+                removed: true,
+                habitId: action.value
+            }
+        case habitConstants.REMOVE_NOTE_FAILURE:
+            return {};
         default:
             return state;
     }
