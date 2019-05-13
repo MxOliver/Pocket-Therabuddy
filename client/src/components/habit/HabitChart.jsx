@@ -10,7 +10,7 @@ class HabitChart extends Component {
         const loaded = this.props.loaded;
 
         let dataSet = [];
-
+ 
         for(let i in data){
             data[i].map(e => {
                 if(e.type === 'time alone'){
