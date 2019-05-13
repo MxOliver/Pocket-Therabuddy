@@ -11,8 +11,8 @@ class MoodChart extends Component {
         
         let dataSet = [];
 
-        for(let i = 0; i < data.length; i++){
-            Object.values(data[i]).forEach(e => {
+        for(let i in data){
+            data[i].map(e => {
                 if(e['moodselect'] === "happy"){
                     dataSet.push(
                         { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'happy'}
@@ -48,6 +48,7 @@ class MoodChart extends Component {
                         { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'tired' }
                     )
                 }
+                return dataSet;
             });
         }
 

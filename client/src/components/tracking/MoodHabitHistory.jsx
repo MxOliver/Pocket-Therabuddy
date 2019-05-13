@@ -1,58 +1,59 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import HistoryNav from '../partials/HistoryNav';
-import { moodActions } from '../../actions/moodActions';
+import { habitActions } from '../../actions/habitActions';
 import { MDBBtn, MDBContainer } from 'mdbreact';
-import MoodChart from './MoodChart';
+import { moodActions } from '../../actions/moodActions';
+import MoodHabitChart from './MoodHabitChart';
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     const { fetchMoods, authentication } = state;
     const { user } = authentication;
     const { moods, fetched } = fetchMoods; 
+    const { habits } = state.fetchHabits;
     return {
         moods,
         user,
-        fetched
+        fetched,
+        habits
     }
 }
 
-class ConnectedMoodHistory extends Component {
+class ConnectedHistories extends Component {
     constructor(props){
         super();
 
         this.state = {
             loaded: false,
-            data: ''
+            habitData: '',
+            moodData: ''
         }
 
         this.fetchData = this.fetchData.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount(){
         const { dispatch, user } = this.props;
+        dispatch(habitActions.fetchHistory(user.response));
         dispatch(moodActions.getMoodHistory(user.response));
     }
 
     fetchData() {
+        const { habits } = this.props;
         const { moods } = this.props;
-        this.setState({ data: moods, loaded: true });
+        this.setState({ loaded: true, habitData: habits, moodData: moods });
     }
 
     render() {
-
-        const navStyle = {
-            marginBottom: '35px'
-        }
+        const { habitData, moodData, loaded } = this.state;
 
         return (
-            <div className="content">
-            <HistoryNav style={navStyle} />
+            <div className="content" style={{paddingTop: '25px'}}>
             <div className="container">
             <MDBBtn id="fetchButton" outline color='red lighten-3' onClick={this.fetchData}>
             Click Twice to Render Graph
             </MDBBtn>
            <MDBContainer>
-            <MoodChart data={this.state.data} loaded={this.state.loaded} style={{ paddingLeft: '-50px'}}/>
+            <MoodHabitChart moodData={moodData} habitData={habitData} loaded={loaded} />
             </MDBContainer>
             </div>
             </div>
@@ -61,6 +62,6 @@ class ConnectedMoodHistory extends Component {
 
 }
 
-const MoodHistory = connect(mapStateToProps)(ConnectedMoodHistory);
+const MoodHabitHistory = connect(mapStateToProps)(ConnectedHistories);
 
-export default MoodHistory;
+export default MoodHabitHistory;

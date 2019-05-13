@@ -39,7 +39,7 @@ async function getHistory(user) {
     };
 
     const response = await fetch(`${process.env.REACT_APP_API_URL}/api/moodtracker/${user.id}/history`, requestOptions);
-    const res = response.text();
+    const res = handleResponse(response)
     localStorage.setItem('moods', JSON.stringify(res));
     return res;
     

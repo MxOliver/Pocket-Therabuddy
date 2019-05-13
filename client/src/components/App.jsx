@@ -16,6 +16,7 @@ import { Router, Switch, Route } from 'react-router-dom';
 import HabitLanding from './habit/habitLanding';
 import AddHabit from './habit/AddHabit';
 import HabitHistory from './habit/HabitHistory';
+import MoodHabitHistory from './tracking/MoodHabitHistory';
 
 class connectedApp extends Component {
     constructor(props){
@@ -49,6 +50,7 @@ class connectedApp extends Component {
                     <Route exact path="/habittracker" component={HabitLanding} />
                     <Route path="/habittracker/add" component={AddHabit} />
                     <Route path="/habittracker/history" component={HabitHistory} />
+                    <Route path="/trackerhistory" component={MoodHabitHistory} />
                     <Route component={Page404} />
                 </Switch>
             </main>
