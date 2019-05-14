@@ -37,9 +37,6 @@ class MoodNav extends Component {
             <MDBNavItem style={navItemStyle}>
                 <MDBNavLink to="/moodtracker/notes" style={textStyle}>Mood Notes</MDBNavLink>
             </MDBNavItem>
-            <MDBNavItem style={navItemStyle}>
-                <MDBNavLink to="/trackerhistory" style={textStyle}>Moods & Habits History</MDBNavLink>
-            </MDBNavItem>
         </MDBNavbarNav>
         </MDBNavbar>
         </div>

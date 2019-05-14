@@ -38,11 +38,7 @@ const MoodJumbotron = () => {
                 </Link>
 
               </div>
-              <div className="pt-2 text-center">
   
-                    <MDBBtn href="/trackerhistory" gradient="purple" className="white-text">Moods & Habits History <MDBIcon color="white" icon="chart-area" /></MDBBtn>
-                 
-                    </div>
             </MDBCardBody>
           </MDBJumbotron>
         </MDBCol>

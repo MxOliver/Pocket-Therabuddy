@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { habitActions } from '../../actions/habitActions';
-import { MDBBtn, MDBContainer } from 'mdbreact';
+import {  MDBContainer } from 'mdbreact';
 import HabitNav from '../partials/HabitNav';
-import HabitChart from './HabitChart';
+import FilterData from './FilterData';
 
 function mapStateToProps(state) {
     const { user } = state.authentication;
@@ -23,7 +23,6 @@ class ConnectedHabitHistory extends Component {
             data: ''
         }
 
-        this.fetchData = this.fetchData.bind(this);
     }
 
     componentDidMount(){
@@ -31,27 +30,19 @@ class ConnectedHabitHistory extends Component {
         dispatch(habitActions.fetchHistory(user.response));
     }
 
-    fetchData() {
-        const { habits } = this.props;
-        this.setState({ loaded: true, data: habits })
-    }
-
     render() {
         const navStyle = {
             marginBottom: '35px'
         }
 
-        const { data, loaded } = this.state;
+        const { habits } = this.props;
 
         return (
             <div className="content">
             <HabitNav style={navStyle} />
             <div className="container">
-            <MDBBtn id="fetchButton" outline color='red lighten-3' onClick={this.fetchData}>
-            Click Twice to Render Graph
-            </MDBBtn>
-           <MDBContainer text-center>
-            <HabitChart data={data} loaded={loaded}/>
+           <MDBContainer>
+            <FilterData data={habits} />
             </MDBContainer>
             </div>
             </div>

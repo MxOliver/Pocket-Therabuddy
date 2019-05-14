@@ -38,7 +38,7 @@ class ConnectedHabitNotes extends Component {
                 habitNotes[i].forEach(e => {
                     if(e.notes.length > 1){
                         habitNotesComponent.push(
-                            <MDBCard>
+                            <MDBCard key={e.id}>
                                 <MDBCardBody key={e.createdAt}>
                                 <MDBCardTitle className="text-left text-capitalize" tag="h5">{e.type}</MDBCardTitle>
                                 <MDBCardText>{e.notes}</MDBCardText>
