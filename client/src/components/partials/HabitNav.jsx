@@ -30,9 +30,6 @@ class HabitNav extends Component {
             <MDBNavItem style={navItemStyle}>
                 <MDBNavLink to="/habittracker/history" style={textStyle}>History</MDBNavLink>
             </MDBNavItem>
-            <MDBNavItem style={navItemStyle}>
-                <MDBNavLink to="/trackerhistory" style={textStyle}>Moods & Habits History</MDBNavLink>
-            </MDBNavItem>
         </MDBNavbarNav>
         </MDBNavbar>
         </div>
