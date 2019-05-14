@@ -15,7 +15,7 @@ class MoodHabitChart extends Component {
     render() {
 
   
-        let mood = ['happy', 'sad', 'tired', 'active', 'angry', 'anxious', 'fine'];
+        let mood = ['happy', 'sad', 'tired', 'energetic', 'angry', 'anxious', 'fine'];
         let habit = ['time alone', 'time outside', 'sleep', 'exercise', 'hydration', 'social interaction', 'leisure activities'];
 
         const moodDataSet = this.props.moodData;
@@ -23,14 +23,22 @@ class MoodHabitChart extends Component {
         let moodSet = [];
         let habitSet = [];
         
-        for(let i = 0; i <= 7; i++){
-            moodSet.push(
-                this.filterData(moodDataSet,{type: mood[i]})
-            )
-            habitSet.push(
-                this.filterData(habitDataSet,{type: habit[i]})
-            )
-        }
+        const all = [mood, habit];
+
+        all.reduce((acc, cu) => { 
+            let ret = [];
+              acc.map(obj => {
+                cu.map(obj_1 => {
+                    habitSet.push(
+                        this.filterData(habitDataSet,{type: obj_1})
+                    )
+                    moodSet.push(
+                        this.filterData(moodDataSet,{type: obj})
+                    )
+                });
+              });
+              return ret;
+           })
 
         for(let i = 0; i <= habitSet.length; i++){
             if(habitSet[i] && habitSet[i].length > 0 && moodSet[i] && moodSet[i].length > 0){

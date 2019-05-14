@@ -40,7 +40,10 @@ class FilterMoodData extends Component {
 
         var dataNest = d3.nest().key(function(d) { return d.mood; }).entries(dataPoints) 
             
-        let color = d3.scaleOrdinal(d3.schemeCategory10);
+        
+            
+        let color = d3.scaleOrdinal().domain(function(d) { return d.habit})
+        .range(['#1F78B4', '#33A02C', '#FB9A99', '#E31A1C', '#FF7F00', '#6A3D9A'])
 
         let legendSpace = height / dataNest.length;
 
@@ -135,7 +138,7 @@ class FilterMoodData extends Component {
                 }
                 if(e['moodselect'] === "active"){
                     dataSet.push(
-                        { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'active' }
+                        { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], mood: 'energetic' }
                     )
                 }
                 if(e['moodselect'] === "anxious"){
