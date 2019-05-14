@@ -264,7 +264,7 @@ class filterData extends Component {
                     }
                     if(e['moodselect'] === "active"){
                         moodDataSet.push(
-                            { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], type: 'active' }
+                            { date: new Date(Date.parse(e['createdAt'])), level: e['moodlevel'], type: 'energetic' }
                         )
                     }
                     if(e['moodselect'] === "anxious"){

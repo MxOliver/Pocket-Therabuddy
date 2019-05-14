@@ -46,7 +46,6 @@ class connectedApp extends Component {
                     <Route exact path="/sign_up" component={SignUpForm}/>
                     <Route path="/moodtracker/add" component={AddMood} />
                     <Route path="/moodtracker/history" component={MoodHistory} />
-                    <Route path="/moodtracker/notes" component={MoodNotes} />
                     <Route exact path="/habittracker" component={HabitLanding} />
                     <Route path="/habittracker/add" component={AddHabit} />
                     <Route path="/habittracker/history" component={HabitHistory} />

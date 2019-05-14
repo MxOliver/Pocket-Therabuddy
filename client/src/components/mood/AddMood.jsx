@@ -127,7 +127,7 @@ class ConnectedMoodForm extends Component {
                         type="radio" 
                         style={radioStyle} 
                         id="active" 
-                        value="active"
+                        value="energetic"
                         name="moodselect"  
                         onChange={this.handleChange} 
                         />
