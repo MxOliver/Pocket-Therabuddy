@@ -32,7 +32,8 @@
     "request": "^2.88.0"
   },
   "dependencies": {
-    "@nivo/line": "^0.56.2",
+    "@svgr/cli": "^4.2.0",
+    "@svgr/webpack": "^4.2.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
