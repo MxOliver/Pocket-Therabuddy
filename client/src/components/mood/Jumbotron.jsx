@@ -36,9 +36,9 @@ const MoodJumbotron = () => {
                   View History <MDBIcon icon="chart-line" />
                 </MDBBtn>
                 </Link>
-
+                
               </div>
-  
+
             </MDBCardBody>
           </MDBJumbotron>
         </MDBCol>

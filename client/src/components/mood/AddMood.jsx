@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MDBInput, MDBContainer, MDBRow, MDBBtn } from "mdbreact";
 import HistoryNav from '../partials/HistoryNav';
+import Angry from '../../icons/angry.svg';
+import Sad from '../../icons/sad.svg';
+import Energetic from '../../icons/energetic.svg';
+import Tired from '../../icons/tired.svg';
+import Fine from '../../icons/fine.svg';
+import Anxious from '../../icons/anxious.svg';
+import HappySvg from '../../icons/happy.svg';
 import { moodActions } from '../../actions/moodActions';
 
 function mapStateToProps(state) {
@@ -24,11 +31,12 @@ class ConnectedMoodForm extends Component {
                 moodlevel: '',
                 notes: '',
             },
-            isChecked: false
+            isChecked: false,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        
     }
     
     handleChange(e){
@@ -39,7 +47,7 @@ class ConnectedMoodForm extends Component {
         mood: {
             ...mood,
             [name]: value
-        }
+        }, outline: 'gold 2px'
         });
     }
 
@@ -64,7 +72,7 @@ class ConnectedMoodForm extends Component {
             background: "#80CBC4",
             border: "#80CBC4"
         }
-    
+
         const rangeStyle = {
             background: "#80CBC4",
             width: "500px",
@@ -80,15 +88,15 @@ class ConnectedMoodForm extends Component {
             marginBottom: '35px'
         }
 
+        
         return (
             <div className="content">
             <HistoryNav style={navStyle}/>
             <form onSubmit={this.handleSubmit}>
             <MDBContainer className="addMood">
-                
-                <MDBRow>
-                <div id="moodselect">
-                <p className="h5 mb-4">Mood</p>
+            
+            <div id="moodselect" className="text-center">
+                <MDBRow center style={{marginBottom: '25px'}}>
 
                 <div className="form-check">
                 <label htmlFor="happy">
@@ -101,7 +109,8 @@ class ConnectedMoodForm extends Component {
                         onChange={this.handleChange}
                         name="moodselect" 
                         />
-                    Happy, Joyful, Relaxed, Silly, Content
+                        <img src={HappySvg} alt="happy icon" style={{height: "300px"}} />
+        
                     </label>
                 </div>
 
@@ -116,7 +125,8 @@ class ConnectedMoodForm extends Component {
                         name="moodselect" 
                         onChange={this.handleChange} 
                         />
-                        Sad, Lonely, Depressed, Insecure, Numb
+                        <img src={Sad} alt="sad icon" style={{height: "300px"}}  />
+                       
                         </label>
                 </div>
 
@@ -131,9 +141,11 @@ class ConnectedMoodForm extends Component {
                         name="moodselect"  
                         onChange={this.handleChange} 
                         />
-                    Energetic, Motivated, Active, Productive
+                        <img src={Energetic} alt="energetic icon" style={{height: "300px"}}  />
+                 
                     </label>
                 </div>
+                
 
                 <div className="form-check">
                 <label htmlFor="tired">
@@ -146,10 +158,13 @@ class ConnectedMoodForm extends Component {
                         name="moodselect" 
                         onChange={this.handleChange} 
                         />
-                    Tired, Sick, Unmotivated, Bored
+                        <img src={Tired} alt="tired icon" style={{height: "300px"}}  />
+                   
                     </label>
                 </div>
+                </MDBRow>
 
+                <MDBRow center>
                 <div className="form-check">
                 <label htmlFor="fine">
                     <input 
@@ -161,7 +176,8 @@ class ConnectedMoodForm extends Component {
                         style={radioStyle} 
                         onChange={this.handleChange} 
                         />
-                    Uneventful, Fine
+                        <img src={Fine} alt="fine icon" style={{height: "300px"}}  />
+                   
                     </label>
                 </div>
 
@@ -176,11 +192,11 @@ class ConnectedMoodForm extends Component {
                         style={radioStyle} 
                         onChange={this.handleChange} 
                         />
-                    Anxious, Worried, Nervous, Restless
+                        <img src={Anxious} alt="anxious icon" style={{height: "300px"}}  />
+                 
                     </label>
                 </div>
-
-
+          
                 <div className="form-check">
                 <label htmlFor="angry">
                     <input 
@@ -192,11 +208,12 @@ class ConnectedMoodForm extends Component {
                         style={radioStyle} 
                         onChange={this.handleChange}  
                         />
-                    Angry, Frustrated, Annoyed, Grumpy, Irritated
+                        <img src={Angry} alt="angry icon" style={{height: "300px"}}  />
+          
                     </label>
                 </div>
-                </div>
                 </MDBRow>
+                </div>
 
                 <MDBRow center>
                     <div className="my-5">

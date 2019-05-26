@@ -7,6 +7,28 @@ a {
   text-decoration: none;
 }
 
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  opacity: 0.5;
+}
+[type=radio]:hover + img {
+  opacity: 0.5;
+}
+
 .navbar-nav {
   flex-direction: row !important;
   margin-bottom: 15px;

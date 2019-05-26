@@ -36,8 +36,8 @@ class MoodHabitChart extends Component {
                         this.filterData(moodDataSet,{type: obj})
                     )
                 });
+                return ret;
               });
-              return ret;
            })
 
         for(let i = 0; i <= habitSet.length; i++){

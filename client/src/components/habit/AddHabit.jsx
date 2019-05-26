@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MDBInput, MDBContainer, MDBRow, MDBBtn } from "mdbreact";
 import HabitNav from '../partials/HabitNav';
+import Sleep from '../../icons/sleep.svg';
+import Exercise from '../../icons/exercise.svg';
+import Leisure from '../../icons/leisure.svg';
+import Outside from '../../icons/outside.svg';
+import Alone from '../../icons/alone.svg';
+import Social from '../../icons/social.svg';
+import Hydration from '../../icons/hydration.svg';
 import { habitActions } from '../../actions/habitActions';
 
 function mapSateToProps(state) {
@@ -57,13 +64,10 @@ class ConnectedHabit extends Component {
 
     render() {
         const navStyle = {
-            marginBottom: '35px'
+            marginBottom: '55px'
         }
 
-        const radioStyle = {
-            background: "#80CBC4",
-            border: "#80CBC4"
-        }
+
     
         const rangeStyle = {
             background: "#80CBC4",
@@ -81,22 +85,22 @@ class ConnectedHabit extends Component {
                 <HabitNav style={navStyle}/>
                 <form onSubmit={this.handleSubmit}>
                 <MDBContainer id="addHabit">
-                    <MDBRow>
-                        <div id="habittype">
-                        <p className="h5 mb-4">Habit</p>
+
+                <div id="habittype">
+            
+                    <MDBRow center style={{marginBottom: '25px', marginTop: '35px'}}>
 
                         <div className="form-check">
                         <label htmlFor="sleep">
                         <input
                             className="form-check-input"
-                            style={radioStyle}
                             id="sleep"
                             name="type"
                             value="sleep"
                             type="radio"
                             onChange={this.handleChange}
                             />
-                        Sleep
+                        <img src={Sleep} alt="sleep" style={{width: '200px'}}/>
                         </label>
                         </div>
 
@@ -104,29 +108,13 @@ class ConnectedHabit extends Component {
                         <label htmlFor="outside">
                         <input
                             className="form-check-input"
-                            style={radioStyle}
                             id="outside"
                             name="type"
                             value="time outside"
                             type="radio"
                             onChange={this.handleChange}
                             />
-                        Time Spent Outside
-                        </label>
-                        </div>
-
-                        <div className="form-check">
-                        <label htmlFor="social">
-                        <input
-                            className="form-check-input"
-                            style={radioStyle}
-                            id="social"
-                            name="type"
-                            value="social interaction"
-                            type="radio"
-                            onChange={this.handleChange}
-                            />
-                        Social Interaction
+                        <img src={Outside} alt="time spent outside" style={{width: '250px'}} />
                         </label>
                         </div>
 
@@ -134,29 +122,13 @@ class ConnectedHabit extends Component {
                         <label htmlFor="exercise">
                         <input
                             className="form-check-input"
-                            style={radioStyle}
                             id="exercise"
                             name="type"
                             value="exercise"
                             type="radio"
                             onChange={this.handleChange}
                             />
-                        Exercise
-                        </label>
-                        </div>
-
-                        <div className="form-check">
-                        <label htmlFor="alone">
-                        <input
-                            className="form-check-input"
-                            style={radioStyle}
-                            id="alone"
-                            name="type"
-                            value="time alone"
-                            type="radio"
-                            onChange={this.handleChange}
-                            />
-                        Time Spent Alone
+                        <img src={Exercise} alt="exercise" style={{width: '200px', paddingTop: '45px'}} />
                         </label>
                         </div>
 
@@ -164,14 +136,32 @@ class ConnectedHabit extends Component {
                         <label htmlFor="hydration">
                         <input
                             className="form-check-input"
-                            style={radioStyle}
                             id="hydration"
                             name="type"
                             value="hydration"
                             type="radio"
                             onChange={this.handleChange}
                             />
-                        Hydration
+                        <img src={Hydration} alt="hydration" style={{height: '200px', paddingBottom: '30px'}} />
+                        </label>
+                        </div>
+                        
+                        </MDBRow>
+
+
+                        <MDBRow center>
+
+                        <div className="form-check">
+                        <label htmlFor="social">
+                        <input
+                            className="form-check-input"
+                            id="social"
+                            name="type"
+                            value="social interaction"
+                            type="radio"
+                            onChange={this.handleChange}
+                            />
+                        <img src={Social} alt="social interaction" style={{height: '200px'}} />
                         </label>
                         </div>
 
@@ -179,19 +169,33 @@ class ConnectedHabit extends Component {
                         <label htmlFor="leisure">
                         <input
                             className="form-check-input"
-                            style={radioStyle}
                             id="leisure"
                             name="type"
                             value="leisure activities"
                             type="radio"
                             onChange={this.handleChange}
                             />
-                        Time Spent on Leisure Activities
+                        <img src={Leisure} alt="leisure activities" style={{width: '250px', paddingTop: '30px'}} />
+                        </label>
+                        </div>
+                        
+                        <div className="form-check">
+                        <label htmlFor="alone">
+                        <input
+                            className="form-check-input"
+                            id="alone"
+                            name="type"
+                            value="time alone"
+                            type="radio"
+                            onChange={this.handleChange}
+                            />
+                        <img src={Alone} alt="time spent alone" style={{height: '200px'}} />
                         </label>
                         </div>
 
-                        </div>
+
                     </MDBRow>
+                    </div>
 
                     <MDBRow center>
                         <div className="my-5">
@@ -199,6 +203,7 @@ class ConnectedHabit extends Component {
                         <p className="text-center">
                         Think of this range as the time span of one day, how much of your day did you devote to or how frequent did you parciticapte in this habit?</p>
 
+                        <div className="text-center" style={{marginTop: '35px'}}>
                         <span className="mr-2">Barely Any</span>
                         <input 
                             type="range"
@@ -222,6 +227,8 @@ class ConnectedHabit extends Component {
                             <option value='50' label="Off the Charts" />
                             <option value='55' />
                         </datalist>
+                        </div>
+                        
                         </div>
 
                     </MDBRow>

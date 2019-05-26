@@ -3,7 +3,6 @@ import NavBar from './partials/NavBar';
 import Landing from './Landing';
 import AddMood from './mood/AddMood';
 import MoodHistory from './mood/MoodHistory'
-import MoodNotes from './mood/MoodNotes';
 import Dashboard from './Dashboard';
 import MoodJumbotron from './mood/Jumbotron';
 import SignInForm from './partials/SignIn';
