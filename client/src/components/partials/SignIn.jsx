@@ -56,7 +56,7 @@ class ConnectedSignIn extends Component {
   }
 
   render() {
-    const { loggingIn } = this.props;
+    const { loggingIn, message, type } = this.props;
     const { email, password, submitted } = this.state;
 
     return (
@@ -67,19 +67,7 @@ class ConnectedSignIn extends Component {
               <MDBCardBody>
                 <form onSubmit={this.handleSubmit} className="grey-text">
                   <p className="h4 text-center py-4">Sign In</p>
-                  <div className='form-group'>
-                    <MDBInput
-                      label="name"
-                      className="form-control"
-                      group
-                      type="text"
-                      validate
-                      error="wrong"
-                      success="right"
-                      name="name"
-                      onChange={this.handleChange}
-                    />
-                  </div>
+                
                   <div className={"form-group" + (submitted && !email ? ' has-error' : '')}>
                     <MDBInput
                       label="email"
@@ -101,6 +89,7 @@ class ConnectedSignIn extends Component {
                       name="password"
                       onChange={this.handleChange}
                     />
+                    {submitted && type === "alert-danger" ? <p className="text-center" style={{color: 'black', background: '#ef9a9a'}}>{message}</p> : <p></p>}
                   </div>
                   <div className="text-center py-4 mt-3">
                     <MDBBtn color="red lighten-3" type="submit">
@@ -120,9 +109,13 @@ class ConnectedSignIn extends Component {
 }
 
 function mapStateToProps(state){
-  const { loggingIn } = state.authentication;
+  const { loggingIn, loggedIn } = state.authentication;
+  const { message, type } = state.alert
   return {
-    loggingIn
+    loggingIn,
+    loggedIn,
+    message,
+    type
   };
 }
 

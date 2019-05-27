@@ -23,7 +23,6 @@ module.exports = {
             if(err){
                 res.send({ error: err });
             } else {
-                console.log("SUCCESS");
                 res.send({ response: user });
             }
         })

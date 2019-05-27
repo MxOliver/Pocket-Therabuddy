@@ -22,10 +22,10 @@ module.exports = {
         let email = checkUser.email;
         let password = checkUser.password;
         User.findOne({ where: { email }}).then((user) => {
-            if(user || authHelper.comparePass(password, user.password)) {
-                callback(null, user);
+            if(!user || !authHelper.comparePass(password, user.password)) {
+                callback("not found");
             } else {
-                callback(err);
+                callback(null, user);
             }
         });
     }
