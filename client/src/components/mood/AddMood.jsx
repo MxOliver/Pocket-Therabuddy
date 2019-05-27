@@ -40,14 +40,15 @@ class ConnectedMoodForm extends Component {
     }
     
     handleChange(e){
-        e.preventDefault();
+
+
         const { name, value } = e.target;
         const { mood } = this.state;
         this.setState({ 
         mood: {
             ...mood,
             [name]: value
-        }, outline: 'gold 2px'
+        }
         });
     }
 
