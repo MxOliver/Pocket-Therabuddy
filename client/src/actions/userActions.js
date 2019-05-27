@@ -16,11 +16,17 @@ function login(email, password){
         dispatch(request({ email }));
 
         userService.login(email, password).then( user => {
-            dispatch(success(user));
-            history.push('/dashboard');
+            if(user.error === "not found"){
+                dispatch(failure("invalid email or password"));
+                dispatch(alertActions.error("invalid email or password"));
+            } else {
+                dispatch(success(user));
+                history.push('/dashboard');
+            }
         },
         error => {
             dispatch(failure(error.toString()));
+            console.log(error.toString());
             dispatch(alertActions.error(error.toString()));
         });
     };

@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 
 function mapStateToProps(state) {
   const { authentication } = state;
+  const { message, type } = state.alert;
   const { user } = authentication;
   return {
-      user
+      user,
+      message,
+      type
   };
 }
 
@@ -17,14 +20,14 @@ class ConnectedNavBar extends Component {
     }
 
     render() {
-      const { user } = this.props;
+      const { user, type } = this.props;
 
       let dash = null;
       let tracker = null;
       let habitTracker = null;
       let combinedTracker = null;
 
-      if(user){
+      if(user && type !== 'alert-danger'){
         dash = (
           <MDBNavItem>
               <MDBNavLink to="/dashboard" className="black-text">Dashboard</MDBNavLink>
