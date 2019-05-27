@@ -40,8 +40,6 @@ class ConnectedMoodForm extends Component {
     }
     
     handleChange(e){
-
-
         const { name, value } = e.target;
         const { mood } = this.state;
         this.setState({ 
