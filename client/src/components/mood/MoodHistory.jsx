@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import HistoryNav from '../partials/HistoryNav';
 import { moodActions } from '../../actions/moodActions';
 import { MDBContainer } from 'mdbreact';
 import FilterMoodData from './FilterData';
@@ -27,18 +26,14 @@ class ConnectedMoodHistory extends Component {
 
         const { moods } = this.props;
 
-        const navStyle = {
-            marginBottom: '35px'
-        }
+      
 
         return (
             <div className="content">
-            <HistoryNav style={navStyle} />
-            <div className="container">
-           <MDBContainer>
-            <FilterMoodData data={moods} style={{ paddingLeft: '-50px'}}/>
-            </MDBContainer>
-            </div>
+      
+     
+            <FilterMoodData data={moods} />
+         
             </div>
         )
     }

@@ -13,9 +13,8 @@ class MoodChart extends Component {
         }
 
             return (
-                <div className="chart" style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div id="moodChart" />
-                </div>
+
+                    <div id="moodChart" className="svg-container" />
             );
     }
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MDBInput, MDBContainer, MDBRow, MDBBtn } from "mdbreact";
-import HistoryNav from '../partials/HistoryNav';
 import Angry from '../../icons/angry.svg';
 import Sad from '../../icons/sad.svg';
 import Energetic from '../../icons/energetic.svg';
@@ -83,16 +82,14 @@ class ConnectedMoodForm extends Component {
             color: 'red lighten-3'
         }
 
-        const navStyle = {
-            marginBottom: '35px'
-        }
+  
 
         
         return (
             <div className="content">
-            <HistoryNav style={navStyle}/>
+      
             <form onSubmit={this.handleSubmit}>
-            <MDBContainer className="addMood">
+            <MDBContainer className="addMood" style={{marginTop: '35px'}}>
             
             <div id="moodselect" className="text-center">
                 <MDBRow center style={{marginBottom: '25px'}}>
@@ -108,7 +105,7 @@ class ConnectedMoodForm extends Component {
                         onChange={this.handleChange}
                         name="moodselect" 
                         />
-                        <img src={HappySvg} alt="happy icon" style={{height: "300px"}} />
+                        <img src={HappySvg} alt="happy icon" />
         
                     </label>
                 </div>
@@ -124,7 +121,7 @@ class ConnectedMoodForm extends Component {
                         name="moodselect" 
                         onChange={this.handleChange} 
                         />
-                        <img src={Sad} alt="sad icon" style={{height: "300px"}}  />
+                        <img src={Sad} alt="sad icon"  />
                        
                         </label>
                 </div>
@@ -140,7 +137,7 @@ class ConnectedMoodForm extends Component {
                         name="moodselect"  
                         onChange={this.handleChange} 
                         />
-                        <img src={Energetic} alt="energetic icon" style={{height: "300px"}}  />
+                        <img src={Energetic} alt="energetic icon" />
                  
                     </label>
                 </div>
@@ -157,7 +154,7 @@ class ConnectedMoodForm extends Component {
                         name="moodselect" 
                         onChange={this.handleChange} 
                         />
-                        <img src={Tired} alt="tired icon" style={{height: "300px"}}  />
+                        <img src={Tired} alt="tired icon"  />
                    
                     </label>
                 </div>
@@ -175,7 +172,7 @@ class ConnectedMoodForm extends Component {
                         style={radioStyle} 
                         onChange={this.handleChange} 
                         />
-                        <img src={Fine} alt="fine icon" style={{height: "300px"}}  />
+                        <img src={Fine} alt="fine icon"   />
                    
                     </label>
                 </div>
@@ -191,7 +188,7 @@ class ConnectedMoodForm extends Component {
                         style={radioStyle} 
                         onChange={this.handleChange} 
                         />
-                        <img src={Anxious} alt="anxious icon" style={{height: "300px"}}  />
+                        <img src={Anxious} alt="anxious icon"  />
                  
                     </label>
                 </div>
@@ -207,7 +204,7 @@ class ConnectedMoodForm extends Component {
                         style={radioStyle} 
                         onChange={this.handleChange}  
                         />
-                        <img src={Angry} alt="angry icon" style={{height: "300px"}}  />
+                        <img src={Angry} alt="angry icon"  />
           
                     </label>
                 </div>

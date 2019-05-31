@@ -107,3 +107,34 @@ path {
   stroke-width: 1;
   fill: none;
 }
+
+#moodselect img[src$=".svg"] {
+  height: 100%;
+  width: 200%;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#habittype img[src$=".svg"] {
+  height: 100%;
+  width: 150%;
+  display: flex;
+  flex-flow: row;
+  align-content: space-between;
+  justify-content: center;
+}
+
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 120%;
+  padding-bottom: 100%;
+  vertical-align: top;
+}
+
+.svg-content {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

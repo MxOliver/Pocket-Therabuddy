@@ -1,6 +1,5 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import HabitNav from '../partials/HabitNav';
 import { MDBJumbotron, MDBBtn, MDBContainer, MDBRow, MDBCol, MDBIcon, MDBCardBody, MDBCardTitle } from "mdbreact";
 
 const HabitLanding = () => {
@@ -16,7 +15,7 @@ const HabitLanding = () => {
 
     return (
         <div className="content">
-        <HabitNav />
+  
         <MDBContainer className="mt-5 text-center">
             <MDBRow>
             <MDBCol>

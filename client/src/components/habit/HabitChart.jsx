@@ -11,8 +11,9 @@ class HabitChart extends Component {
         }
 
             return (
-                <div className="chart" style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div id="habitChart" />
+       
+                <div className="chart">
+                    <div id="habitChart" className="svg-container" />
                 </div>
             );
     }

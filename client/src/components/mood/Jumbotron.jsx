@@ -1,13 +1,12 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import HistoryNav from '../partials/HistoryNav';
 import { MDBJumbotron, MDBBtn, MDBContainer, MDBRow, MDBCol, MDBIcon, MDBCardBody, MDBCardTitle } from "mdbreact";
 
 const MoodJumbotron = () => {
 
   return (
     <div className="content">
-    <HistoryNav />
+  
     <MDBContainer className="mt-5 text-center">
       <MDBRow>
         <MDBCol>

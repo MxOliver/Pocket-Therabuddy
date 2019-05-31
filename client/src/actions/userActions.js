@@ -21,7 +21,7 @@ function login(email, password){
                 dispatch(alertActions.error("invalid email or password"));
             } else {
                 dispatch(success(user));
-                history.push('/dashboard');
+                history.push('/');
             }
         },
         error => {
