@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MDBInput, MDBContainer, MDBRow, MDBBtn } from "mdbreact";
-import HabitNav from '../partials/HabitNav';
 import Sleep from '../../icons/sleep.svg';
 import Exercise from '../../icons/exercise.svg';
-import Leisure from '../../icons/leisure.svg';
+import Leisure from '../../icons/leisure3.svg';
 import Outside from '../../icons/outside.svg';
 import Alone from '../../icons/alone.svg';
 import Social from '../../icons/social.svg';
@@ -82,115 +81,133 @@ class ConnectedHabit extends Component {
 
         return (
             <div className="content">
-                <HabitNav style={navStyle}/>
                 <form onSubmit={this.handleSubmit}>
                 <MDBContainer id="addHabit">
 
-                <div id="habittype">
+                <div id="habittype" className="text-center">
             
                     <MDBRow center style={{marginBottom: '25px', marginTop: '35px'}}>
 
-                        <div className="form-check">
-                        <label htmlFor="sleep">
-                        <input
-                            className="form-check-input"
-                            id="sleep"
-                            name="type"
-                            value="sleep"
-                            type="radio"
-                            onChange={this.handleChange}
-                            />
-                        <img src={Sleep} alt="sleep" style={{width: '200px'}}/>
-                        </label>
+                        <div className="col-md-3">
+                            <div className="form-check">
+                            <label htmlFor="sleep">
+                            <input
+                                className="form-check-input"
+                                id="sleep"
+                                name="type"
+                                value="sleep"
+                                type="radio"
+                                onChange={this.handleChange}
+                                />
+                            <img src={Sleep} alt="sleep" />
+                            </label>
+                            </div>
                         </div>
-
-                        <div className="form-check">
-                        <label htmlFor="outside">
-                        <input
-                            className="form-check-input"
-                            id="outside"
-                            name="type"
-                            value="time outside"
-                            type="radio"
-                            onChange={this.handleChange}
-                            />
-                        <img src={Outside} alt="time spent outside" style={{width: '250px'}} />
-                        </label>
+                        
+                        <div className="col-md-3">
+                            <div className="form-check">
+                            <label htmlFor="outside">
+                            <input
+                                className="form-check-input"
+                                id="outside"
+                                name="type"
+                                value="time outside"
+                                type="radio"
+                                onChange={this.handleChange}
+                                />
+                            <img src={Outside} alt="time spent outside" />
+                            </label>
+                            </div>
                         </div>
-
-                        <div className="form-check">
-                        <label htmlFor="exercise">
-                        <input
-                            className="form-check-input"
-                            id="exercise"
-                            name="type"
-                            value="exercise"
-                            type="radio"
-                            onChange={this.handleChange}
-                            />
-                        <img src={Exercise} alt="exercise" style={{width: '200px', paddingTop: '45px'}} />
-                        </label>
+                        
+                        <div className="col-md-3">
+                            <div className="form-check">
+                            <label htmlFor="exercise">
+                            <input
+                                className="form-check-input"
+                                id="exercise"
+                                name="type"
+                                value="exercise"
+                                type="radio"
+                                onChange={this.handleChange}
+                                />
+                            <img src={Exercise} alt="exercise" style={{paddingTop: '10px'}} />
+                            </label>
+                            </div>
                         </div>
-
-                        <div className="form-check">
-                        <label htmlFor="hydration">
-                        <input
-                            className="form-check-input"
-                            id="hydration"
-                            name="type"
-                            value="hydration"
-                            type="radio"
-                            onChange={this.handleChange}
-                            />
-                        <img src={Hydration} alt="hydration" style={{height: '200px', paddingBottom: '30px'}} />
-                        </label>
+                        
+                        <div className="col-md-3">
+                            <div className="form-check">
+                            <label htmlFor="hydration">
+                            <input
+                                className="form-check-input"
+                                id="hydration"
+                                name="type"
+                                value="hydration"
+                                type="radio"
+                                onChange={this.handleChange}
+                                />
+                            <img src={Hydration} alt="hydration" />
+                            </label>
+                            </div>
                         </div>
+                        
                         
                         </MDBRow>
 
 
                         <MDBRow center>
 
-                        <div className="form-check">
-                        <label htmlFor="social">
-                        <input
-                            className="form-check-input"
-                            id="social"
-                            name="type"
-                            value="social interaction"
-                            type="radio"
-                            onChange={this.handleChange}
-                            />
-                        <img src={Social} alt="social interaction" style={{height: '200px'}} />
-                        </label>
-                        </div>
+                        <div className="col-md-4">
 
-                        <div className="form-check">
-                        <label htmlFor="leisure">
-                        <input
-                            className="form-check-input"
-                            id="leisure"
-                            name="type"
-                            value="leisure activities"
-                            type="radio"
-                            onChange={this.handleChange}
-                            />
-                        <img src={Leisure} alt="leisure activities" style={{width: '250px', paddingTop: '30px'}} />
-                        </label>
+                            <div className="form-check">
+                            <label htmlFor="social">
+                            <input
+                                className="form-check-input"
+                                id="social"
+                                name="type"
+                                value="social interaction"
+                                type="radio"
+                                onChange={this.handleChange}
+                                />
+                            <img src={Social} alt="social interaction" style={{paddingRight: '25px'}} />
+                            </label>
+                            </div>
+
                         </div>
                         
-                        <div className="form-check">
-                        <label htmlFor="alone">
-                        <input
-                            className="form-check-input"
-                            id="alone"
-                            name="type"
-                            value="time alone"
-                            type="radio"
-                            onChange={this.handleChange}
-                            />
-                        <img src={Alone} alt="time spent alone" style={{height: '200px'}} />
-                        </label>
+                        <div className="col-md-4">
+                            <div className="form-check">
+                            <label htmlFor="leisure">
+                            <input
+                                className="form-check-input"
+                                id="leisure"
+                                name="type"
+                                value="leisure activities"
+                                type="radio"
+                                onChange={this.handleChange}
+                                />
+                            <img src={Leisure} alt="leisure activities" />
+                            </label>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4">
+
+                            <div className="form-check">
+                            <label htmlFor="alone">
+                            <input
+                                className="form-check-input"
+                                id="alone"
+                                name="type"
+                                value="time alone"
+                                type="radio"
+                                onChange={this.handleChange}
+                                />
+                            <img src={Alone} alt="time spent alone" />
+                            </label>
+                            </div>
+
                         </div>
 
 
