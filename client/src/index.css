@@ -88,9 +88,19 @@ code {
 }
 
 .legend {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   margin-left: 15px;
+}
+
+.xLabel {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.yLabel {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 
@@ -127,7 +137,7 @@ path {
 .svg-container {
   display: inline-block;
   position: relative;
-  width: 120%;
+  width: 100%;
   padding-bottom: 100%;
   vertical-align: top;
 }
@@ -135,6 +145,17 @@ path {
 .svg-content {
   display: inline-block;
   position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.svg-container-2 {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+
+.svg-content-2 {
   top: 0;
   left: 0;
 }

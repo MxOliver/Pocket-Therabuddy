@@ -62,11 +62,6 @@ class ConnectedHabit extends Component {
     }
 
     render() {
-        const navStyle = {
-            marginBottom: '55px'
-        }
-
-
     
         const rangeStyle = {
             background: "#80CBC4",

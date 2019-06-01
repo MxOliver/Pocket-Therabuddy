@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { habitActions } from '../../actions/habitActions';
-import {  MDBContainer } from 'mdbreact';
 import FilterData from './FilterData';
 
 function mapStateToProps(state) {

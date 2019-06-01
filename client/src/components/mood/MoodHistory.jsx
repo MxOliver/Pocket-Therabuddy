@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { moodActions } from '../../actions/moodActions';
-import { MDBContainer } from 'mdbreact';
 import FilterMoodData from './FilterData';
 
 function mapStateToProps(state){

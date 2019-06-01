@@ -96,7 +96,7 @@ class ConnectedNavBar extends Component {
       }
 
         return (
-            <MDBNavbar color="teal lighten-3" dark expand="md">
+            <MDBNavbar style={{background: "#ef6c00"}} dark expand="md">
                 <MDBNavbarBrand>
                   <strong className="black-text">Pocket Therabuddy</strong>
               </MDBNavbarBrand>

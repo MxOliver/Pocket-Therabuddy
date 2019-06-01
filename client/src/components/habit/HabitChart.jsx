@@ -12,9 +12,9 @@ class HabitChart extends Component {
 
             return (
        
-                <div className="chart">
+        
                     <div id="habitChart" className="svg-container" />
-                </div>
+           
             );
     }
 }

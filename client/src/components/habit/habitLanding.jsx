@@ -7,11 +7,6 @@ const HabitLanding = () => {
     const pStyle = {
         color: 'teal lighten-3'
     } 
-    
-    const buttonStyle = {
-        color: 'red lighten-3',
-        text: '#b71c1c'
-    }
 
     return (
         <div className="content">
@@ -32,7 +27,7 @@ const HabitLanding = () => {
                     <div className="pt-2">
                     <Link to="/habittracker/add">
                     <MDBBtn
-                    style={buttonStyle}>
+                    style={{background: '#0277bd'}}>
                     Add Habit <MDBIcon icon="bed" />
                     </MDBBtn>
                     </Link>

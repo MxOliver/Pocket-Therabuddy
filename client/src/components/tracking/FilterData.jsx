@@ -47,8 +47,9 @@ class filterData extends Component {
 
  
             var svg = d3.select('#trackerChart').append('svg')
-                .attr('width', width + margin.left + margin.right)
-                .attr('height', height + margin.top + margin.bottom)
+                .attr('viewBox', `20 0 1150 700`)
+                .attr('perserveAspectRatio', 'xMinYMin meet')
+                .classed('svg-content-2', true)
             .append('g')
                 .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
@@ -75,12 +76,14 @@ class filterData extends Component {
     
             svg.append('text')
                 .attr('transform', 'translate(' + (width/2) + " ," + (height + margin.top + 5) + ")" )
+                .attr('class', 'xLabel')
                 .style('text-anchor', 'middle')
                 .text('Date Recorded');
         
             svg.append('text')
                 .attr('x', (width / 7) - margin.left - margin.right - 7)
                 .attr('y', (margin.top / 2) - 5)
+                .attr('class', 'yLabel')
                 .style('text-anchor', 'left')
                 .text('Time Spent on Habit + Mood Intensity Level')
 
