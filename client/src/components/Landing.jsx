@@ -37,11 +37,7 @@ class ConnectedLandingPage extends Component {
       const pStyle = {
         color: 'teal lighten-3'
     } 
-    
-    const buttonStyle = {
-        color: 'red lighten-3',
-        text: '#b71c1c'
-    }
+
 
       let buttonComponent = null;
 
@@ -58,7 +54,7 @@ class ConnectedLandingPage extends Component {
           <div className="pt-2">
           <Link to="/sign_up">
           <MDBBtn
-          style={buttonStyle}>
+          style={{background: '#0277bd'}}>
           Sign Up <MDBIcon icon="user-circle" />
           </MDBBtn>
           </Link>

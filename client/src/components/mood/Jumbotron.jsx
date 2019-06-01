@@ -22,7 +22,7 @@ const MoodJumbotron = () => {
               <div className="pt-2">
                 <Link to="/moodtracker/add">
                 <MDBBtn
-                  color="default">
+                  style={{background: '#0277bd'}}>
                   Add Mood <MDBIcon far icon="smile-beam" />
                 </MDBBtn>
                 </Link>

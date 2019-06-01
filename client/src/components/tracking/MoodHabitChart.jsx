@@ -41,6 +41,7 @@ class MoodHabitChart extends Component {
            })
 
         for(let i = 0; i <= habitSet.length; i++){
+            console.log(i.toString())
             if(habitSet[i] && habitSet[i].length > 0 && moodSet[i] && moodSet[i].length > 0){
                 this.props.generateChart(habitSet[i], moodSet[i++]);
             }
@@ -49,11 +50,10 @@ class MoodHabitChart extends Component {
 
 
             return (
-                    <MDBRow>
-                    <div className="chart" style={{display: 'flex', justifyContent: 'space-around'}}>
-                    <div id='trackerChart' />
-                     </div>
-                    </MDBRow>   
+                    
+                    
+                    <div id='trackerChart' className="svg-container-2"/>
+                
              
             )
     

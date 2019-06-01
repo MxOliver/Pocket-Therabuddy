@@ -32,7 +32,7 @@ class FilterHabitData extends Component {
         .curve(d3.curveMonotoneX)
 
         var svg = d3.select('#habitChart').append('svg')
-            .attr('viewBox', `0 0 1500 1100`)
+            .attr('viewBox', `0 0 1150 700`)
             .attr('perserveAspectRatio', 'xMinYMin meet')
             .classed('svg-content', true)
         .append('g')

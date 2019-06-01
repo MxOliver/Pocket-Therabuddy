@@ -29,11 +29,11 @@ class ConnectedHistories extends Component {
         const { habits, moods } = this.props;
 
         return (
-            <div className="content" style={{paddingTop: '25px'}}>
+            <div className="content" style={{paddingTop: '10px'}}>
             
-            <div className="container">
+      
             <FilterData moodData={moods} habitData={habits} />
-            </div>
+    
             </div>
         )
     }
