@@ -96,7 +96,7 @@ class ConnectedSignIn extends Component {
                       Sign In
                     </MDBBtn>
                     { loggingIn }
-                    <Link to="/sign_up" className="btn btn-link">Sign Up</Link>
+                    <Link to="/sign_up" className="btn btn-link"  style={{background: '#0277bd'}}>Sign Up</Link>
                   </div>
                 </form>
               </MDBCardBody>
