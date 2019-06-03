@@ -1,15 +1,13 @@
-import { moodActions } from '../src/actions/moodActions';
-import jest from 'jest';
+import * as actions from '../src/actions/moodActions';
+import * as types from '../src/constants/moodConstants';
 
-const addMood = moodActions.addMood;
-const getMoodHistory = moodActions.getMoodHistory;
-const newMood = {
-    "moodselect": "happy",
-    "moodlevel": "67",
-    "moodnotes": undefined,
-    "date": "Tue Apr 23 2019"
-}
-
-test('dispatch mood and return success', () => {
-    expect(addMood(newMood)).toBe("success");
-});
+describe('actions', () => {
+    it('should create an action to add a mood', () => {
+        const mood = {moodselect: 'happy', moodlevel: 50, moodnotes: null}
+        const expectedAction = {
+            type: types.ADD_MOOD_REQUEST,
+            mood
+        }
+        expect(actions.addMood(mood)).toEqual(expectedAction)
+    })
+})
