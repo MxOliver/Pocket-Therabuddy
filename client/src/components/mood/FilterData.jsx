@@ -86,10 +86,10 @@ class FilterMoodData extends Component {
 
         if(new Date(dateMax) < moment().subtract(1, 'week')){
             svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
-            .call(makeAxis(xScale, 5));
+            .call(makeAxis(xScale, 5)).selectAll('text').style('text-anchor', 'end').attr('transform', 'rotate(-65)');
         }else {
             svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
-            .call(makeAxis(xScale, 1));
+            .call(makeAxis(xScale, 1)).selectAll('text').style('text-anchor', 'end').attr('transform', 'rotate(-65)');
         }
 
             svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));

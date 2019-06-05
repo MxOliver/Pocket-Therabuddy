@@ -11,6 +11,7 @@ class FilterHabitData extends Component {
     }
 
     generateChart(dataSet){
+
         var margin = {top: 50, right: 100, bottom: 85, left: 80},
         width = 1150 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
@@ -38,7 +39,9 @@ class FilterHabitData extends Component {
         .append('g')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-        var dataNest = d3.nest().key(function(d) { return d.habit; }).entries(dataPoints) 
+        var dataNest = d3.nest()
+            .key(function(d) { return d.habit; })
+            .entries(dataPoints) 
 
         let color = d3.scaleOrdinal().domain(function(d) { return d.habit})
             .range(['#1F78B4', '#33A02C', '#FB9A99', '#E31A1C', '#FF7F00', '#6A3D9A'])
@@ -71,6 +74,7 @@ class FilterHabitData extends Component {
     
         });
 
+
         const makeAxis = (scale, n) => {
             return d3.axisBottom(scale).tickFormat(d3.timeFormat('%a %b %d %Y')).ticks(d3.timeDay.every(n));
         }
@@ -83,10 +87,10 @@ class FilterHabitData extends Component {
     
          if(new Date(dateMax) < moment().subtract(1, 'week')){
             svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
-            .call(makeAxis(xScale, 5));
+            .call(makeAxis(xScale, 5)).selectAll('text').style('text-anchor', 'end').attr('transform', 'rotate(-65)');
          }else {
             svg.append('g').attr('class', 'xAxis').attr('transform', 'translate(0,' + height + ')')
-            .call(makeAxis(xScale, 1));
+            .call(makeAxis(xScale, 1)).selectAll('text').style('text-anchor', 'end').attr('transform', 'rotate(-65)');
          }
     
             svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
