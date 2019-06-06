@@ -3,10 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nivo/line": "^0.56.2",
     "@svgr/parcel-plugin-svgr": "^4.2.0",
     "axios": "^0.18.0",
-    "canvasjs": "^1.8.1",
     "chai": "^4.2.0",
     "d3": "^5.9.2",
     "enzyme": "^3.9.0",
@@ -16,10 +14,8 @@
     "mdbreact": "^4.13.0",
     "moment": "^2.24.0",
     "momentjs": "^2.0.0",
-    "nivo": "^0.31.0",
     "parcel-bundler": "^1.12.3",
     "react": "^16.8.6",
-    "react-d3-library": "^1.1.8",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.2",
     "react-router": "^4.3.1",
@@ -36,7 +32,8 @@
   "scripts": {
     "start": "react-scripts start .env.development",
     "build": "react-scripts build .env.production .env.development",
-    "test": "react-scripts test .env.development",
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

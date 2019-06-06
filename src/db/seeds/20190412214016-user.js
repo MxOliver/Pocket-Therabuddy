@@ -36,7 +36,6 @@ module.exports = {
     createdAt: faker.date.recent(),
     updatedAt: faker.date.recent()
   }], {});
-
   },
 
   down: async (queryInterface, Sequelize) => {

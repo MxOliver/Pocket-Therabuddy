@@ -60,9 +60,9 @@ class ConnectedSignIn extends Component {
     const { email, password, submitted } = this.state;
 
     return (
-      <MDBContainer id="user-form">
+      <MDBContainer id="user-form" className="d-flex justify-content-center">
         <MDBRow>
-          <MDBCol md="6">
+          <MDBCol>
             <MDBCard>
               <MDBCardBody>
                 <form onSubmit={this.handleSubmit} className="grey-text">
@@ -101,7 +101,7 @@ class ConnectedSignIn extends Component {
                 </form>
               </MDBCardBody>
             </MDBCard>
-          </MDBCol>
+            </MDBCol>
         </MDBRow>
       </MDBContainer>
     );

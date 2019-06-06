@@ -5,6 +5,7 @@ import { fetchMoods } from './dataReducer';
 import { saveHabit } from './habitReducer';
 import { fetchHabits } from './habitHistoryReducer';
 import { combineReducers } from 'redux';
+import { saveSkills } from './skillReducer';
 
 const rootReducer = combineReducers({
     alert, 
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     saveMood,
     fetchMoods,
     fetchHabits,
-    saveHabit
+    saveHabit,
+    saveSkills
 })
 
 export default rootReducer;

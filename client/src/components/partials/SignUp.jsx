@@ -68,9 +68,9 @@ class ConnectedUserForm extends Component {
     const { user, submitted } = this.state;
 
     return (
-      <MDBContainer id="user-form">
+      <MDBContainer id="user-form" className="d-flex justify-content-center">
         <MDBRow>
-          <MDBCol md="6">
+          <MDBCol>
             <MDBCard>
                 <MDBCardBody>
                 <form className="signUpForm" onSubmit={this.handleSubmit}>
