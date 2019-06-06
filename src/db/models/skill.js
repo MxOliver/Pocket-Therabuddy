@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var skill = sequelize.define('skill', {
+  var Skill = sequelize.define('Skill', {
     type: {
       type: DataTypes.STRING,
     },
@@ -16,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {});
-  skill.associate = function(models) {
+  Skill.associate = function(models) {
     Skill.belongsTo(models.User, {
       foreignKey: "userId",
       onDelete: "CASCADE"
     })
   };
-  return skill;
+  return Skill;
 };

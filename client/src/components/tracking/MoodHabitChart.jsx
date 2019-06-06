@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { MDBRow } from 'mdbreact';
 
 class MoodHabitChart extends Component {
 

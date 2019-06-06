@@ -33,7 +33,7 @@ module.exports = {
     type: faker.random.arrayElement(['sleep', 'exercise', 'time outside', 'social interaction', 'time alone', 'hydration', 'leisure activities']),
     frequency: faker.random.number({min: 1, max: 99}),
     userId: user.id,
-    createdAt: faker.date.recent(),
+    createdAt: faker.date.between('2019-04-01', '2019-04-25'),
     updatedAt: faker.date.recent()
   }], {});
   },

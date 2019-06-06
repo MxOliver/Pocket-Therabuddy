@@ -18,8 +18,11 @@ class ConnectedHabitHistory extends Component {
 
         this.state = {
             loaded: false,
-            data: ''
+            data: '',
+            value: 'Jun'
         }
+
+        this.handleChange = this.handleChange.bind(this);
 
     }
 
@@ -27,15 +30,26 @@ class ConnectedHabitHistory extends Component {
         const { dispatch, user } = this.props;
         dispatch(habitActions.fetchHistory(user.response));
     }
+    
+    handleChange(e) {
+        console.log(e.target.value);
+        this.setState({ value: e.target.value })
+    }
 
     render() {
 
         const { habits } = this.props;
+        const { value } = this.state;
 
         return (
-            <div className="content">
-           
-            <FilterData data={habits} />
+            <div className="content" style={{marginTop: '25px', marginLeft: '10px'}}>
+            <select id="habitDropdown" value={this.state.value} onChange={this.handleChange}>
+               <option value="Apr">April</option>
+               <option value="May">May</option>
+               <option value="Jun" defaultValue>June</option>
+               <option value="Aug">August</option>
+           </select>
+            <FilterData data={habits} dateRange={value} />
 
             </div>
         )
