@@ -11,32 +11,7 @@ class filterData extends Component {
 
     }
 
-    updateChart(habitDataSet, moodDataSet) {
-        let dataSet = habitDataSet.concat(moodDataSet);
-
-        let dataPoints = dataSet.map(function(d) {
-            return {
-                date: new Date(d.date),
-                level: +d.level,
-                type: d.type
-            }
-        })
-
-        let habitPoints = habitDataSet.map(function(habit) {
-            return {
-                date: new Date(habit.date),
-                level: +habit.level,
-                type: habit.type
-            }
-        });
-
-        let moodPoints = moodDataSet.map(function(mood) {
-            return {
-                date: new Date(mood.date),
-                level: +mood.level,
-                type: mood.type
-            };
-        });
+    updateChart(dataPoints) {
 
         var margin = {top: 50, right: 100, bottom: 85, left: 80},
         width = 1150 - margin.left - margin.right,
@@ -74,11 +49,6 @@ class filterData extends Component {
         
             svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
     
-            svg.append('text')
-                .attr('transform', 'translate(' + (width/2) + " ," + (height + margin.top + 5) + ")" )
-                .attr('class', 'xLabel')
-                .style('text-anchor', 'middle')
-                .text('Date Recorded');
         
             svg.append('text')
                 .attr('x', (width / 7) - margin.left - margin.right - 7)
@@ -89,124 +59,58 @@ class filterData extends Component {
 
              //// END CHART SET UP
 
-            let moodNest = d3.nest().key(function(d) { return d.type }).entries(moodPoints);
+            let dataNest = d3.nest().key(function(d) { return d.type }).entries(dataPoints);
+
+            console.log(dataNest);
 
             let line = d3.line()
-                .x(function(mood) { return xScale(mood.date)})
-                .y(function (mood) { return yScale(mood.level)})
+                .x(function(d) { return xScale(d.date)})
+                .y(function (d) { return yScale(d.level)})
                 .curve(d3.curveMonotoneX)
 
-            let lineColor = d3.scaleOrdinal(d3.schemeCategory10);
+            svg.append('g').classed('data-points', true);
 
-            svg.append('g').classed('mood-points', true);
+            let legendSpace = height / dataNest.length;
 
-            let moodLegendSpace = height / moodNest.length;
+            let color = ['#ef9a9a', '#80cbc4'];
 
-            moodNest.forEach(function(d, i){
+            for( let d in dataNest){
 
                 svg.append('path')
                     .attr('class', 'line')
-                    .style('stroke', function() {
-                        return d.color = lineColor(d.key);
-                    })
+                    .style('stroke', color[d])
                     .style('stroke-width', 3)
-                    .attr('d', line(d.values))
+                    .attr('d', line(dataNest[d].values))
                 
         
-                
                 svg.append('text')
-                    .attr('y', (moodLegendSpace/5)+ i * moodLegendSpace)
+                    .attr('y', (legendSpace/5) + d * legendSpace)
                     .attr('x', width - (margin.right / 3) - 15)
                     .attr('class', 'legend')
-                    .style('fill', function() {
-                        return d.color = lineColor(d.key);
-                    })
-                    .text(d.key)
-                
-            });
+                    .style('fill', color[d])
+                    .text(dataNest[d].key)
 
-            var points = svg.select('g.mood-points').selectAll('dot')
-                .data(moodPoints.filter(function(mood) {
-                    return mood.level;
-                }))
-                .enter()
+              
+                var points = svg.select('g.data-points').selectAll('dot')
+                    .data(dataNest[d].values)
+                    .enter()
 
-            points.append('circle')
-                .attr('r', 4)
-                .attr('class', 'circles')
-                .style('fill', function(mood) { return mood.color = lineColor(mood.type)})
-                .attr('cx', function(mood) { return xScale(mood.date); })
-                .attr('cy', function(mood) { return yScale(+mood.level); })
+                points.append('circle')
+                    .attr('r', 4)
+                    .attr('class', 'circles')
+                    .style('fill', color[d])
+                    .attr('cx', function(d) { return xScale(d.date); })
+                    .attr('cy', function(d) { return yScale(+d.level); })
+            };
 
-            //// HABIT CHART
-
-            let habitNest = d3.nest().key(function(d) { return d.type }).entries(habitPoints);
-
-            let area = d3.area()
-                .curve(d3.curveMonotoneX)
-                .x(function(habit) { return xScale(habit.date)})
-                .y0(yScale(0))
-                .y1(function(habit) { return yScale(+habit.level)})
-
-            let line1 = d3.line()
-                .curve(d3.curveMonotoneX)
-                .x(function(habit) { return xScale(habit.date)})
-                .y(function(habit) { return yScale(+habit.level)})
-                
-            
-            let areaColor = d3.scaleOrdinal().range(d3.schemeCategory10);
-
-            svg.append('g').classed('habit-points', true)
-
-            let habitLegendSpace = height / habitNest.length;
-
-            habitNest.forEach(function(d, i){
-
-                svg.append('path')
-                    .attr('class', 'area')
-                    .attr('d', area(d.values))
-                    .style('fill', function() { return d.color = areaColor(d.key) })
-                    .style('fill-opacity', .3)
-                    .style('stroke', 'none')
-
-                svg.append('path')
-                    .attr('class', 'area-line')
-                    .attr('fill', 'none')
-                    .style('stroke', function() { return d.color = areaColor(d.key)})
-                    .style('stoke-width', 4)
-                    .style('stroke-opacity', .8)
-                    .attr('d', line1(d.values))
-
-                svg.append('text')
-                    .attr('y', (habitLegendSpace/5)+ i - 25)
-                    .attr('x', width - (margin.right / 3) - 15)
-                    .attr('class', 'legend')
-                    .style('fill', function() {
-                        return d.color = areaColor(d.key);
-                    })
-                    .style('fill-opacity', .7)
-                    .text(d.key)
-
-            })
-
-            var hpoints = svg.select('g.habit-points').selectAll('dot')
-                .data(habitPoints.filter(function(habit) {
-                    return habit.level;
-                }))
-                .enter()
-
-            hpoints.append('circle')
-                .attr('r', 4)
-                .attr('class', 'circles2')
-                .style('fill', function(habit) { return habit.color = areaColor(habit.type)})
-                .style('fill-opacity', 0.7)
-                .attr('cx', function(habit) { return xScale(habit.date); })
-                .attr('cy', function(habit) { return yScale(+habit.level); })
     }
 
     render() {
 
         let habitData = this.props.habitData;
+        const dateRange = this.props.dateRange;
+        const moodSelect = this.props.moodSelect;
+        const habitSelect = this.props.habitSelect;
         let habitDataSet = [];
 
             for(let i in habitData){
@@ -294,8 +198,50 @@ class filterData extends Component {
                 });
             }
 
+            let habitPoints = habitDataSet.map(function(habit) {
+                return {
+                    date: new Date(habit.date),
+                    level: +habit.level,
+                    type: habit.type
+                }
+            });
+    
+            let moodPoints = moodDataSet.map(function(mood) {
+                return {
+                    date: new Date(mood.date),
+                    level: +mood.level,
+                    type: mood.type
+                };
+            });
+
+            let filteredMood;
+            let filteredHabit;
+            let filteredData;
+
+            if (dateRange && moodSelect && habitSelect){
+
+                filteredHabit = habitPoints.filter(function(d) {
+                    return d.date.toString().includes(dateRange);
+                });
+                filteredHabit = filteredHabit.filter(function(d) {
+                    return d.type.toString() === habitSelect;
+                });
+                filteredMood = moodPoints.filter(function(d) {
+                    return d.date.toString().includes(dateRange);
+                });
+                filteredMood = filteredMood.filter(function(d) {
+                    return d.type.toString() === moodSelect;
+                })
+            }
+
+            if(filteredMood && filteredHabit){
+                filteredData = filteredMood.concat(filteredHabit);
+            }
+
+            console.log(filteredData);
+
             return (
-                <MoodHabitChart generateChart={this.updateChart} habitData={habitDataSet} moodData={moodDataSet} />
+                <MoodHabitChart generateChart={this.updateChart} dataSet={filteredData} />
             )
        
     }

@@ -36,15 +36,15 @@ class ConnectedNavBar extends Component {
       let tracker = null;
       let habitTracker = null;
       let combinedTracker = null;
-      let dash = null;
+      //let dash = null;
 
 
       if(user && type !== 'alert-danger'){
-        dash = (
-            <MDBNavItem>
-              <MDBNavLink to="/dashboard" className="black-text">Dashboard</MDBNavLink>
-            </MDBNavItem>
-        )
+        // dash = (
+        //     <MDBNavItem>
+        //       <MDBNavLink to="/dashboard" className="black-text">Dashboard</MDBNavLink>
+        //     </MDBNavItem>
+        // )
 
         tracker = (
           <MDBNavItem>

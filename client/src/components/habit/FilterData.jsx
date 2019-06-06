@@ -7,22 +7,15 @@ class FilterHabitData extends Component {
     constructor(props){
         super(props);
 
+
         this.generateChart = this.generateChart.bind(this);
     }
 
-    generateChart(dataSet){
+    generateChart(dataPoints){
 
         var margin = {top: 50, right: 100, bottom: 85, left: 80},
         width = 1150 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
-
-        let dataPoints = dataSet.map(function(d) {
-            return {
-                date: new Date(d.date),
-                level: +d.level,
-                habit: d.type
-            };
-        });
 
         let xScale = d3.scaleTime().domain(d3.extent(dataPoints, function(d) { return d.date})).range([margin.left, width - margin.right]);
         let yScale = d3.scaleLinear().domain([0, 100]).range([height - (margin.bottom / 4), margin.top]);
@@ -95,10 +88,6 @@ class FilterHabitData extends Component {
     
             svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
     
-          svg.append('text')
-            .attr('transform', 'translate(' + (width/2) + " ," + (height + margin.top + 5) + ")" )
-            .style('text-anchor', 'middle')
-            .text('Date Recorded');
         
         svg.append('text')
          .attr('x', (width / 7) - margin.left - margin.right - 7)
@@ -123,6 +112,7 @@ class FilterHabitData extends Component {
     render() {
 
         const data = this.props.data;
+        const dateRange = this.props.dateRange;
 
         let dataSet = [];
  
@@ -167,9 +157,25 @@ class FilterHabitData extends Component {
             })
         }
 
-        return (
-            <HabitChart dataSet={dataSet} generateChart={this.generateChart} />
-        )
+        let dataPoints = dataSet.map(function(d) {
+            return {
+                date: new Date(d.date),
+                level: +d.level,
+                habit: d.type
+            };
+        });
+
+        let filteredData;
+
+        if (dateRange){
+            filteredData = dataPoints.filter(function(d) {
+                return d.date.toString().includes(dateRange);
+            });
+        }
+
+            return (
+                <HabitChart dataSet={filteredData} generateChart={this.generateChart} />
+            )   
 
     }
 }

@@ -1,57 +1,36 @@
 import React, { Component } from 'react';
-import { MDBRow } from 'mdbreact';
+import * as d3 from 'd3';
 
 class MoodHabitChart extends Component {
 
-    constructor(props){
-        super(props);
-
-        
-        this.filterData = this.filterData.bind(this);
+    componentDidMount() {
+        let chart = d3.select('#trackerChart');
+        chart.selectAll('*').remove();
     }
 
-    filterData = (dataArray, obj) => dataArray.filter( data => Object.keys(data).some( key => obj[key] === data[key]) );
+    componentDidUpdate(){
+        let dataNote = d3.select('#dataTrackerNote');
+        let chart = d3.select('#trackerChart');
+        dataNote.selectAll('*').remove();
+        chart.selectAll('*').remove();
+
+        const dataSet = this.props.dataSet;
+        if(dataSet && dataSet.length > 0){
+            this.props.generateChart(dataSet);
+            dataNote.selectAll('*').remove();
+        } else {
+            chart.selectAll('*').remove();
+            dataNote.append('text').text('No data for this date range');
+        }
+    }
 
     render() {
 
-  
-        let mood = ['happy', 'sad', 'tired', 'energetic', 'angry', 'anxious', 'fine'];
-        let habit = ['time alone', 'time outside', 'sleep', 'exercise', 'hydration', 'social interaction', 'leisure activities'];
-
-        const moodDataSet = this.props.moodData;
-        const habitDataSet = this.props.habitData;
-        let moodSet = [];
-        let habitSet = [];
-        
-        const all = [mood, habit];
-
-        all.reduce((acc, cu) => { 
-            let ret = [];
-              acc.map(obj => {
-                cu.map(obj_1 => {
-                    habitSet.push(
-                        this.filterData(habitDataSet,{type: obj_1})
-                    )
-                    moodSet.push(
-                        this.filterData(moodDataSet,{type: obj})
-                    )
-                });
-                return ret;
-              });
-           })
-
-        for(let i = 0; i <= habitSet.length; i++){
-            if(habitSet[i] && habitSet[i].length > 0 && moodSet[i] && moodSet[i].length > 0){
-                this.props.generateChart(habitSet[i], moodSet[i++]);
-            }
-        }
-
-
-
             return (
-                    
-                    
-                    <div id='trackerChart' className="svg-container-2"/>
+                    <div>
+                        <div id="dataTrackerNote"  style={{paddingTop: '15px'}} />
+                        <div id='trackerChart' className="svg-container-2"/>
+                    </div>
                 
              
             )
