@@ -171,10 +171,6 @@ class FilterHabitData extends Component {
             filteredData = dataPoints.filter(function(d) {
                 return d.date.toString().includes(dateRange);
             });
-        } else {
-            filteredData = dataPoints.filter(function(d) {
-                return d.date.toString().includes('Jun');
-            });
         }
 
             return (

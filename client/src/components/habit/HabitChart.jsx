@@ -4,16 +4,15 @@ import * as d3 from 'd3';
 class HabitChart extends Component {
 
     componentDidMount(){
-        const dataSet = this.props.dataSet;
-        if(dataSet && dataSet.length > 0){
-            this.props.generateChart(dataSet);
-
-        }
+        let chart = d3.select('#habitChart');
+        chart.selectAll('*').remove();
     }
     
     componentDidUpdate() {
         let dataNote = d3.select('#dataNote');
         dataNote.selectAll('*').remove();
+        let chart = d3.select('#habitChart');
+        chart.selectAll('*').remove();
 
         const dataSet = this.props.dataSet;
         if(dataSet && dataSet.length > 0){

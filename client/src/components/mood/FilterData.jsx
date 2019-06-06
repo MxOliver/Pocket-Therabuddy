@@ -10,18 +10,10 @@ class FilterMoodData extends Component {
         this.generateChart = this.generateChart.bind(this);
     }
 
-    generateChart(dataSet){
+    generateChart(dataPoints){
             var margin = {top: 50, right: 100, bottom: 85, left: 80},
             width = 1150 - margin.left - margin.right,
             height = 600 - margin.top - margin.bottom;
-
-            let dataPoints = dataSet.map(function(d) {
-                return {
-                    date: new Date(d.date),
-                    level: +d.level,
-                    mood: d.mood
-                };
-            });
 
 
             let xScale = d3.scaleTime().domain(d3.extent(dataPoints, function(d) { return d.date})).range([margin.left, width - margin.right]);
@@ -41,9 +33,8 @@ class FilterMoodData extends Component {
 
         var dataNest = d3.nest().key(function(d) { return d.mood; }).entries(dataPoints) 
             
-        
             
-        let color = d3.scaleOrdinal().domain(function(d) { return d.habit})
+        let color = d3.scaleOrdinal().domain(function(d) { return d.mood})
         .range(['#1F78B4', '#33A02C', '#FB9A99', '#E31A1C', '#FF7F00', '#6A3D9A'])
 
         let legendSpace = height / dataNest.length;
@@ -93,11 +84,6 @@ class FilterMoodData extends Component {
         }
 
             svg.append('g').attr('class', 'yAxis').call(d3.axisLeft(yScale));
-
-            svg.append('text')
-            .attr('transform', 'translate(' + (width/2) + " ," + (height + margin.top + 2) + ")" )
-            .style('text-anchor', 'middle')
-            .text('Date Recorded');
         
         svg.append('text')
         .attr('x', (width / 7) - margin.left - margin.right - 7)
@@ -122,6 +108,7 @@ class FilterMoodData extends Component {
     render() {
 
         const data = this.props.data;
+        const dateRange = this.props.dateRange;
         
         let dataSet = [];
 
@@ -166,8 +153,24 @@ class FilterMoodData extends Component {
             });
         }
 
+        let dataPoints = dataSet.map(function(d) {
+            return {
+                date: new Date(d.date),
+                level: +d.level,
+                mood: d.mood
+            };
+        });
+
+        let filteredData;
+
+        if (dateRange){
+            filteredData = dataPoints.filter(function(d) {
+                return d.date.toString().includes(dateRange);
+            });
+        }
+
         return(
-            <MoodChart dataSet={dataSet} generateChart={this.generateChart} />
+            <MoodChart dataSet={filteredData} generateChart={this.generateChart} />
         )
 
     }
