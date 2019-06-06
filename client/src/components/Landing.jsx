@@ -53,7 +53,7 @@ class ConnectedLandingPage extends Component {
         buttonComponent = (
           <div className="pt-2">
           <Link to="/sign_up">
-          <MDBBtn
+          <MDBBtn color='primary'
           style={{background: '#0277bd'}}>
           Sign Up <MDBIcon icon="user-circle" />
           </MDBBtn>
